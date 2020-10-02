@@ -1,14 +1,15 @@
 package by.svirski.testweb.dao.connector;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import by.svirski.testweb.dao.exception.ConnectionPoolException;
+import by.svirski.testweb.dao.exception.DaoException;
 
 public final class ConnectionPool {
 	private static ConnectionPool instance;
@@ -23,7 +24,7 @@ public final class ConnectionPool {
 		return instance;
 	}
 	
-	public Connection getConnection() {
+	public Connection getConnection() throws ConnectionPoolException {
 		Context context;
 		Connection connection = null;
 		try {
@@ -31,9 +32,9 @@ public final class ConnectionPool {
 			DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/ConnPool");
 			connection = ds.getConnection();
 		} catch (NamingException e) {
-			e.printStackTrace();
+			throw new ConnectionPoolException("can't find directory", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new ConnectionPoolException("can't take connection", e);
 		}
 		return connection;
 		

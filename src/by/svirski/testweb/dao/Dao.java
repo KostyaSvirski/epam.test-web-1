@@ -7,7 +7,8 @@ import by.svirski.testweb.bean.BeanIndicator;
 
 public interface Dao<T extends BeanIndicator> {
 	
-	boolean insert(Map<String, String> paramters);
+	boolean insert(List<String> paramters);
 	boolean update(Map<String, String> parameters);
 	List<T> select(List<String> parameters);
+	boolean delete(Map<String, String> parameters); 
 }

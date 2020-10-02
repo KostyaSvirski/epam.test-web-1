@@ -15,7 +15,7 @@ public class MainController extends HttpServlet {
 	private static final String PASSWORD = "pass";
 	private static final String CORRECT_PASSWORD = "1";
 	private static final String PASS_TO_JSP = "/hello.jsp";
-	private static final String PASS_TO_INCORRECT_JSP = "/not_valid_pass.jsp";
+	private static final String PASS_TO_INCORRECT_JSP = "/error_page.jsp";
        
     public MainController() {
         super();
@@ -32,6 +32,7 @@ public class MainController extends HttpServlet {
 			request.setAttribute("login", login);
 			getServletContext().getRequestDispatcher(PASS_TO_JSP).forward(request, response);
 		} else {
+			request.setAttribute("type_error", "неверный пароль");
 			getServletContext().getRequestDispatcher(PASS_TO_INCORRECT_JSP).forward(request, response);
 		}
 	}

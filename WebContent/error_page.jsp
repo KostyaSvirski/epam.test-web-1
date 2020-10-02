@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>not valid pass</title>
+<title>ERROR</title>
 </head>
 <body>
-	<h1>error: incorrect pass!</h1>
+	<h1>error: ${type_error}</h1>
 </body>
 </html>
