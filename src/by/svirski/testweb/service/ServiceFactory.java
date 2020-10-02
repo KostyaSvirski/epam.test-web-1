@@ -9,7 +9,6 @@ public class ServiceFactory {
 	private final RegistrationService registrationService = new RegistrationService();
 	
 	private ServiceFactory() {
-		
 	}
 
 	public static ServiceFactory getInstance() {

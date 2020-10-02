@@ -2,6 +2,8 @@ package by.svirski.testweb.dao.exception;
 
 public class ConnectionPoolException extends Exception {
 
+	private static final long serialVersionUID = 1L;
+
 	public ConnectionPoolException() {
 		// TODO Auto-generated constructor stub
 	}

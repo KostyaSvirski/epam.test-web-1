@@ -9,7 +9,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import by.svirski.testweb.dao.exception.ConnectionPoolException;
-import by.svirski.testweb.dao.exception.DaoException;
 
 public final class ConnectionPool {
 	private static ConnectionPool instance;
@@ -24,7 +23,7 @@ public final class ConnectionPool {
 		return instance;
 	}
 	
-	public Connection getConnection() throws ConnectionPoolException {
+	public Connection getConnection() throws ConnectionPoolException { //TODO 2:06 03.10.2020 Не берутся соеденения
 		Context context;
 		Connection connection = null;
 		try {
