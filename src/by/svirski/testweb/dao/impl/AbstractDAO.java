@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import by.svirski.testweb.bean.BeanIndicator;
+import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.dao.Dao;
 import by.svirski.testweb.dao.exception.DaoException;
@@ -42,10 +44,10 @@ public abstract class AbstractDAO implements Dao<BeanIndicator> {
 	}
 	
 	protected List<String> createListOfMainParameters(Map<TypeOfParameters.UserType, String> parametersMap) {
-		List<String> listOfParameters = new ArrayList<String>() {{
-			add(parametersMap.get(TypeOfParameters.UserType.LOGIN));
-			add(parametersMap.get(TypeOfParameters.UserType.PASSWORD));
-		}};
+		List<String> listOfParameters = new ArrayList<String>();
+		listOfParameters.add(parametersMap.get(TypeOfParameters.UserType.LOGIN));
+		String hashPassword = Integer.toString(parametersMap.get(TypeOfParameters.UserType.PASSWORD).hashCode());
+		listOfParameters.add(hashPassword);
 		return listOfParameters;
 	}
 	
@@ -81,7 +83,7 @@ public abstract class AbstractDAO implements Dao<BeanIndicator> {
 	}
 	
 	public abstract boolean registrateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
-	
+	public abstract User authorizateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 
 	
 }
