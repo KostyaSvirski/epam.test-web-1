@@ -39,7 +39,7 @@ public class MainController extends HttpServlet {
 		String pass = request.getParameter(PASSWORD);
 		Map<TypeOfParameters.UserType, String> mapParameters = new HashMap<TypeOfParameters.UserType, String>();
 		mapParameters.put(TypeOfParameters.UserType.PASSWORD, pass);
-		mapParameters.put(TypeOfParameters.UserType.EMAIL, login);
+		mapParameters.put(TypeOfParameters.UserType.LOGIN, login);
 		ServiceFactory factory = ServiceFactory.getInstance();
 		CustomService service = factory.getUserService();
 		try {
