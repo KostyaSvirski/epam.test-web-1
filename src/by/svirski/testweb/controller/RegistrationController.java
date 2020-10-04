@@ -61,10 +61,10 @@ public class RegistrationController extends HttpServlet {
 		parametersMap.put(TypeOfParameters.UserType.DATE_OF_BIRTH, dateOfBirth);
 		parametersMap.put(TypeOfParameters.UserType.PHONE_NUMBER, phone);
 		ServiceFactory factory = ServiceFactory.getInstance();
-		CustomService service = factory.getRegistrationService();
+		CustomService service = factory.getUserService();
 		boolean result = false;
 		try {
-			result = service.execute(parametersMap);
+			result = service.registrate(parametersMap);
 		} catch (ServiceException e) {
 			request.setAttribute(ERROR, e.getMessage());
 			getServletContext().getRequestDispatcher(PASS_TO_INC_JSP).forward(request, response);

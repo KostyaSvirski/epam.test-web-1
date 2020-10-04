@@ -1,14 +1,12 @@
 package by.svirski.testweb.service;
 
-import by.svirski.testweb.service.impl.AuthorizationService;
-import by.svirski.testweb.service.impl.RegistrationService;
+import by.svirski.testweb.service.impl.UserService;
 
 public class ServiceFactory {
 
 	private static final ServiceFactory instance = new ServiceFactory();
 	
-	private final RegistrationService registrationService = new RegistrationService();
-	private final AuthorizationService authorizationService = new AuthorizationService();
+	private final UserService userService = new UserService();
 	
 	private ServiceFactory() {
 	}
@@ -17,14 +15,8 @@ public class ServiceFactory {
 		return instance;
 	}
 
-	public RegistrationService getRegistrationService() {
-		return registrationService;
-	}
-
-	public AuthorizationService getAuthorizationService() {
-		return authorizationService;
-	}
-	
-	
+	public UserService getUserService() {
+		return userService;
+	}	
 	
 }

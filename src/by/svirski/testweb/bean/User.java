@@ -1,6 +1,6 @@
 package by.svirski.testweb.bean;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class User implements BeanIndicator{
 	
@@ -12,7 +12,7 @@ public class User implements BeanIndicator{
 	private String surname;
 	private String passportId;
 	private String passportNumber;
-	private Date dateOfBirth;
+	private Calendar dateOfBirth;
 	private String email;
 	private String phoneNumber;	
 	private Gender gender;
@@ -22,7 +22,7 @@ public class User implements BeanIndicator{
 	}
 
 	public User(String login, String password, boolean isBlocked, RoleInProject roleInProject, String name,
-			String surname, String passportId, String passportNumber, Date dateOfBirth, String email,
+			String surname, String passportId, String passportNumber, Calendar dateOfBirth, String email,
 			String phoneNumber, Gender gender) {
 		super();
 		this.login = login;
@@ -82,7 +82,7 @@ public class User implements BeanIndicator{
 		return passportNumber;
 	}
 
-	public Date getDateOfBirth() {
+	public Calendar getDateOfBirth() {
 		return dateOfBirth;
 	}
 
@@ -130,7 +130,7 @@ public class User implements BeanIndicator{
 		this.passportNumber = passportNumber;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(Calendar dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -282,6 +282,8 @@ public class User implements BeanIndicator{
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 	
 }

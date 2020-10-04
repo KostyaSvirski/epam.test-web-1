@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import by.svirski.testweb.bean.BeanIndicator;
 import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
@@ -14,7 +16,7 @@ import by.svirski.testweb.dao.connector.ConnectionPool;
 import by.svirski.testweb.dao.exception.ConnectionPoolException;
 import by.svirski.testweb.dao.exception.DaoException;
 
-public class UserDAO extends AbstractDAO {
+public class UserDAO extends AbstractUserDAO {
 
 	private static final String REGISTRATE_USER_MAIN = "INSERT INTO USERS (login, password) VALUES (?, ?)";
 	private static final String FIND_ID_USER = "select (id) from users where login = ?";
@@ -23,6 +25,7 @@ public class UserDAO extends AbstractDAO {
 	private static final String REGISTRATE_STATUS = "insert into status_in_project (id, is_blocked) values (?, ?)";
 	private static final String REGISTRATE_ROLE = "insert into role_in_project (id, role) values (?, ?)";
 	private static final String CHECK_REGISTRATION = "select (id) from users where login = ? and password = ?";
+	private static final String SELECT_USER = "select * from users join personal on personal.id_user = users.id where login = ? and password = ?";
 
 	public UserDAO() {
 		// TODO Auto-generated constructor stub
@@ -48,12 +51,20 @@ public class UserDAO extends AbstractDAO {
 			String password = parameters.get(TypeOfParameters.UserType.PASSWORD);
 			int position = findUserId(cn, login, password);
 			if (position != -1) {
-				
-			}  
+				List<String> listOfParametersForRequest = new ArrayList<String>();
+				listOfParametersForRequest.add(login);
+				listOfParametersForRequest.add(password);
+				List<BeanIndicator> foundList = select(listOfParametersForRequest, SELECT_USER, cn);
+				if(foundList.size() == 1) {
+					user = (User) foundList.get(0);
+				} else if (foundList.size() > 1) {
+					throw new DaoException("найдено более одного пользователя");
+				}
+			}
 			return user;
 		} finally {
 			if (cn != null) {
-				if(!connectionPool.returnConnectionIntoPool(cn)) {
+				if (!connectionPool.returnConnectionIntoPool(cn)) {
 					throw new DaoException("не закрыт ресурс connection");
 				}
 			}
@@ -130,37 +141,6 @@ public class UserDAO extends AbstractDAO {
 		}
 	}
 
-	@Override
-	public boolean insert(List<String> parameters, Connection cn, String request) throws DaoException {
-		PreparedStatement ps = null;
-		try {
-			try {
-				ps = cn.prepareStatement(request);
-			} catch (SQLException e) {
-				throw new DaoException("error in create prepared statement", e);
-			}
-			try {
-				ps.setString(1, parameters.get(0));
-				ps.setString(2, parameters.get(1));
-			} catch (SQLException e) {
-				throw new DaoException("error in setting parameters", e);
-			}
-			try {
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DaoException("error in sending request", e);
-			}
-			return true;
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 
 	private int findUserId(Connection cn, String login) throws DaoException {
 		try {

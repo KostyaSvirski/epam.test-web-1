@@ -3,6 +3,7 @@ package by.svirski.testweb.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.service.CustomService;
 import by.svirski.testweb.service.ServiceFactory;
@@ -39,16 +41,15 @@ public class MainController extends HttpServlet {
 		mapParameters.put(TypeOfParameters.UserType.PASSWORD, pass);
 		mapParameters.put(TypeOfParameters.UserType.EMAIL, login);
 		ServiceFactory factory = ServiceFactory.getInstance();
-		CustomService service = factory.getAuthorizationService();
-		boolean flag;
+		CustomService service = factory.getUserService();
 		try {
-			flag = service.execute(mapParameters);
-			if(flag) {
-				request.setAttribute("name", "Костя");
-				request.setAttribute("login", login);
+			User user = service.authorize(mapParameters);
+			if(user != null) {
+				request.setAttribute("name", user.getName());
+				request.setAttribute("surname", user.getSurname());
 				getServletContext().getRequestDispatcher(PASS_TO_JSP).forward(request, response);
 			} else {
-				request.setAttribute("type_error", "неверный пароль");
+				request.setAttribute("type_error", "неверный пароль или логин");
 				getServletContext().getRequestDispatcher(PASS_TO_INCORRECT_JSP).forward(request, response);
 			}
 		} catch (ServiceException e) {

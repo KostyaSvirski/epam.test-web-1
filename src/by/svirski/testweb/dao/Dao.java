@@ -11,6 +11,6 @@ public interface Dao<T extends BeanIndicator> {
 	
 	boolean insert(List<String> paramters, Connection cn, String request) throws DaoException;
 	boolean update(Map<String, String> parameters);
-	List<T> select(List<String> parameters);
+	List<T> select(List<String> parameters, String request, Connection cn) throws DaoException;
 	boolean delete(Map<String, String> parameters); 
 }

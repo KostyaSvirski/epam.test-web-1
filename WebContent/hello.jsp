@@ -9,6 +9,6 @@
 <body>
 	<h1>hello</h1>
 	<p>Name: ${name}</p> 
-	<p>Login: ${login}</p>
+	<p>Surname: ${surname}</p>
 </body>
 </html>
