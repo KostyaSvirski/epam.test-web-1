@@ -3,7 +3,6 @@ package by.svirski.testweb.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +17,7 @@ import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
 @WebServlet("/MainController")
-public class MainController extends HttpServlet {
+public class AuthorizationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String LOGIN = "login";
@@ -27,7 +26,7 @@ public class MainController extends HttpServlet {
 	private static final String PASS_TO_INCORRECT_JSP = "/error_page.jsp";
 	private static final String ERROR = "type_error";
        
-    public MainController() {
+    public AuthorizationController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +35,7 @@ public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String login = request.getParameter(LOGIN);
-		String pass = request.getParameter(PASSWORD);
+		String pass = Integer.toString(request.getParameter(PASSWORD).hashCode());
 		Map<TypeOfParameters.UserType, String> mapParameters = new HashMap<TypeOfParameters.UserType, String>();
 		mapParameters.put(TypeOfParameters.UserType.PASSWORD, pass);
 		mapParameters.put(TypeOfParameters.UserType.LOGIN, login);

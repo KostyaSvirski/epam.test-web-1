@@ -19,7 +19,7 @@ import by.svirski.testweb.service.exception.ServiceException;
 public class RegistrationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String PASS_TO_JSP = "/CorrectRegistration.jsp";
+	private static final String PASS_TO_JSP = "/index.html";
 	private static final String PASS_TO_INC_JSP = "/error_page.jsp";
 
 	private static final String NAME = "name";

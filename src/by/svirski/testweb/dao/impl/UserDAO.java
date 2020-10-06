@@ -97,17 +97,18 @@ public class UserDAO extends AbstractUserDAO {
 				return false;
 			}
 			boolean isMainRegistrate = false;
+			
 			List<String> listOfParamters = createListOfMainParameters(parameters);
 			isMainRegistrate = insert(listOfParamters, cn, REGISTRATE_USER_MAIN);
 			position = findUserId(cn, login);
 			parameters.put(TypeOfParameters.UserType.ID, Integer.toString(position));
 			listOfParamters = createListOfPersonalParameters(parameters);
-			isMainRegistrate = insert(listOfParamters, cn, REGISTRATE_USER_PERSONAL);
+			boolean isPersonalRegistrated = insert(listOfParamters, cn, REGISTRATE_USER_PERSONAL);
 			listOfParamters = createListOfRoleParameters(parameters);
-			isMainRegistrate = insert(listOfParamters, cn, REGISTRATE_ROLE);
+			boolean isRoleRegistated= insert(listOfParamters, cn, REGISTRATE_ROLE);
 			listOfParamters = createListOfStatusParameters(parameters);
-			isMainRegistrate = insert(listOfParamters, cn, REGISTRATE_STATUS);
-			return isMainRegistrate;
+			boolean isStatusRegistrated= insert(listOfParamters, cn, REGISTRATE_STATUS);
+			return (isMainRegistrate && isPersonalRegistrated && isRoleRegistated && isStatusRegistrated);
 		} finally {
 			if (cn != null) {
 				if (!connectionPool.returnConnectionIntoPool(cn)) {

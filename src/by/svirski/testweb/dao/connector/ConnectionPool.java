@@ -54,7 +54,7 @@ public final class ConnectionPool {
 
 	}
 
-	public Connection getConnection() throws ConnectionPoolException { // TODO 2:06 03.10.2020 Не берутся соеденения
+	public Connection getConnection() throws ConnectionPoolException { 
 		Connection connection = null;
 		connection = freeConnectionDeque.remove();
 		givenConnections.push(connection);
