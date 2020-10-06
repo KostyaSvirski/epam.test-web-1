@@ -60,6 +60,8 @@ public class RegistrationController extends HttpServlet {
 		parametersMap.put(TypeOfParameters.UserType.PASSPORT_NUMBER, passportNumber);
 		parametersMap.put(TypeOfParameters.UserType.DATE_OF_BIRTH, dateOfBirth);
 		parametersMap.put(TypeOfParameters.UserType.PHONE_NUMBER, phone);
+		parametersMap.put(TypeOfParameters.UserType.IS_BLOCKED, "false");
+		parametersMap.put(TypeOfParameters.UserType.ROLE_IN_PROJECT, "user");
 		ServiceFactory factory = ServiceFactory.getInstance();
 		CustomService service = factory.getUserService();
 		boolean result = false;

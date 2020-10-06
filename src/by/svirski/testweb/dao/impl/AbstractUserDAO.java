@@ -121,7 +121,7 @@ public abstract class AbstractUserDAO implements Dao<BeanIndicator> {
 			add(parametersMap.get(TypeOfParameters.UserType.PASSPORT_ID));
 			add(parametersMap.get(TypeOfParameters.UserType.PASSPORT_NUMBER));
 			add(parametersMap.get(TypeOfParameters.UserType.DATE_OF_BIRTH));
-			add(parametersMap.get(TypeOfParameters.UserType.EMAIL));
+			add(parametersMap.get(TypeOfParameters.UserType.LOGIN));
 			add(parametersMap.get(TypeOfParameters.UserType.PHONE_NUMBER));			
 		}};
 		return listOfParameters;
