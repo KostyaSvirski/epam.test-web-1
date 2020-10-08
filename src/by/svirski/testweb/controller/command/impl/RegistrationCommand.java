@@ -1,23 +1,20 @@
-package by.svirski.testweb.controller;
+package by.svirski.testweb.controller.command.impl;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.svirski.testweb.bean.type.TypeOfParameters;
+import by.svirski.testweb.controller.command.ActionCommand;
 import by.svirski.testweb.service.CustomService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
-@WebServlet("/Registration")
-public class RegistrationController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class RegistrationCommand implements ActionCommand {
 
 	private static final String PASS_TO_JSP = "/index.html";
 	private static final String PASS_TO_INC_JSP = "/error_page.jsp";
@@ -33,13 +30,12 @@ public class RegistrationController extends HttpServlet {
 	private static final String PHONE = "phone";
 	private static final String ERROR = "type_error";
 
-	public RegistrationController() {
-		super();
+	public RegistrationCommand() {
 		// TODO Auto-generated constructor stub
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8");
 		String name = request.getParameter(NAME);
 		String surname = request.getParameter(SURNAME);
@@ -67,23 +63,19 @@ public class RegistrationController extends HttpServlet {
 		boolean result = false;
 		try {
 			result = service.registrate(parametersMap);
+			if (result) {
+				request.setAttribute(NAME, name);
+				request.setAttribute(SURNAME, surname);
+				request.getServletContext().getRequestDispatcher(PASS_TO_JSP).forward(request, response);
+			} else {
+				request.setAttribute(ERROR, "Что-то пошло не так");
+				request.getServletContext().getRequestDispatcher(PASS_TO_INC_JSP).forward(request, response);
+			}
 		} catch (ServiceException e) {
 			request.setAttribute(ERROR, e.getMessage());
-			getServletContext().getRequestDispatcher(PASS_TO_INC_JSP).forward(request, response);
+			request.getServletContext().getRequestDispatcher(PASS_TO_INC_JSP).forward(request, response);
 		}
-		if (result) {
-			request.setAttribute(NAME, name);
-			request.setAttribute(SURNAME, surname);
-			getServletContext().getRequestDispatcher(PASS_TO_JSP).forward(request, response);
-		} else {
-			request.setAttribute(ERROR, "Что-то пошло не так");
-			getServletContext().getRequestDispatcher(PASS_TO_INC_JSP).forward(request, response);
-		}
-	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

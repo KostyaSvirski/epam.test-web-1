@@ -7,7 +7,8 @@
 <body>
 	<h1 style="text-align: center;">Регистрация</h1>
 	<div style="text-align: left;">
-	<form action="Registration" method="POST">
+	<form action="MainController" method="POST">
+		<input type="hidden" name="command" value="registration_command">
 		<label>login: </label>
 		<input type="email" name="login"><br><br>
 		<label>password: </label>
