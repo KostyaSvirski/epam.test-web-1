@@ -16,7 +16,7 @@ import by.svirski.testweb.service.exception.ServiceException;
 
 public class RegistrationCommand implements ActionCommand {
 
-	private static final String PASS_TO_JSP = "/index.html";
+	private static final String PASS_TO_JSP = "/sign_in.html";
 	private static final String PASS_TO_INC_JSP = "/error_page.jsp";
 
 	private static final String NAME = "name";
