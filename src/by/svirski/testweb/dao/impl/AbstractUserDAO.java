@@ -107,8 +107,7 @@ public abstract class AbstractUserDAO implements Dao<BeanIndicator> {
 	protected List<String> createListOfMainParameters(Map<TypeOfParameters.UserType, String> parametersMap) {
 		List<String> listOfParameters = new ArrayList<String>();
 		listOfParameters.add(parametersMap.get(TypeOfParameters.UserType.LOGIN));
-		String hashPassword = Integer.toString(parametersMap.get(TypeOfParameters.UserType.PASSWORD).hashCode());
-		listOfParameters.add(hashPassword);
+		listOfParameters.add(parametersMap.get(TypeOfParameters.UserType.PASSWORD));
 		return listOfParameters;
 	}
 	

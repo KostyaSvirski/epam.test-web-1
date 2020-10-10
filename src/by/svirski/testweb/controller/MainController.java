@@ -22,7 +22,6 @@ public class MainController extends HttpServlet {
 	
 	public MainController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,7 +31,7 @@ public class MainController extends HttpServlet {
 		CommandProvider provider = new CommandProvider();
 		ActionCommand command = provider.defineCommand(commandToExecute);
 		command.execute(request, response);		
-		}
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

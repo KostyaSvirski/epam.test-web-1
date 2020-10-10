@@ -1,4 +1,4 @@
-package by.svirski.testweb.bean.validator;
+package by.svirski.testweb.util.validator;
 
 public interface CustomValidator {
 

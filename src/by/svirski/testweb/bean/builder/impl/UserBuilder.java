@@ -8,13 +8,13 @@ import by.svirski.testweb.bean.Gender;
 import by.svirski.testweb.bean.RoleInProject;
 import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.builder.Builder;
-import by.svirski.testweb.bean.parser.CustomParser;
-import by.svirski.testweb.bean.parser.exception.CustomParseException;
-import by.svirski.testweb.bean.parser.impl.DateParser;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
-import by.svirski.testweb.bean.validator.CustomValidator;
-import by.svirski.testweb.bean.validator.impl.DateValidator;
-import by.svirski.testweb.bean.validator.impl.PhoneValidator;
+import by.svirski.testweb.util.parser.CustomParser;
+import by.svirski.testweb.util.parser.exception.CustomParseException;
+import by.svirski.testweb.util.parser.impl.DateParser;
+import by.svirski.testweb.util.validator.CustomValidator;
+import by.svirski.testweb.util.validator.impl.DateValidator;
+import by.svirski.testweb.util.validator.impl.PhoneValidator;
 
 public class UserBuilder implements Builder<User> {
 

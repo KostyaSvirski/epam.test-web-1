@@ -1,10 +1,10 @@
-package by.svirski.testweb.bean.parser.impl;
+package by.svirski.testweb.util.parser.impl;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import by.svirski.testweb.bean.parser.CustomParser;
-import by.svirski.testweb.bean.parser.exception.CustomParseException;
+import by.svirski.testweb.util.parser.CustomParser;
+import by.svirski.testweb.util.parser.exception.CustomParseException;
 
 public class DateParser implements CustomParser<Calendar> {
 

@@ -13,8 +13,7 @@ public class LogOutCommand implements ActionCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-
+		request.getSession().invalidate();
 	}
 
 }

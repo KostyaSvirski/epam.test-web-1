@@ -89,11 +89,10 @@ public class UserDAO extends AbstractUserDAO {
 			String login = parameters.get(TypeOfParameters.UserType.LOGIN);
 			int position = findUserId(cn, login);
 			if (position != -1) {
-				if (cn != null) {
-					if (!connectionPool.returnConnectionIntoPool(cn)) {
-						throw new DaoException("не закрыт ресурс connection");
-					}
-				}
+				/*
+				 * if (cn != null) { if (!connectionPool.returnConnectionIntoPool(cn)) { throw
+				 * new DaoException("не закрыт ресурс connection"); } }
+				 */
 				return false;
 			}
 			boolean isMainRegistrate = false;

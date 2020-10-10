@@ -1,9 +1,9 @@
-package by.svirski.testweb.bean.validator.impl;
+package by.svirski.testweb.util.validator.impl;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import by.svirski.testweb.bean.validator.CustomValidator;
+import by.svirski.testweb.util.validator.CustomValidator;
 
 public class DateValidator implements CustomValidator {
 

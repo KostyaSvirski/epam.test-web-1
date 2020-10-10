@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>Registration Page</title>
 </head>
 <body>
-	<h1 style="text-align: center;">Регистрация</h1>
+	<h1 style="text-align: center;">Регистрация</h1>
 	<div style="text-align: left;">
 	<form action="MainController" method="POST">
 		<input type="hidden" name="command" value="registration_command">
@@ -13,6 +14,8 @@
 		<input type="email" name="login"><br><br>
 		<label>password: </label>
 		<input type="password" name="pass"><br><br>
+		<label>repeat password: </label>
+		<input type="password" name="pass_repeat"><br><br>
 		<label>surname: </label>
 		<input type="text" name="surname"><br><br>
 		<label>name: </label>
@@ -29,7 +32,8 @@
 		<input type="text" name="date_of_birth"><br><br>
 		<label>phone: </label>
 		<input type="text" name="phone"><br><br>
-		<input type="submit">
+		<input type="submit" value = "LOG IN"><br><hr>
+		<p style="color: red">${type_error}</p>
 	</form>
 	</div>
 </body>

@@ -1,4 +1,4 @@
-package by.svirski.testweb.bean.parser.exception;
+package by.svirski.testweb.util.parser.exception;
 
 public class CustomParseException extends Exception {
 

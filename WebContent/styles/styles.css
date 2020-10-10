@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+  height: 100vh;
+}
 header,
 footer {
   background-color: black;
@@ -7,20 +11,29 @@ footer {
   align-items: center;
 }
 .logo {
-  width: 80px;
-  height: 80px;
+  width: 5%;
+  height: 5%;
   padding: 5px 25px 5px 40px;
+}
+nav {
+  width: 100%;
+  display: flex;
 }
 .nav {
   text-decoration: none;
-  padding: 13px 72px;
-  font-size: 19px;
+  display: block;
+  text-align: center;
+  margin: 0px auto;
+  padding: 25px 10px;
+  transition: all 0.3s;
+  width: 14.5%;
+  font-size: 1.1875rem;
   font-family: "Inconsolata", monospace;
   color: #f2f4f4;
 }
 .nav:hover {
-  text-decoration: underline;
   color: #f25a14;
+  box-shadow: 0px -5px 0 #f25a14 inset;
 }
 
 .main {
@@ -115,11 +128,13 @@ iframe {
 .cars_PH {
   width: 550px;
   height: 350px;
+  opacity: 0.85;
 }
 .cars_PH:hover {
-  -webkit-transform: scale(1.4);
-  -ms-transform: scale(1.4);
-  transform: scale(1.4);
+  opacity: 1;
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .rent {
@@ -386,5 +401,5 @@ footer {
   font-family: "Inconsolata", monospace;
   font-family: "Roboto Slab", serif;
   font-size: 14px;
-  padding: 0px 5px 10px 1315px;
+  margin: 5px 515px;
 }

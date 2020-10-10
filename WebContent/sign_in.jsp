@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -16,7 +17,8 @@
 		<input type="submit"><br>
 	</form>
 	</div>
+	<p style="color: green">${message}</p>
 	<hr>
-	<a href = "registration.html"> Регистрация </a>
+	<a href = "registration.jsp"> Регистрация </a>
 </body>
 </html>

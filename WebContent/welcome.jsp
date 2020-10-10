@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -34,9 +35,10 @@
         <a class="nav" href="/tariffs">Tariffs</a>
         <a class="nav" href="/carBrands">Car Brands</a>
         <a class="nav" href="/contacts">Contacts</a>
+        <a class="nav" href="sign_in.jsp">Sign in</a>
       </nav>
     </header>
-	
+
     <main>
       <section class="main">
         <p class="main_text">Premium car rental</p>
@@ -72,7 +74,7 @@
           <section class="types_of_cars">
             <img
               class="cars_PH"
-              src="https://i.imgur.com/AVISys7.jpg"
+              src="https://i.imgur.com/oq3oyx3.jpg"
               alt="Sports cars"
             />
             <p><a class="autopark_p" href="/Sportscars">Sports cars</a></p>
@@ -80,7 +82,7 @@
           <section class="types_of_cars">
             <img
               class="cars_PH"
-              src="https://i.imgur.com/TNs1cu3.jpg"
+              src="https://i.imgur.com/T4SfXoP.jpg"
               alt="SUVs"
             />
             <p><a class="autopark_p" href="/SUVs">SUVs</a></p>
@@ -90,7 +92,7 @@
           <section class="types_of_cars">
             <img
               class="cars_PH"
-              src="https://i.imgur.com/ZaVOnu8.jpg"
+              src="https://i.imgur.com/tXE6BcT.jpg"
               alt="Executive class"
             />
             <p>
@@ -100,7 +102,7 @@
           <section class="types_of_cars">
             <img
               class="cars_PH"
-              src="https://i.imgur.com/GecUqXl.jpg"
+              src="https://i.imgur.com/cpjy3r8.jpg"
               alt="Convertibles"
             />
             <p><a class="autopark_p" href="/Convertibles">Convertibles</a></p>
@@ -297,8 +299,8 @@
             ></path>
           </svg>
         </div>
+        <pre id="rights">&copy; All rights reserved</pre>
       </section>
-      <p id="rights">&copy; All rights reserved</p>
     </footer>
   </body>
 </html>
