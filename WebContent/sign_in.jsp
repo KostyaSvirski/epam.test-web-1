@@ -8,7 +8,7 @@
 <body>
 	<h1 style="text-align: center;">AUTHORITHATION</h1>
 	<div style="text-align: center;">
-	<form action="MainController" method="GET">
+	<form action="MainController" method="POST">
 		<input type="hidden" name="command" value="authorization_command">
 		<label>login: </label><br>
 		<input type="email" name="login"><br><br>
@@ -19,6 +19,7 @@
 	</div>
 	<p style="color: ${collor}; text-align: center">${message}</p>
 	<hr>
-	<a href = "registration.jsp"> Регистрация </a>
+	<a href = "registration.jsp"> Регистрация </a><br>
+	<a href = "welcome.jsp"> Назад </a>
 </body>
 </html>

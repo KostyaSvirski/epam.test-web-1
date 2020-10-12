@@ -26,6 +26,7 @@ public class RegistrationCommand implements ActionCommand {
 	private static final String NAME = "name";
 	private static final String SURNAME = "surname";
 	private static final String PASSWORD = "pass";
+	private static final String REPEAT_PASSWORD = "pass_repeat";
 	private static final String LOGIN = "login";
 	private static final String GENDER = "gender";
 	private static final String PASSPORT_ID = "passport_id";
@@ -46,6 +47,12 @@ public class RegistrationCommand implements ActionCommand {
 		String surname = request.getParameter(SURNAME);
 		String login = request.getParameter(LOGIN);
 		String pass = Integer.toString(encryptPassword(request.getParameter(PASSWORD)));
+		String repeatPass = Integer.toString(encryptPassword(request.getParameter(REPEAT_PASSWORD)));
+		if(!repeatPass.equalsIgnoreCase(pass)) {
+			request.setAttribute(COLLOR, "red");
+			request.setAttribute(MESSAGE, "пароли не сопадают");
+			request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
+		}
 		String gender = request.getParameter(GENDER);
 		String passportId = request.getParameter(PASSPORT_ID);
 		String passportNumber = request.getParameter(PASSPORT_NUMBER);

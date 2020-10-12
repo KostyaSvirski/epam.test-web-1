@@ -19,7 +19,7 @@ public class LogOutCommand implements ActionCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
-		request.getServletContext().getRequestDispatcher(WELCOME_PAGE).forward(request, response);
+		response.sendRedirect(request.getContextPath() + WELCOME_PAGE);
 	}
 
 }

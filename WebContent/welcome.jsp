@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html lang="en">
@@ -35,7 +36,12 @@
         <a class="nav" href="/tariffs">Tariffs</a>
         <a class="nav" href="/carBrands">Car Brands</a>
         <a class="nav" href="/contacts">Contacts</a>
-        <a class="nav" href="sign_in.jsp">Sign in</a>
+        <c:if test="${sessionScope.user.login == null}">
+	        <a class="nav" href="sign_in.jsp">Sign in</a>	        
+        </c:if>
+         <c:if test="${sessionScope.user.login != null}">
+	        <a class="nav" href="log_out.jsp">Log out</a>	        
+        </c:if>
       </nav>
     </header>
 
@@ -43,21 +49,26 @@
       <section class="main">
         <p class="main_text">Premium car rental</p>
         <p class="main_text2">The best quality</p>
+        <c:if test="${sessionScope.user.login == null}">
+	        <p class="main_text3">hello, authorize please</p>    
+        </c:if>
+        <c:if test="${sessionScope.user.login != null}">
+	        <p class="main_text3">hello, ${sessionScope.user.name} ${sessionScope.user.surname}</p>    
+        </c:if>
       </section>
 
       <section class="about_us">
         <div class="about_us_text">
-          <h2>About us</h2>
           <p>
+            <p id="about_us_text1">About us</p>
             Premium car rental service is your unique opportunity to touch your
-            <br />
-            dream and get unforgettable emotions. Each car in our fleet is a<br />
+            dream and get unforgettable emotions. Each car in our fleet is a
             pearl of the global automotive industry, capable of captivating
-            with<br />
-            its dynamics, aesthetics and comfort. You don't have to be a<br />
-            millionaire to enjoy the best models of Ferrari, Porsche, Bentley<br />
+            with
+            its dynamics, aesthetics and comfort. You don't have to be a
+            millionaire to enjoy the best models of Ferrari, Porsche, Bentley
             and Lamborghini, you can choose a convenient and profitable
-            rental!<br />
+            rental!
           </p>
         </div>
         <iframe
@@ -67,17 +78,18 @@
           allowfullscreen
         ></iframe>
       </section>
-
+      
+    <section>
+      <h2 id="autopark_h2">Autopark</h2>
       <section class="autopark">
-        <h2 id="autopark_h2">Autopark</h2>
-        <section class="row1">
+        <section class="row">
           <section class="types_of_cars">
             <img
               class="cars_PH"
               src="https://i.imgur.com/oq3oyx3.jpg"
               alt="Sports cars"
             />
-            <p><a class="autopark_p" href="/Sportscars">Sports cars</a></p>
+            <p class="autopark_p"><a class="autopark_p" href="/Sportscars">Sports cars</a></p>
           </section>
           <section class="types_of_cars">
             <img
@@ -85,17 +97,17 @@
               src="https://i.imgur.com/T4SfXoP.jpg"
               alt="SUVs"
             />
-            <p><a class="autopark_p" href="/SUVs">SUVs</a></p>
+            <p class="autopark_p"><a class="autopark_p" href="/SUVs">SUVs</a></p>
           </section>
         </section>
-        <section class="row1">
+        <section class="row">
           <section class="types_of_cars">
             <img
               class="cars_PH"
               src="https://i.imgur.com/tXE6BcT.jpg"
               alt="Executive class"
             />
-            <p>
+            <p class="autopark_p">
               <a class="autopark_p" href="/Executive class">Executive class</a>
             </p>
           </section>
@@ -105,10 +117,11 @@
               src="https://i.imgur.com/cpjy3r8.jpg"
               alt="Convertibles"
             />
-            <p><a class="autopark_p" href="/Convertibles">Convertibles</a></p>
+            <p class="autopark_p"><a class="autopark_p" href="/Convertibles">Convertibles</a></p>
           </section>
         </section>
       </section>
+    </section>
 
       <section class="rent">
         <h2 id="rent_h2">Rental rules</h2>
@@ -118,31 +131,30 @@
             <ul class="push">
               <li>
                 The minimum age is from 19 years. Work experience-from 1 year.
-                <br />
                 The lessee must provide an original passport with a residence
-                permit, <br />
+                permit, 
                 a selfie with a passport and a driver's license on both sides.
               </li>
               <li>
                 We provide a car rental service for foreign citizens. The
-                amount<br />
+                amount
                 of the security deposit can be increased.
               </li>
               <li>
-                To rent a car, a returnable security deposit is required, the<br />
-                amount of which depends on the chosen car, as well as the<br />
-                driving experience and citizenship of the renter. The minimum<br />
+                To rent a car, a returnable security deposit is required, the
+                amount of which depends on the chosen car, as well as the
+                driving experience and citizenship of the renter. The minimum
                 deposit is 30,000 rubles, see the section
                 <a class="rent_a" href="/tariffs">tariffs</a>.
               </li>
               <li>
-                An additional driver must be declared before the start of the<br />
-                car rental, providing the original passport and driver's<br />
-                license. The price includes 2 drivers. The insurance of each<br />
+                An additional driver must be declared before the start of the
+                car rental, providing the original passport and driver's
+                license. The price includes 2 drivers. The insurance of each
                 subsequent driver takes place at an additional cost.
               </li>
               <li>
-                To reserve a car for a certain date, you must make an advance<br />
+                To reserve a car for a certain date, you must make an advance
                 payment of 50% of the cost.
               </li>
             </ul>
@@ -162,9 +174,9 @@
               <li>Violation of the established speed limits</li>
             </ul>
             <p id="atten">
-              !!! In case of revealing any of these <br />
-              violations, the car can be forcibly withdrawn,<br />
-              without reimbursement of the funds paid and <br />
+              !!! In case of revealing any of these 
+              violations, the car can be forcibly withdrawn,
+              without reimbursement of the funds paid and 
               the insurance deposit !!!
             </p>
           </div>
@@ -207,7 +219,7 @@
 
     <footer>
       <section class="contacts">
-        <section class="logo1">
+        <section>
           <img
             class="logo"
             src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
@@ -215,15 +227,15 @@
           />
         </section>
         <div class="cont">
-          <pre><b>    Contacts</b></pre>
+          <p><strong>Contacts</strong></p>
           <p>+375(12)-345-67-89</p>
         </div>
         <div class="cont">
-          <pre><b>                Adress</b></pre>
+          <p><strong>Adress</strong></p>
           <p>Minsk, Yakub Kolas street, building 5, office 13</p>
         </div>
         <div class="cont">
-          <pre><b>       Mail</b></pre>
+          <p><strong>Mail</strong></p>
           <p>rentofauto@rent.com</p>
         </div>
       </section>
@@ -299,7 +311,7 @@
             ></path>
           </svg>
         </div>
-        <pre id="rights">&copy; All rights reserved</pre>
+        <!--<p id="rights">&copy; All rights reserved</p>-->
       </section>
     </footer>
   </body>

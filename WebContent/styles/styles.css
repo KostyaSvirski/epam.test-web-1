@@ -8,12 +8,12 @@ footer {
 }
 .header {
   display: flex;
-  align-items: center;
+  height: 12vh;
 }
 .logo {
-  width: 5%;
-  height: 5%;
-  padding: 5px 25px 5px 40px;
+  width: 10vh;
+  height: 10vh;
+  padding: 1vh 3vw 1vh 3vw;
 }
 nav {
   width: 100%;
@@ -23,8 +23,8 @@ nav {
   text-decoration: none;
   display: block;
   text-align: center;
-  margin: 0px auto;
-  padding: 25px 10px;
+  margin: 1.5vh 0vh 0vh 0vh;
+  padding: 3vh 0vh;
   transition: all 0.3s;
   width: 14.5%;
   font-size: 1.1875rem;
@@ -33,7 +33,7 @@ nav {
 }
 .nav:hover {
   color: #f25a14;
-  box-shadow: 0px -5px 0 #f25a14 inset;
+  box-shadow: 0vh -0.5vh 0vh #f25a14 inset;
 }
 
 .main {
@@ -64,9 +64,9 @@ nav {
   font-family: "Roboto Slab", serif;
   font-weight: bold;
   color: #f2f4f4;
-  font-size: 50px;
+  font-size: 3.125rem;
   text-align: center;
-  padding: 200px 0px 0px 0px;
+  margin: 17% 0% 0% 0%;
 }
 .main_text2 {
   position: relative;
@@ -74,50 +74,77 @@ nav {
   font-family: "Inconsolata", monospace;
   font-family: "Roboto Slab", serif;
   color: #dc7633;
-  font-size: 30px;
+  font-size: 1.875rem;
   text-align: center;
   text-decoration: underline;
+}
+.main_text3 {
+  position: relative;
+  z-index: 3;
+  font-family: "Inconsolata", monospace;
+  font-family: "Roboto Slab", serif;
+  color: white;
+  opacity: 0.5;
+  font-size: 1.4rem;
+  text-align: center;
 }
 
 .about_us {
   display: flex;
+  height: 65vh;
+  width: 100%;
+}
+#about_us_text1 {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 .about_us_text {
   background-color: rgb(176, 215, 245, 0.5);
-  margin: 70px 20px 80px 20px;
-  padding: 10px 50px 10px 50px;
-  border-radius: 10px;
+  height: 50%;
+  width: 40%;
+  margin: 7% 0% 10.2% 3%;
+  padding: 3vh 3vh;
+  border-radius: 3vh;
   font-family: "Inconsolata", monospace;
   font-family: "Roboto Slab", serif;
-  font-size: 17px;
+  font-size: 1.0625rem;
 }
 iframe {
-  width: 700px;
-  height: 400px;
-  padding: 20px 0px 20px 10px;
+  width: 60%;
+  height: 60vh;
+  margin: 1.75vh 3vh;
+  padding: 1vh 1vh;
 }
 
 .autopark {
   font-family: "Roboto Slab", serif;
   background-color: white;
+  width: 100%;
+  height: 140vh;
+  display: table;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
 }
 #autopark_h2 {
+  font-family: "Roboto Slab", serif;
   text-align: center;
-  padding: 20px;
-  margin: 0px;
+  padding: 0vh;
 }
-.row1 {
-  display: flex;
-  margin: 0px 100px;
+.row {
+  display: table-cell;
+  align-items: center;
 }
 .types_of_cars {
-  margin: 20px 20px;
-  padding: 20px;
+  margin: 0vh;
+  padding: 3vh;
+  width: 100%;
 }
 .autopark_p {
   text-decoration: none;
-  padding: 10px 150px;
-  font-size: 25px;
+  text-align: center;
+  font-size: 1.5625rem;
   font-family: "Inconsolata", monospace;
   color: black;
 }
@@ -126,15 +153,19 @@ iframe {
   color: #f25a14;
 }
 .cars_PH {
-  width: 550px;
-  height: 350px;
+  width: auto;
+  height: 100%;
+  margin: 0vh 0vh 0vh 18vh;
   opacity: 0.85;
+  -moz-transition: all 0.7s ease-out;
+  -o-transition: all 0.7s ease-out;
+  -webkit-transition: all 0.7s ease-out;
 }
 .cars_PH:hover {
   opacity: 1;
-  -webkit-transform: scale(1.2);
-  -ms-transform: scale(1.2);
-  transform: scale(1.2);
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
 }
 
 .rent {
@@ -143,8 +174,8 @@ iframe {
 }
 #rent_h2 {
   text-align: center;
-  padding: 30px;
-  margin: 0px;
+  padding: 2%;
+  margin: 0vh;
 }
 #rent_h3_1 {
   color: rgb(0, 93, 163);
@@ -174,13 +205,13 @@ iframe {
 .push {
   list-style: none;
   font-family: "Roboto Slab", serif;
-  font-size: 19px;
+  font-size: 1.1875rem;
 }
 .push li {
   position: relative;
   padding: 20px 0 20px 40px;
   color: rgb(82, 158, 216);
-  font-size: 19px;
+  font-size: 1.1875rem;
 }
 .push li:before {
   position: absolute;
@@ -217,7 +248,7 @@ iframe {
   position: relative;
   padding: 20px 0 20px 40px;
   color: #d63333;
-  font-size: 19px;
+  font-size: 1.1875rem;
 }
 .push1 li:before {
   position: absolute;
@@ -251,7 +282,7 @@ iframe {
   text-align: center;
   padding: 50px 20px;
   color: rgb(163, 0, 0);
-  font-size: 21px;
+  font-size: 1.3125rem;
 }
 
 .tariffs {
@@ -295,7 +326,7 @@ iframe {
   left: -80px;
   width: 80px;
   text-align: center;
-  font-size: 19px;
+  font-size: 1.1875rem;
   color: #707071;
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
@@ -361,45 +392,58 @@ iframe {
   font-family: "Roboto Slab", serif;
   color: #f25a14;
   text-align: center;
-  font-size: 25px;
+  font-size: 1.5625rem;
 }
 .spisok {
   display: flex;
-  padding: 30px 200px;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0vh;
+  width: 100%;
 }
 .spisok1 {
-  padding: 25px 100px;
+  padding: 6vh 10vh;
+  display: block;
 }
 .spis_a {
   color: #f25a14;
-  font-size: 20px;
+  font-size: 1.25rem;
   text-decoration: none;
 }
 
 footer {
   color: white;
+  width: 100%;
+  font-family: "Inconsolata", monospace;
+  font-family: "Roboto Slab", serif;
+  font-size: 0.875rem;
 }
 .contacts {
   display: flex;
-  padding: 10px 25px 0px 25px;
+  padding: 1vh 1.5vh 0vh 1.5vh;
 }
 .cont {
-  padding: 5px 100px;
-  font-family: "Inconsolata", monospace;
-  font-family: "Roboto Slab", serif;
-  font-size: 14px;
+  width: 30%;
+  text-align: center;
 }
 .logo2 {
   display: flex;
   cursor: pointer;
-  padding: 0px 650px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
 }
 .t-sociallinks__svg {
-  padding: 0px 10px;
+  margin: 0vh 1vh;
+  display: block;
 }
-#rights {
+/*#rights {
   font-family: "Inconsolata", monospace;
   font-family: "Roboto Slab", serif;
-  font-size: 14px;
-  margin: 5px 515px;
+  font-size: 0.875rem;
+
 }
