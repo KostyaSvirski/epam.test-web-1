@@ -33,6 +33,7 @@ public class RegistrationCommand implements ActionCommand {
 	private static final String DATE_OF_BIRTH = "date_of_birth";
 	private static final String PHONE = "phone";
 	private static final String ERROR = "type_error";
+	private static final String COLLOR = "collor";
 
 	public RegistrationCommand() {
 		// TODO Auto-generated constructor stub
@@ -69,11 +70,13 @@ public class RegistrationCommand implements ActionCommand {
 			try {
 				result = service.registrate(parametersMap);
 				if (result) {
+					request.setAttribute(COLLOR, "green");
 					request.setAttribute(MESSAGE, "вы успешно зарегистрированы");
 					request.getServletContext().getRequestDispatcher(PASS_TO_SIGN_IN).forward(request, response);
 				} else {
-					request.setAttribute(ERROR, "Что-то пошло не так");
-					request.getServletContext().getRequestDispatcher(PASS_TO_ERROR).forward(request, response);
+					request.setAttribute(COLLOR, "red");
+					request.setAttribute(MESSAGE, "такой пользователь уже существует!");
+					request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
 				}
 			} catch (ServiceException e) {
 				request.setAttribute(ERROR, e.getMessage());
@@ -81,7 +84,8 @@ public class RegistrationCommand implements ActionCommand {
 			}
 			
 		} else {
-			request.setAttribute(ERROR, "не все поля заполнены");
+			request.setAttribute(COLLOR, "red");
+			request.setAttribute(MESSAGE, "не все поля заполнены");
 			request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
 		}
 

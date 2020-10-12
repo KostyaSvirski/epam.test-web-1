@@ -6,7 +6,7 @@
 	<title>hello page</title>
 </head>
 <body>
-	<h1 style="text-align: center;">Авторизация</h1>
+	<h1 style="text-align: center;">AUTHORITHATION</h1>
 	<div style="text-align: center;">
 	<form action="MainController" method="GET">
 		<input type="hidden" name="command" value="authorization_command">
@@ -17,7 +17,7 @@
 		<input type="submit"><br>
 	</form>
 	</div>
-	<p style="color: green">${message}</p>
+	<p style="color: ${collor}; text-align: center">${message}</p>
 	<hr>
 	<a href = "registration.jsp"> Регистрация </a>
 </body>

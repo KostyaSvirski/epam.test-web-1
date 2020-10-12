@@ -6,7 +6,7 @@
 	<title>Registration Page</title>
 </head>
 <body>
-	<h1 style="text-align: center;">Регистрация</h1>
+	<h1 style="text-align: center;">REGISTRATION</h1>
 	<div style="text-align: left;">
 	<form action="MainController" method="POST">
 		<input type="hidden" name="command" value="registration_command">
@@ -32,8 +32,8 @@
 		<input type="text" name="date_of_birth"><br><br>
 		<label>phone: </label>
 		<input type="text" name="phone"><br><br>
-		<input type="submit" value = "LOG IN"><br><hr>
-		<p style="color: red">${type_error}</p>
+		<input type="submit" value = "SIGN UP"><br><hr>
+		<p style="color: ${collor}">${message}</p>
 	</form>
 	</div>
 </body>

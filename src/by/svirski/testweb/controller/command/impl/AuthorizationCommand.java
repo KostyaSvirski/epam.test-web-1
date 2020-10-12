@@ -24,6 +24,8 @@ public class AuthorizationCommand implements ActionCommand {
 	private static final String PASS_TO_INCORRECT_JSP = "/error_page.jsp";
 	private static final String ERROR = "type_error";
 	private static final String MESSAGE = "message"; 
+	private static final String COLLOR = "collor"; 
+	private static final String PASS_TO_SIGN_IN = "/sign_in.jsp"; 
 
 	public AuthorizationCommand() {
 		// TODO Auto-generated constructor stub
@@ -44,12 +46,14 @@ public class AuthorizationCommand implements ActionCommand {
 			try {
 				User user = service.authorize(mapParameters);
 				if (user != null) {
+					request.getSession().setAttribute("user", user);
 					request.setAttribute("name", user.getName());
 					request.setAttribute("surname", user.getSurname());
 					request.getServletContext().getRequestDispatcher(PASS_TO_JSP).forward(request, response);
 				} else {
+					request.setAttribute(COLLOR, "red");
 					request.setAttribute(MESSAGE, "неверный пароль или логин");
-					request.getServletContext().getRequestDispatcher(PASS_TO_INCORRECT_JSP).forward(request, response);
+					request.getServletContext().getRequestDispatcher(PASS_TO_SIGN_IN).forward(request, response);
 				}
 			} catch (ServiceException e) {
 				request.setAttribute(ERROR, e.getMessage());

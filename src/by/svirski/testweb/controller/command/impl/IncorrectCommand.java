@@ -11,7 +11,7 @@ import by.svirski.testweb.controller.command.ActionCommand;
 public class IncorrectCommand implements ActionCommand {
 	
 	private static final String ERROR = "type_error";
-	private static final String PASS_TO_JSP = "/error_page";
+	private static final String PASS_TO_INCORRECT_JSP = "/error_page";
 
 	public IncorrectCommand() {
 		// TODO Auto-generated constructor stub
@@ -20,7 +20,7 @@ public class IncorrectCommand implements ActionCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute(ERROR, "не распознана команда");
-		request.getServletContext().getRequestDispatcher(PASS_TO_JSP).forward(request, response);
+		request.getServletContext().getRequestDispatcher(PASS_TO_INCORRECT_JSP).forward(request, response);
 	}
 
 }
