@@ -4,10 +4,9 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-import by.svirski.testweb.bean.BeanIndicator;
 import by.svirski.testweb.dao.exception.DaoException;
 
-public interface Dao<T extends BeanIndicator> {
+public interface BeanDao<T> {
 	
 	boolean insert(List<String> paramters, Connection cn, String request) throws DaoException;
 	boolean update(Map<String, String> parameters);

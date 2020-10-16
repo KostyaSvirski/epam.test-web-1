@@ -30,17 +30,17 @@
         alt="logo"
       />
       <nav>
-        <a class="nav" href="/aboutUs">About Us</a>
-        <a class="nav" href="/autopark">Autopark</a>
-        <a class="nav" href="/rent">Rent</a>
-        <a class="nav" href="/tariffs">Tariffs</a>
-        <a class="nav" href="/carBrands">Car Brands</a>
-        <a class="nav" href="/contacts">Contacts</a>
+        <a class="nav" href="#aboutUs">About Us</a>
+        <a class="nav" href="#autopark">Autopark</a>
+        <a class="nav" href="#rent">Rent</a>
+        <a class="nav" href="#tariffs">Tariffs</a>
+        <a class="nav" href="#carBrands">Car Brands</a>
+        <a class="nav" href="#contacts">Contacts</a>
         <c:if test="${sessionScope.user.login == null}">
 	        <a class="nav" href="sign_in.jsp">Sign in</a>	        
         </c:if>
          <c:if test="${sessionScope.user.login != null}">
-	        <a class="nav" href="log_out.jsp">Log out</a>	        
+	        <a class="nav" href="my_page.jsp">My Page</a>	        
         </c:if>
       </nav>
     </header>
@@ -50,14 +50,15 @@
         <p class="main_text">Premium car rental</p>
         <p class="main_text2">The best quality</p>
         <c:if test="${sessionScope.user.login == null}">
-	        <p class="main_text3">hello, authorize please</p>    
+	        <p class="main_text3">authorize please</p>    
         </c:if>
         <c:if test="${sessionScope.user.login != null}">
 	        <p class="main_text3">hello, ${sessionScope.user.name} ${sessionScope.user.surname}</p>    
         </c:if>
+        <p class="main_text3">current count of users: ${count}</p> 
       </section>
 
-      <section class="about_us">
+      <section class="about_us" id="aboutUs">
         <div class="about_us_text">
           <p>
             <p id="about_us_text1">About us</p>
@@ -79,7 +80,7 @@
         ></iframe>
       </section>
       
-    <section>
+    <section id="autopark">
       <h2 id="autopark_h2">Autopark</h2>
       <section class="autopark">
         <section class="row">
@@ -123,7 +124,7 @@
       </section>
     </section>
 
-      <section class="rent">
+      <section class="rent" id="rent">
         <h2 id="rent_h2">Rental rules</h2>
         <section class="spis">
           <div class="spis1">
@@ -183,14 +184,14 @@
         </section>
       </section>
 
-      <section class="tariffs">
+      <section class="tariffs" id="tariffs">
         <h2>
           You can find out about our tariffs by the
           <a id="tariffs_a" href="/tariffs">link</a>.
         </h2>
       </section>
 
-      <section class="carBrands">
+      <section class="carBrands" id="carBrands">
         <h2 id="carBrands_h2">Car brands</h2>
         <div class="spisok">
           <ul class="list3b">
@@ -218,7 +219,7 @@
     </main>
 
     <footer>
-      <section class="contacts">
+      <section class="contacts" id="contacts">
         <section>
           <img
             class="logo"

@@ -7,20 +7,20 @@ import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.dao.DaoFactory;
 import by.svirski.testweb.dao.exception.DaoException;
-import by.svirski.testweb.dao.impl.AbstractUserDAO;
-import by.svirski.testweb.service.CustomService;
+import by.svirski.testweb.dao.impl.AbstractUserDAOImpl;
+import by.svirski.testweb.service.CustomUserService;
 import by.svirski.testweb.service.exception.ServiceException;
 
-public class UserService implements CustomService{
+public class UserServiceImpl implements CustomUserService{
 
-	public UserService() {
+	public UserServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public boolean registrate(Map<TypeOfParameters.UserType, String> parameters) throws ServiceException {
 		DaoFactory factory = DaoFactory.getInstance();
-		AbstractUserDAO dao = factory.getUserDao();
+		AbstractUserDAOImpl dao = factory.getUserDao();
 		boolean check = false;
 		try {
 			check = dao.registrateUser(parameters);
@@ -33,7 +33,7 @@ public class UserService implements CustomService{
 	@Override
 	public User authorize(Map<UserType, String> parameters) throws ServiceException {
 		DaoFactory factory = DaoFactory.getInstance();
-		AbstractUserDAO dao = factory.getUserDao();
+		AbstractUserDAOImpl dao = factory.getUserDao();
 		User user = null;
 		try {
 			user = dao.authorizateUser(parameters);

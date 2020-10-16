@@ -9,18 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import by.svirski.testweb.bean.BeanIndicator;
 import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.builder.Builder;
 import by.svirski.testweb.bean.builder.impl.UserBuilder;
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
-import by.svirski.testweb.dao.Dao;
+import by.svirski.testweb.dao.BeanDao;
 import by.svirski.testweb.dao.exception.DaoException;
 
-public abstract class AbstractUserDAO implements Dao<BeanIndicator> {
+public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 	
-	public AbstractUserDAO() {	
+	public AbstractUserDAOImpl() {	
 	}
 
 	
@@ -65,8 +64,8 @@ public abstract class AbstractUserDAO implements Dao<BeanIndicator> {
 	}
 
 	@Override
-	public List<BeanIndicator> select(List<String> parameters, String request, Connection cn) throws DaoException {
-		List<BeanIndicator> listOfBeans = new ArrayList<BeanIndicator>();
+	public List<User> select(List<String> parameters, String request, Connection cn) throws DaoException {
+		List<User> listOfBeans = new ArrayList<User>();
 		try {
 			PreparedStatement ps = cn.prepareStatement(request);
 			for(int i = 1; i <= parameters.size(); i++) {

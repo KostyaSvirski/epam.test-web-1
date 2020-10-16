@@ -48,6 +48,8 @@ public class UserBuilder implements Builder<User> {
 		validator = new PhoneValidator();
 		if(validator.validate(parameters.get(UserType.PHONE_NUMBER))) {
 			user.setPhoneNumber(parameters.get(UserType.PHONE_NUMBER));
+		} else {
+			user.setPhoneNumber("no phone");
 		}
 		Gender[] genders = Gender.values();
 		for(Gender gender : genders) {

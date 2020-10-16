@@ -1,6 +1,7 @@
 package by.svirski.testweb.bean;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class User implements BeanIndicator{
 	
@@ -82,8 +83,8 @@ public class User implements BeanIndicator{
 		return passportNumber;
 	}
 
-	public Calendar getDateOfBirth() {
-		return dateOfBirth;
+	public Date getDateOfBirth() {
+		return dateOfBirth.getTime();
 	}
 
 	public String getEmail() {
@@ -257,9 +258,7 @@ public class User implements BeanIndicator{
 		StringBuilder builder = new StringBuilder();
 		builder.append("User [login=");
 		builder.append(login);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", isBlocked=");
+		builder.append("isBlocked=");
 		builder.append(isBlocked);
 		builder.append(", roleInProject=");
 		builder.append(roleInProject);

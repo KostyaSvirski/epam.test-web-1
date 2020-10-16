@@ -10,7 +10,7 @@ import by.svirski.testweb.controller.command.ActionCommand;
 
 public class LogOutCommand implements ActionCommand {
 	
-	private static final String WELCOME_PAGE = "/welcome.jsp";
+	private static final String WELCOME_PAGE = "/index.jsp";
 
 	public LogOutCommand() {
 		// TODO Auto-generated constructor stub

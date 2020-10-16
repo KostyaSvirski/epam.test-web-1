@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import by.svirski.testweb.bean.BeanIndicator;
 import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
@@ -16,7 +15,7 @@ import by.svirski.testweb.dao.connector.ConnectionPool;
 import by.svirski.testweb.dao.exception.ConnectionPoolException;
 import by.svirski.testweb.dao.exception.DaoException;
 
-public class UserDAO extends AbstractUserDAO {
+public class UserDAO extends AbstractUserDAOImpl {
 
 	private static final String REGISTRATE_USER_MAIN = "INSERT INTO USERS (login, password) VALUES (?, ?)";
 	private static final String FIND_ID_USER = "select (id) from users where login = ?";
@@ -54,7 +53,7 @@ public class UserDAO extends AbstractUserDAO {
 				List<String> listOfParametersForRequest = new ArrayList<String>();
 				listOfParametersForRequest.add(login);
 				listOfParametersForRequest.add(password);
-				List<BeanIndicator> foundList = select(listOfParametersForRequest, SELECT_USER, cn);
+				List<User> foundList = select(listOfParametersForRequest, SELECT_USER, cn);
 				if(foundList.size() == 1) {
 					user = (User) foundList.get(0);
 				} else if (foundList.size() > 1) {
@@ -89,10 +88,6 @@ public class UserDAO extends AbstractUserDAO {
 			String login = parameters.get(TypeOfParameters.UserType.LOGIN);
 			int position = findUserId(cn, login);
 			if (position != -1) {
-				/*
-				 * if (cn != null) { if (!connectionPool.returnConnectionIntoPool(cn)) { throw
-				 * new DaoException("не закрыт ресурс connection"); } }
-				 */
 				return false;
 			}
 			boolean isMainRegistrate = false;

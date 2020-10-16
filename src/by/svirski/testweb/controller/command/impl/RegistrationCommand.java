@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.controller.command.ActionCommand;
-import by.svirski.testweb.service.CustomService;
+import by.svirski.testweb.service.CustomUserService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
@@ -50,50 +50,51 @@ public class RegistrationCommand implements ActionCommand {
 		String repeatPass = Integer.toString(encryptPassword(request.getParameter(REPEAT_PASSWORD)));
 		if(!repeatPass.equalsIgnoreCase(pass)) {
 			request.setAttribute(COLLOR, "red");
-			request.setAttribute(MESSAGE, "пароли не сопадают");
+			request.setAttribute(MESSAGE, "пароли не совпадают");
 			request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
-		}
-		String gender = request.getParameter(GENDER);
-		String passportId = request.getParameter(PASSPORT_ID);
-		String passportNumber = request.getParameter(PASSPORT_NUMBER);
-		String dateOfBirth = request.getParameter(DATE_OF_BIRTH);
-		String phone = request.getParameter(PHONE);
-		Map<TypeOfParameters.UserType, String> parametersMap = new HashMap<TypeOfParameters.UserType, String>();
-		parametersMap.put(TypeOfParameters.UserType.NAME, name);
-		parametersMap.put(TypeOfParameters.UserType.SURNAME, surname);
-		parametersMap.put(TypeOfParameters.UserType.LOGIN, login);
-		parametersMap.put(TypeOfParameters.UserType.PASSWORD, pass);
-		parametersMap.put(TypeOfParameters.UserType.GENDER, gender);
-		parametersMap.put(TypeOfParameters.UserType.PASSPORT_ID, passportId);
-		parametersMap.put(TypeOfParameters.UserType.PASSPORT_NUMBER, passportNumber);
-		parametersMap.put(TypeOfParameters.UserType.DATE_OF_BIRTH, dateOfBirth);
-		parametersMap.put(TypeOfParameters.UserType.PHONE_NUMBER, phone);
-		parametersMap.put(TypeOfParameters.UserType.IS_BLOCKED, "false");
-		parametersMap.put(TypeOfParameters.UserType.ROLE_IN_PROJECT, "user");
-		if(checkParameters(parametersMap)) {
-			ServiceFactory factory = ServiceFactory.getInstance();
-			CustomService service = factory.getUserService();
-			boolean result = false;
-			try {
-				result = service.registrate(parametersMap);
-				if (result) {
-					request.setAttribute(COLLOR, "green");
-					request.setAttribute(MESSAGE, "вы успешно зарегистрированы");
-					request.getServletContext().getRequestDispatcher(PASS_TO_SIGN_IN).forward(request, response);
-				} else {
-					request.setAttribute(COLLOR, "red");
-					request.setAttribute(MESSAGE, "такой пользователь уже существует!");
-					request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
-				}
-			} catch (ServiceException e) {
-				request.setAttribute(ERROR, e.getMessage());
-				request.getServletContext().getRequestDispatcher(PASS_TO_ERROR).forward(request, response);
-			}
-			
 		} else {
-			request.setAttribute(COLLOR, "red");
-			request.setAttribute(MESSAGE, "не все поля заполнены");
-			request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
+			String gender = request.getParameter(GENDER);
+			String passportId = request.getParameter(PASSPORT_ID);
+			String passportNumber = request.getParameter(PASSPORT_NUMBER);
+			String dateOfBirth = request.getParameter(DATE_OF_BIRTH);
+			String phone = request.getParameter(PHONE);
+			Map<TypeOfParameters.UserType, String> parametersMap = new HashMap<TypeOfParameters.UserType, String>();
+			parametersMap.put(TypeOfParameters.UserType.NAME, name);
+			parametersMap.put(TypeOfParameters.UserType.SURNAME, surname);
+			parametersMap.put(TypeOfParameters.UserType.LOGIN, login);
+			parametersMap.put(TypeOfParameters.UserType.PASSWORD, pass);
+			parametersMap.put(TypeOfParameters.UserType.GENDER, gender);
+			parametersMap.put(TypeOfParameters.UserType.PASSPORT_ID, passportId);
+			parametersMap.put(TypeOfParameters.UserType.PASSPORT_NUMBER, passportNumber);
+			parametersMap.put(TypeOfParameters.UserType.DATE_OF_BIRTH, dateOfBirth);
+			parametersMap.put(TypeOfParameters.UserType.PHONE_NUMBER, phone);
+			parametersMap.put(TypeOfParameters.UserType.IS_BLOCKED, "false");
+			parametersMap.put(TypeOfParameters.UserType.ROLE_IN_PROJECT, "user");
+			if(checkParameters(parametersMap)) {
+				ServiceFactory factory = ServiceFactory.getInstance();
+				CustomUserService service = factory.getUserService();
+				boolean result = false;
+				try {
+					result = service.registrate(parametersMap);
+					if (result) {
+						request.setAttribute(COLLOR, "green");
+						request.setAttribute(MESSAGE, "вы успешно зарегистрированы");
+						request.getServletContext().getRequestDispatcher(PASS_TO_SIGN_IN).forward(request, response);
+					} else {
+						request.setAttribute(COLLOR, "red");
+						request.setAttribute(MESSAGE, "такой пользователь уже существует!");
+						request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
+					}
+				} catch (ServiceException e) {
+					request.setAttribute(ERROR, e.getMessage());
+					response.sendRedirect(request.getContextPath() + PASS_TO_ERROR);		
+				}
+				
+			} else {
+				request.setAttribute(COLLOR, "red");
+				request.setAttribute(MESSAGE, "не все поля заполнены");
+				request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
+			}
 		}
 
 	}

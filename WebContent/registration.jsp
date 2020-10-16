@@ -1,40 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<html>
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link
+	  rel="shortcut icon"
+	  href="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
+	  type="image/x-icon"
+	/>
+	<link
+	  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Roboto+Slab&display=swap"
+	  rel="stylesheet"
+	/>
+	<link rel="stylesheet" href="styles/registration.css" />
 	<title>Registration Page</title>
-</head>
-<body>
-	<h1 style="text-align: center;">REGISTRATION</h1>
-	<div style="text-align: left;">
-	<form action="MainController" method="POST">
+ </head>	
+
+<body class="body">
+	<main class="main">
+	<h1  class="main_text">REGISTRATION</h1>
+	<div class="main">
+	<form class="decor" action="MainController" method="POST">
+		<div class="form-left-decoration"></div>
+		<div class="form-right-decoration"></div>
+		<div class="circle"></div>
+
+		<div class="form-inner">
 		<input type="hidden" name="command" value="registration_command">
-		<label>login: </label>
-		<input type="email" name="login"><br><br>
-		<label>password: </label>
-		<input type="password" name="pass"><br><br>
-		<label>repeat password: </label>
-		<input type="password" name="pass_repeat"><br><br>
-		<label>surname: </label>
-		<input type="text" name="surname"><br><br>
-		<label>name: </label>
-		<input type="text" name="name"><br><br>
-		<label>gender: </label>
-		<input type="radio" name="gender" value="male">Male
-		<input type="radio" name="gender" value="female">Female
-		<br><br>
-		<label>passport id: </label>
-		<input type="text" name="passport_id"><br><br>
-		<label>passport number: </label>
-		<input type="text" name="passport_number"><br><br>
-		<label>date of birth: </label>
-		<input type="text" name="date_of_birth"><br><br>
-		<label>phone: </label>
-		<input type="text" name="phone"><br><br>
-		<input type="submit" value = "SIGN UP"><br><hr>
-		<p style="color: ${collor}">${message}</p>
+		<input type="email" placeholder="Email" name="login">
+		<input type="password" placeholder="Password" name="pass">
+		<input type="password" placeholder="Repeat password" name="pass_repeat">
+		<input type="text" placeholder="Surname" name="surname">
+		<input type="text" placeholder="Name" name="name">
+		<div class="radio">
+			<input type="radio" name="gender" value="male">Male
+			<input type="radio" name="gender" value="female">Female<br>
+		</div>
+		<input type="text" placeholder="Passport id" name="passport_id">
+		<input type="text" placeholder="Passport number" name="passport_number">
+		<input type="text" placeholder="Date of birth DD.MM.YYYY" name="date_of_birth">
+		<input type="text" placeholder="Phone +123456789" name="phone">
+		<input type="submit" value = "SIGN UP">
+		<p style="color: ${collor}; text-align: center">${message}</p>
+	</div>
 	</form>
 	</div>
+</main>
 </body>
 </html>
