@@ -34,15 +34,9 @@ public class UserDAO extends AbstractUserDAOImpl {
 	public User authorizateUser(Map<UserType, String> parameters) throws DaoException {
 		User user = null;
 		Connection cn = null;
-		ConnectionPool connectionPool = null;
 		try {
 			try {
-				connectionPool = ConnectionPool.getInstance();
-			} catch (ConnectionPoolException e1) {
-				throw new DaoException(e1.getMessage(), e1);
-			}
-			try {
-				cn = connectionPool.getConnection();
+				cn = ConnectionPool.getInstance().getConnection();
 			} catch (ConnectionPoolException e) {
 				throw new DaoException(e);
 			}
@@ -54,7 +48,7 @@ public class UserDAO extends AbstractUserDAOImpl {
 				listOfParametersForRequest.add(login);
 				listOfParametersForRequest.add(password);
 				List<User> foundList = select(listOfParametersForRequest, SELECT_USER, cn);
-				if(foundList.size() == 1) {
+				if (foundList.size() == 1) {
 					user = (User) foundList.get(0);
 				} else if (foundList.size() > 1) {
 					throw new DaoException("найдено более одного пользователя");
@@ -62,11 +56,7 @@ public class UserDAO extends AbstractUserDAOImpl {
 			}
 			return user;
 		} finally {
-			if (cn != null) {
-				if (!connectionPool.returnConnectionIntoPool(cn)) {
-					throw new DaoException("не закрыт ресурс connection");
-				}
-			}
+			close(cn);
 		}
 	}
 
@@ -91,7 +81,7 @@ public class UserDAO extends AbstractUserDAOImpl {
 				return false;
 			}
 			boolean isMainRegistrate = false;
-			
+
 			List<String> listOfParamters = createListOfMainParameters(parameters);
 			isMainRegistrate = insert(listOfParamters, cn, REGISTRATE_USER_MAIN);
 			position = findUserId(cn, login);
@@ -99,16 +89,12 @@ public class UserDAO extends AbstractUserDAOImpl {
 			listOfParamters = createListOfPersonalParameters(parameters);
 			boolean isPersonalRegistrated = insert(listOfParamters, cn, REGISTRATE_USER_PERSONAL);
 			listOfParamters = createListOfRoleParameters(parameters);
-			boolean isRoleRegistated= insert(listOfParamters, cn, REGISTRATE_ROLE);
+			boolean isRoleRegistated = insert(listOfParamters, cn, REGISTRATE_ROLE);
 			listOfParamters = createListOfStatusParameters(parameters);
-			boolean isStatusRegistrated= insert(listOfParamters, cn, REGISTRATE_STATUS);
+			boolean isStatusRegistrated = insert(listOfParamters, cn, REGISTRATE_STATUS);
 			return (isMainRegistrate && isPersonalRegistrated && isRoleRegistated && isStatusRegistrated);
 		} finally {
-			if (cn != null) {
-				if (!connectionPool.returnConnectionIntoPool(cn)) {
-					throw new DaoException("не закрыт ресурс connection");
-				}
-			}
+			close(cn);
 		}
 	}
 
@@ -128,14 +114,12 @@ public class UserDAO extends AbstractUserDAOImpl {
 			} catch (SQLException e) {
 				throw new DaoException("error in rs", e);
 			} finally {
-				rs.close();
-				ps.close();
+				close(ps);
 			}
 		} catch (SQLException e) {
 			throw new DaoException("can't create prepareded statement", e);
 		}
 	}
-
 
 	private int findUserId(Connection cn, String login) throws DaoException {
 		try {
@@ -152,8 +136,7 @@ public class UserDAO extends AbstractUserDAOImpl {
 			} catch (SQLException e) {
 				throw new DaoException("error in rs", e);
 			} finally {
-				rs.close();
-				ps.close();
+				close(ps);
 			}
 		} catch (SQLException e) {
 			throw new DaoException("can't create prepareded statement", e);

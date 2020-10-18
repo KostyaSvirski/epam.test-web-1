@@ -1,20 +1,21 @@
 package by.svirski.testweb.dao.impl;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import by.svirski.testweb.dao.SiteDao;
+import by.svirski.testweb.dao.SystemDao;
 import by.svirski.testweb.dao.connector.ConnectionPool;
 import by.svirski.testweb.dao.exception.ConnectionPoolException;
 import by.svirski.testweb.dao.exception.DaoException;
 
-public class SiteDAOImpl implements SiteDao {
+public class SystemDAOImpl implements SystemDao {
 
 	private static final String REQUEST_COUNT_USERS = "select (id) from users";
 
-	public SiteDAOImpl() {
+	public SystemDAOImpl() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -28,7 +29,7 @@ public class SiteDAOImpl implements SiteDao {
 				cn = connectionPool.getConnection();
 			} catch (ConnectionPoolException e1) {
 				throw new DaoException(e1.getMessage(), e1);
-			}		
+			}
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			int count = 0;
@@ -42,19 +43,10 @@ public class SiteDAOImpl implements SiteDao {
 			} catch (SQLException e) {
 				throw new DaoException(e);
 			} finally {
-				try {
-					rs.close();
-					ps.close();
-				} catch (SQLException e) {
-					throw new DaoException(e);
-				}
+				close(ps);
 			}
 		} finally {
-			if (cn != null) {
-				if (!connectionPool.returnConnectionIntoPool(cn)) {
-					throw new DaoException("не закрыт ресурс connection");
-				}
-			}
+			close(cn);
 		}
 	}
 

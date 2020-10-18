@@ -40,17 +40,6 @@ public class User implements BeanIndicator{
 		this.gender = gender;
 	}
 
-	public User(String login, String password, boolean isBlocked, RoleInProject roleInProject, String name,
-			String surname) {
-		super();
-		this.login = login;
-		this.password = password;
-		this.isBlocked = isBlocked;
-		this.roleInProject = roleInProject;
-		this.name = name;
-		this.surname = surname;
-	}
-
 	public String getLogin() {
 		return login;
 	}
@@ -63,8 +52,8 @@ public class User implements BeanIndicator{
 		return isBlocked;
 	}
 
-	public RoleInProject getRoleInProject() {
-		return roleInProject;
+	public String getRoleInProject() {
+		return roleInProject.toString();
 	}
 
 	public String getName() {

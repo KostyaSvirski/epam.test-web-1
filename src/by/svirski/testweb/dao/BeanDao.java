@@ -12,4 +12,6 @@ public interface BeanDao<T> {
 	boolean update(Map<String, String> parameters);
 	List<T> select(List<String> parameters, String request, Connection cn) throws DaoException;
 	boolean delete(Map<String, String> parameters); 
+	
+	
 }

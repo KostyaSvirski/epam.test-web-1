@@ -1,6 +1,7 @@
 package by.svirski.testweb.dao.connector;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayDeque;
@@ -25,8 +26,9 @@ public final class ConnectionPool {
 	private static final String DB_POOLSIZE = "poolsize";
 
 	private static ConnectionPool instance;
-	private BlockingDeque<Connection> freeConnectionDeque;
-	private Deque<Connection> givenConnections;
+	private BlockingDeque<ProxyConnection> freeConnections;
+	private Deque<ProxyConnection> givenConnections;
+	private int poolSize;
 
 	public static synchronized ConnectionPool getInstance() throws ConnectionPoolException {
 		if (instance == null) {
@@ -38,14 +40,14 @@ public final class ConnectionPool {
 	private ConnectionPool() throws ConnectionPoolException {
 		ResourceBundle rb = ResourceBundle.getBundle(DB_PROPERTIES);
 		Properties properties = createPropertiesList(rb);
-		int capacity = Integer.parseInt(rb.getString(DB_POOLSIZE));
-		freeConnectionDeque = new LinkedBlockingDeque<Connection>(capacity);
-		givenConnections = new ArrayDeque<Connection>();
+		poolSize = Integer.parseInt(rb.getString(DB_POOLSIZE));
+		freeConnections = new LinkedBlockingDeque<ProxyConnection>(poolSize);
+		givenConnections = new ArrayDeque<ProxyConnection>();
 		try {
-			for (int i = 0; i < capacity; i++) {
+			for (int i = 0; i < poolSize; i++) {
 				Connection connection = DriverManager.getConnection(properties.getProperty(DB_URL),
 						properties.getProperty(DB_LOGIN), properties.getProperty(DB_PASSWORD));
-				freeConnectionDeque.offer(connection);
+				freeConnections.offer(new ProxyConnection(connection));
 			}
 
 		} catch (SQLException e) {
@@ -54,21 +56,45 @@ public final class ConnectionPool {
 
 	}
 
-	public Connection getConnection() throws ConnectionPoolException { 
-		Connection connection = null;
-		connection = freeConnectionDeque.remove();
+	public ProxyConnection getConnection() throws ConnectionPoolException { 
+		ProxyConnection connection = null;
+		connection = freeConnections.remove();
 		givenConnections.push(connection);
 		return connection;
 	}
+	
+	public void destroyPool() throws ConnectionPoolException {
+        try {
+            for (int i = 0; i < poolSize; i++) {
+                ProxyConnection proxyConnection = freeConnections.take();
+                proxyConnection.reallyClose();
+            }
+            //LOGGER.log(Level.INFO, "Connection pool has been destroyed");
+        } catch (InterruptedException | SQLException e) {
+           // LOGGER.log(Level.ERROR, e);
+            throw new ConnectionPoolException(e);
+        } finally {
+            deregisterDrivers();
+        }
+    }
 
-	public boolean returnConnectionIntoPool(Connection connection) {
-		if (connection.equals(givenConnections.getFirst())) {
-			givenConnections.remove();
-			freeConnectionDeque.offer(connection);
-			return true;
-		}
-		return false;
-	}
+    private void deregisterDrivers() throws ConnectionPoolException {
+        try {
+            while (DriverManager.getDrivers().hasMoreElements()) {
+                Driver driver = DriverManager.getDrivers().nextElement();
+                DriverManager.deregisterDriver(driver);
+            }
+            //LOGGER.log(Level.INFO, "Drivers have been deregistered");
+        } catch (SQLException e) {
+            throw new ConnectionPoolException(e);
+        }
+    }
+
+	/*
+	 * public boolean returnConnectionIntoPool(Connection connection) { if
+	 * (connection.equals(givenConnections.getFirst())) { givenConnections.remove();
+	 * freeConnections.offer(connection); return true; } return false; }
+	 */
 
 	private static Properties createPropertiesList(ResourceBundle rb) {
 		Properties properties = new Properties();
@@ -80,5 +106,16 @@ public final class ConnectionPool {
 		properties.put(DB_SERVER_TIMEZONE, rb.getString(DB_SERVER_TIMEZONE));
 		properties.put(DB_USE_UNICODE, rb.getString(DB_USE_UNICODE));
 		return properties;
+	}
+
+	public void releaseConnection(ProxyConnection connection) {
+		if (connection instanceof ProxyConnection
+                && givenConnections.remove(connection)) {
+            freeConnections.offer((ProxyConnection) connection);
+            //LOGGER.log(Level.DEBUG, "Connection has been released");
+        } else {
+            //LOGGER.log(Level.ERROR, "Invalid connection to release");
+        }
+		
 	}
 }

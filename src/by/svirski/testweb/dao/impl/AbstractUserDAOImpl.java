@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,8 +67,9 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 	@Override
 	public List<User> select(List<String> parameters, String request, Connection cn) throws DaoException {
 		List<User> listOfBeans = new ArrayList<User>();
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = cn.prepareStatement(request);
+			ps = cn.prepareStatement(request);
 			for(int i = 1; i <= parameters.size(); i++) {
 				ps.setString(i, parameters.get(i-1));
 			}
@@ -88,11 +90,13 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 				User user = builder.build(parametersMap);
 				listOfBeans.add(user);
 			}
+			return listOfBeans;
 		} catch (SQLException e) {
 			throw new DaoException("error in create prepared statement", e);
+		} finally {
+			close(ps);
 		}
 		
-		return listOfBeans;
 	}
 
 	@Override
@@ -143,6 +147,28 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 	
 	public abstract boolean registrateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 	public abstract User authorizateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
+	
+	protected void close(Statement statement) {
+		/* final Logger logger = LogManager.getLogger(Dao.class); */
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+				/* logger.log(Level.ERROR, "Statement hasn't been closed"); */
+            }
+        }
+    }
+
+    protected void close(Connection connection) {
+		/* final Logger logger = LogManager.getLogger(Dao.class); */
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+				/* logger.log(Level.ERROR, "Statement hasn't been closed"); */
+            }
+        }
+    }
 
 	
 }
