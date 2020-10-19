@@ -1,4 +1,4 @@
-package by.svirski.testweb.dao.impl;
+package by.svirski.testweb.dao.abstracts;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.builder.Builder;
 import by.svirski.testweb.bean.builder.impl.UserBuilder;
@@ -20,9 +24,14 @@ import by.svirski.testweb.dao.exception.DaoException;
 
 public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 	
+	private static Logger logger = LogManager.getLogger(AbstractUserDAOImpl.class);
+	
+	
+	
 	public AbstractUserDAOImpl() {	
 	}
-
+	
+	
 	
 	@Override
 	public boolean insert(List<String> parameters, Connection cn, String request) throws DaoException {
@@ -47,13 +56,7 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 			}
 			return true;
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			close(ps);
 		}
 	}
 
@@ -62,6 +65,12 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 	public boolean update(Map<String, String> parameters) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public List<User> selectAll(String request, Connection cn) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -86,13 +95,14 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 				parametersMap.put(UserType.DATE_OF_BIRTH, rs.getString(10));
 				parametersMap.put(UserType.EMAIL, rs.getString(11));
 				parametersMap.put(UserType.PHONE_NUMBER, rs.getString(12));
-				Builder<User> builder = new UserBuilder();
+				Builder<User, UserType> builder = new UserBuilder();
 				User user = builder.build(parametersMap);
 				listOfBeans.add(user);
 			}
 			return listOfBeans;
 		} catch (SQLException e) {
-			throw new DaoException("error in create prepared statement", e);
+			logger.log(Level.ERROR, "ошибка в выполнении запроса");
+			throw new DaoException("ошибка в выполнении запроса", e);
 		} finally {
 			close(ps);
 		}
@@ -145,30 +155,30 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 		return listOfParameters;
 	}
 	
-	public abstract boolean registrateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
-	public abstract User authorizateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 	
 	protected void close(Statement statement) {
-		/* final Logger logger = LogManager.getLogger(Dao.class); */
         if (statement != null) {
             try {
                 statement.close();
+                logger.log(Level.DEBUG, "Statement был закрыт");
             } catch (SQLException e) {
-				/* logger.log(Level.ERROR, "Statement hasn't been closed"); */
+				logger.log(Level.ERROR, "Statement не был закрыт");
             }
         }
     }
 
     protected void close(Connection connection) {
-		/* final Logger logger = LogManager.getLogger(Dao.class); */
         if (connection != null) {
             try {
                 connection.close();
+                logger.log(Level.DEBUG, "Connection был закрыт");
             } catch (SQLException e) {
-				/* logger.log(Level.ERROR, "Statement hasn't been closed"); */
+				logger.log(Level.ERROR, "Connection не был закрыт");
             }
         }
     }
 
+    public abstract boolean registrateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
+    public abstract User authorizateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 	
 }

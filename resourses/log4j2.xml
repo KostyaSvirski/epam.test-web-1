@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
-  <Appenders>
-    <File name="file" fileName="log.log">
-      <PatternLayout>
-        <Pattern>%d %p %c{1.} [%t] %m %ex%n</Pattern>
-      </PatternLayout>
-    </File>
-  </Appenders>
-  <Loggers>
-    <Root level="trace">
-      <AppenderRef ref="file" level="DEBUG"/>
-    </Root>
-    <Logger name="logging.log4j.LoggingLog4j" level="info" additivity="false">
-        <AppenderRef ref="file2" level="INFO"/>
-    </Logger>
-  </Loggers>
-</Configuration> 
+<Configuration status="info">
+    <Properties>
+        <property name="pattern_console">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %level %logger{1} - %msg%n
+        </property>
+        <property name="pattern_file">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %level %logger{5} - %msg%n
+        </property>
+    </Properties>
+    <Appenders>
+        <Console name="console">
+            <PatternLayout pattern="${pattern_console}"/>
+        </Console>
+        <File name="txt_file" filename="D:\java\EPAM\svirski2\test_web_project\log.txt">
+            <PatternLayout pattern="${pattern_file}"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <Appender-ref ref="console" level="debug"/>
+            <Appender-ref ref="txt_file" level="info"/>
+        </Root>
+    </Loggers>
+</Configuration>

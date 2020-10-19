@@ -31,7 +31,7 @@
       />
       <nav>
         <a class="nav" href="#aboutUs">About Us</a>
-        <a class="nav" href="#autopark">Autopark</a>
+        <a class="nav" href="show_cars.jsp">Autopark</a>
         <a class="nav" href="#rent">Rent</a>
         <a class="nav" href="#tariffs">Tariffs</a>
         <a class="nav" href="#carBrands">Car Brands</a>

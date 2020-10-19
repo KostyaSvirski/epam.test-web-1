@@ -4,6 +4,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.svirski.testweb.bean.Gender;
 import by.svirski.testweb.bean.RoleInProject;
 import by.svirski.testweb.bean.User;
@@ -16,7 +20,9 @@ import by.svirski.testweb.util.validator.CustomValidator;
 import by.svirski.testweb.util.validator.impl.DateValidator;
 import by.svirski.testweb.util.validator.impl.PhoneValidator;
 
-public class UserBuilder implements Builder<User> {
+public class UserBuilder implements Builder<User, UserType> {
+	
+	private static Logger logger = LogManager.getLogger(UserBuilder.class);
 
 	public UserBuilder() {
 		// TODO Auto-generated constructor stub
@@ -42,6 +48,7 @@ public class UserBuilder implements Builder<User> {
 				dateOfBirth = parser.parse(parameters.get(UserType.DATE_OF_BIRTH));
 			} catch (CustomParseException e) {
 				dateOfBirth = new GregorianCalendar();
+				logger.log(Level.INFO, "не корректная дата");
 			}
 			user.setDateOfBirth(dateOfBirth);
 		} 
@@ -49,6 +56,7 @@ public class UserBuilder implements Builder<User> {
 		if(validator.validate(parameters.get(UserType.PHONE_NUMBER))) {
 			user.setPhoneNumber(parameters.get(UserType.PHONE_NUMBER));
 		} else {
+			logger.log(Level.INFO, "не корректный номер телефона");
 			user.setPhoneNumber("no phone");
 		}
 		Gender[] genders = Gender.values();
@@ -57,6 +65,7 @@ public class UserBuilder implements Builder<User> {
 				user.setGender(gender);
 			}
 		}
+		logger.log(Level.DEBUG, "построился объект User");
 		return user;
 	}
 

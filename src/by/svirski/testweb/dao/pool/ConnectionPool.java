@@ -1,4 +1,4 @@
-package by.svirski.testweb.dao.connector;
+package by.svirski.testweb.dao.pool;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -10,10 +10,15 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import by.svirski.testweb.dao.exception.ConnectionPoolException;
 
 public final class ConnectionPool {
+	
+	private final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
 	private static final String DB_PROPERTIES = "database";
 	private static final String DB_URL = "url";
@@ -51,50 +56,11 @@ public final class ConnectionPool {
 			}
 
 		} catch (SQLException e) {
-			throw new ConnectionPoolException(e.getMessage(), e);
+			LOGGER.log(Level.FATAL, "Error during connection creating", e);
+			throw new ConnectionPoolException("connection hasn't been created");
 		}
 
 	}
-
-	public ProxyConnection getConnection() throws ConnectionPoolException { 
-		ProxyConnection connection = null;
-		connection = freeConnections.remove();
-		givenConnections.push(connection);
-		return connection;
-	}
-	
-	public void destroyPool() throws ConnectionPoolException {
-        try {
-            for (int i = 0; i < poolSize; i++) {
-                ProxyConnection proxyConnection = freeConnections.take();
-                proxyConnection.reallyClose();
-            }
-            //LOGGER.log(Level.INFO, "Connection pool has been destroyed");
-        } catch (InterruptedException | SQLException e) {
-           // LOGGER.log(Level.ERROR, e);
-            throw new ConnectionPoolException(e);
-        } finally {
-            deregisterDrivers();
-        }
-    }
-
-    private void deregisterDrivers() throws ConnectionPoolException {
-        try {
-            while (DriverManager.getDrivers().hasMoreElements()) {
-                Driver driver = DriverManager.getDrivers().nextElement();
-                DriverManager.deregisterDriver(driver);
-            }
-            //LOGGER.log(Level.INFO, "Drivers have been deregistered");
-        } catch (SQLException e) {
-            throw new ConnectionPoolException(e);
-        }
-    }
-
-	/*
-	 * public boolean returnConnectionIntoPool(Connection connection) { if
-	 * (connection.equals(givenConnections.getFirst())) { givenConnections.remove();
-	 * freeConnections.offer(connection); return true; } return false; }
-	 */
 
 	private static Properties createPropertiesList(ResourceBundle rb) {
 		Properties properties = new Properties();
@@ -108,14 +74,56 @@ public final class ConnectionPool {
 		return properties;
 	}
 
+	public ProxyConnection getConnection() throws ConnectionPoolException { 
+		ProxyConnection connection = null;
+		try {
+			connection = freeConnections.remove();
+			givenConnections.push((ProxyConnection) connection);
+			LOGGER.log(Level.DEBUG, "Connection has been given");
+		} catch (Exception e) {
+			LOGGER.log(Level.ERROR, e);
+			throw new ConnectionPoolException(e);
+		}
+		return connection;			
+	}
+
+	
 	public void releaseConnection(ProxyConnection connection) {
 		if (connection instanceof ProxyConnection
-                && givenConnections.remove(connection)) {
-            freeConnections.offer((ProxyConnection) connection);
-            //LOGGER.log(Level.DEBUG, "Connection has been released");
-        } else {
-            //LOGGER.log(Level.ERROR, "Invalid connection to release");
-        }
+				&& givenConnections.remove(connection)) {
+			freeConnections.offer((ProxyConnection) connection);
+			LOGGER.log(Level.DEBUG, "Connection has been released");
+		} else {
+			LOGGER.log(Level.ERROR, "Invalid connection to release");
+		}
 		
 	}
+	
+	public void destroyPool() throws ConnectionPoolException {
+        try {
+            for (int i = 0; i < poolSize; i++) {
+                ProxyConnection proxyConnection = freeConnections.take();
+                proxyConnection.reallyClose();
+            }
+            LOGGER.log(Level.INFO, "Connection pool has been destroyed");
+        } catch (InterruptedException | SQLException e) {
+            LOGGER.log(Level.ERROR, e);
+        } finally {
+            deregisterDrivers();
+        }
+    }
+
+    private void deregisterDrivers() throws ConnectionPoolException {
+        try {
+            while (DriverManager.getDrivers().hasMoreElements()) {
+                Driver driver = DriverManager.getDrivers().nextElement();
+                DriverManager.deregisterDriver(driver);
+            }
+            LOGGER.log(Level.INFO, "Drivers have been deregistered");
+        } catch (SQLException e) {
+        	LOGGER.log(Level.ERROR, "Drivers haven't been deregistered");
+            throw new ConnectionPoolException(e);
+        }
+    }
+
 }

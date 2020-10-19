@@ -1,22 +1,20 @@
-package by.svirski.testweb.dao.impl;
+package by.svirski.testweb.dao.abstracts.realisation;
 
-import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import by.svirski.testweb.dao.SystemDao;
-import by.svirski.testweb.dao.connector.ConnectionPool;
 import by.svirski.testweb.dao.exception.ConnectionPoolException;
 import by.svirski.testweb.dao.exception.DaoException;
+import by.svirski.testweb.dao.pool.ConnectionPool;
 
 public class SystemDAOImpl implements SystemDao {
 
 	private static final String REQUEST_COUNT_USERS = "select (id) from users";
 
 	public SystemDAOImpl() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

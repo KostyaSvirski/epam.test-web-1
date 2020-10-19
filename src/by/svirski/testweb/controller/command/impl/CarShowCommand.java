@@ -3,6 +3,7 @@ package by.svirski.testweb.controller.command.impl;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -10,13 +11,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import by.svirski.testweb.bean.Car;
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
 import by.svirski.testweb.controller.command.ActionCommand;
+import by.svirski.testweb.service.CustomCarService;
+import by.svirski.testweb.service.ServiceFactory;
+import by.svirski.testweb.service.exception.ServiceException;
 
-public class CarClassShowCommand implements ActionCommand{
+public class CarShowCommand implements ActionCommand{
+	
+	private final static String PATH_TO_CARS = "/cars.jsp";
+	private final static String PATH_TO_ERROR = "/error_page.jsp";
 
-	public CarClassShowCommand() {
+	public CarShowCommand() {
 		
 	}
 
@@ -25,6 +33,17 @@ public class CarClassShowCommand implements ActionCommand{
 			throws UnsupportedEncodingException, IOException, ServletException {
 		Map<TypeOfParameters.CarType, String> parametersMap = new HashMap<TypeOfParameters.CarType, String>();
 		parametersMap = putParametersIntoMap(parametersMap, request);
+		ServiceFactory factory = ServiceFactory.getInstance();
+		CustomCarService service = factory.getCarService();
+		try {
+			List<Car> listOfBeans = service.showCars(parametersMap);
+			request.setAttribute("cars", listOfBeans);
+			request.getServletContext().getRequestDispatcher(PATH_TO_CARS).forward(request, response);
+		} catch (ServiceException e) {
+			request.setAttribute("type_error", e);
+			request.getServletContext().getRequestDispatcher(PATH_TO_ERROR).forward(request, response);
+		}
+		
 		
 	}
 
@@ -42,6 +61,5 @@ public class CarClassShowCommand implements ActionCommand{
 		}
 		return parametersMap;
 	}
-
 	
 }

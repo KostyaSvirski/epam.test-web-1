@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.svirski.testweb.controller.command.ActionCommand;
-import by.svirski.testweb.service.CustomSiteService;
+import by.svirski.testweb.service.CustomSystemService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
@@ -27,7 +27,7 @@ public class CountUsersCommand implements ActionCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {
 		ServiceFactory factory = ServiceFactory.getInstance();
-		CustomSiteService siteService = factory.getSiteService();
+		CustomSystemService siteService = factory.getSiteService();
 		int countUsers = 0;
 		try {
 			countUsers = siteService.countUsers();

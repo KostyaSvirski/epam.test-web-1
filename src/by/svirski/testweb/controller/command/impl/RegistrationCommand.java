@@ -9,6 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.controller.command.ActionCommand;
@@ -17,6 +21,8 @@ import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
 public class RegistrationCommand implements ActionCommand {
+	
+	private static Logger logger = LogManager.getLogger(RegistrationCommand.class);
 
 	private static final String PASS_TO_SIGN_IN = "/sign_in.jsp";
 	private static final String PASS_TO_ERROR = "/error_page.jsp";
@@ -49,6 +55,7 @@ public class RegistrationCommand implements ActionCommand {
 		String pass = Integer.toString(encryptPassword(request.getParameter(PASSWORD)));
 		String repeatPass = Integer.toString(encryptPassword(request.getParameter(REPEAT_PASSWORD)));
 		if(!repeatPass.equalsIgnoreCase(pass)) {
+			logger.log(Level.INFO, "пароли не совпадают");
 			request.setAttribute(COLLOR, "red");
 			request.setAttribute(MESSAGE, "пароли не совпадают");
 			request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);

@@ -3,12 +3,12 @@ package by.svirski.testweb.service.impl;
 import by.svirski.testweb.dao.DaoFactory;
 import by.svirski.testweb.dao.SystemDao;
 import by.svirski.testweb.dao.exception.DaoException;
-import by.svirski.testweb.service.CustomSiteService;
+import by.svirski.testweb.service.CustomSystemService;
 import by.svirski.testweb.service.exception.ServiceException;
 
-public class SiteServiceImpl implements CustomSiteService{
+public class SystemServiceImpl implements CustomSystemService{
 
-	public SiteServiceImpl() {
+	public SystemServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
 

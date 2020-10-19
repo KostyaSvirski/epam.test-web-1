@@ -6,8 +6,8 @@ import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.dao.DaoFactory;
+import by.svirski.testweb.dao.abstracts.AbstractUserDAOImpl;
 import by.svirski.testweb.dao.exception.DaoException;
-import by.svirski.testweb.dao.impl.AbstractUserDAOImpl;
 import by.svirski.testweb.service.CustomUserService;
 import by.svirski.testweb.service.exception.ServiceException;
 

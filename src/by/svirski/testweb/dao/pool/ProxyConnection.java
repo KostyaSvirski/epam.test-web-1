@@ -1,4 +1,4 @@
-package by.svirski.testweb.dao.connector;
+package by.svirski.testweb.dao.pool;
 
 import java.sql.*;
 import java.util.Map;
