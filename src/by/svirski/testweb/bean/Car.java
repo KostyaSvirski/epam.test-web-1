@@ -58,23 +58,23 @@ public class Car implements BeanIndicator {
 		return acceleration;
 	}
 
-	public DriveUnit getDriveUnit() {
-		return driveUnit;
+	public String getDriveUnit() {
+		return driveUnit.toString();
 	}
 
-	public Fuel getFuel() {
-		return fuel;
+	public String getFuel() {
+		return fuel.toString();
 	}
 
-	public long getCost() {
-		return cost;
+	public String getCost() {
+		return String.valueOf(cost);
 	}
 
 	public String getImage() {
 		return image;
 	}
 
-	public boolean isBooked() {
+	public boolean getIsBooked() {
 		return isBooked;
 	}
 

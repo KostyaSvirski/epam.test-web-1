@@ -47,19 +47,23 @@
 					<b>${car.brand} ${car.model}</b>
 				</p>
 				<p>Class: ${car.carClass}</p>
-				<p>Power: ${car.power}</p>
+				<p>Power: ${car.power} hp</p>
 				<p>Engine: ${car.engine}</p>
-				<p>Acceleration: ${car.acceleration}</p>
-				<p>Drive unit: {car.driveUnit}</p>
-				<p>Fuel: {car.fuel}</p>
-				<p>Cost: {car.cost}</p>
+				<p>Acceleration: ${car.acceleration} seconds</p>
+				<p>Drive unit: ${car.driveUnit}</p>
+				<p>Fuel: ${car.fuel}</p>
+				<p>Cost: ${car.cost} $</p>
 				<div class="all_button">
 					<c:if test="${sessionScope.user.login != null}">
-						<a href="#rent" class="button">RENT</a> 
+						<c:if test="${car.isBooked == true}">
+							<p>this car is already booked</p>
+						</c:if>
+						<c:if test="${car.isBooked == false}">
+							<a href="#rent" class="button">RENT</a> 
+						</c:if>
 					</c:if>
 					<c:if test="${sessionScope.user.login == null}">
 						<p>sign in please to rent</p>
-						<a href="sign_in.jsp" class="button">Sign in</a>
 					</c:if>
 					<a href="#detail" class="button">DETAIL</a>
 				</div>

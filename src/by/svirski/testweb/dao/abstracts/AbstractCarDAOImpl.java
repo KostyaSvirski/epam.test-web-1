@@ -7,8 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +25,7 @@ import by.svirski.testweb.dao.BeanDao;
 import by.svirski.testweb.dao.exception.DaoException;
 
 public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
-	
+
 	private static Logger logger = LogManager.getLogger(AbstractCarDAOImpl.class);
 
 	public AbstractCarDAOImpl() {
@@ -68,7 +70,8 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
 				ResultSet rs = ps.executeQuery();
 				List<Car> carList = new ArrayList<Car>();
 				Builder<Car, CarType> builder = new CarBuilder();
-				while(rs.next()) {
+				//Car carPrev = null;
+				while (rs.next()) {
 					Map<CarType, String> parametersMap = new HashMap<TypeOfParameters.CarType, String>();
 					parametersMap.put(CarType.BRAND, rs.getString(1));
 					parametersMap.put(CarType.MODEL, rs.getString(2));
@@ -82,6 +85,7 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
 					parametersMap.put(CarType.IMG, rs.getString(10));
 					parametersMap.put(CarType.IS_BOOCKED, Boolean.toString(rs.getBoolean(11)));
 					Car car = builder.build(parametersMap);
+					//carPrev = car;
 					carList.add(car);
 				}
 				return carList;
@@ -93,28 +97,28 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
 			close(ps);
 		}
 	}
-	
-	protected void close(Statement statement) {
-        if (statement != null) {
-            try {
-                statement.close();
-                logger.log(Level.DEBUG, "Statement был закрыт");
-            } catch (SQLException e) {
-				logger.log(Level.ERROR, "Statement не был закрыт");
-            }
-        }
-    }
 
-    protected void close(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-                logger.log(Level.DEBUG, "Connection был закрыт");
-            } catch (SQLException e) {
+	protected void close(Statement statement) {
+		if (statement != null) {
+			try {
+				statement.close();
+				logger.log(Level.DEBUG, "Statement был закрыт");
+			} catch (SQLException e) {
+				logger.log(Level.ERROR, "Statement не был закрыт");
+			}
+		}
+	}
+
+	protected void close(Connection connection) {
+		if (connection != null) {
+			try {
+				connection.close();
+				logger.log(Level.DEBUG, "Connection был закрыт");
+			} catch (SQLException e) {
 				logger.log(Level.ERROR, "Connection не был закрыт");
-            }
-        }
-    }
+			}
+		}
+	}
 
 	public abstract List<Car> showAllCars() throws DaoException;
 }

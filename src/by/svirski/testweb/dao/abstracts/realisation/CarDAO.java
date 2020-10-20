@@ -18,8 +18,8 @@ public class CarDAO extends AbstractCarDAOImpl {
 	private static Logger logger = LogManager.getLogger(CarDAO.class);
 
 	private static final String SQL_REQUEST_ALL_CARS_SHOW = 
-			"select brand, model, class, power, engine, acceleration, drive_unit, fuel, cost, img, is_booked from car"
-			+ "join book_list on book_list.id_car";
+			"select brand, model, class, power, engine, acceleration, drive_unit, fuel, cost, img, is_booked from car "
+			+ "left join book_list on book_list.id_car = car.id_car";
 
 	public CarDAO() {
 		// TODO Auto-generated constructor stub

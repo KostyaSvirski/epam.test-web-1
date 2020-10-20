@@ -61,7 +61,7 @@ public class UserBuilder implements Builder<User, UserType> {
 		}
 		Gender[] genders = Gender.values();
 		for(Gender gender : genders) {
-			if(gender.toString().equalsIgnoreCase(parameters.get(UserType.GENDER))) {
+			if(gender.name().equalsIgnoreCase(parameters.get(UserType.GENDER))) {
 				user.setGender(gender);
 			}
 		}

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import by.svirski.testweb.bean.Car;
 import by.svirski.testweb.dao.exception.DaoException;
 
 public interface BeanDao<T> {

@@ -84,8 +84,8 @@ public class User implements BeanIndicator{
 		return phoneNumber;
 	}
 
-	public Gender getGender() {
-		return gender;
+	public String getGender() {
+		return gender.toString();
 	}
 
 	public void setLogin(String login) {
