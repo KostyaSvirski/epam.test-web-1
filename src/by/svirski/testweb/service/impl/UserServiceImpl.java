@@ -42,8 +42,21 @@ public class UserServiceImpl implements CustomUserService{
 		}
 		
 		return user;
-		
 	}
 
+	@Override
+	public User editUser(Map<UserType, String> parameters) throws ServiceException {
+		DaoFactory factory = DaoFactory.getInstance();
+		AbstractUserDAOImpl dao = factory.getUserDao();
+		User updatedUser = null;
+		try {
+			updatedUser = dao.editUser(parameters);
+		} catch (DaoException e) {
+			throw new ServiceException(e); 
+		}
+		return updatedUser;
+	}
+
+	
 	
 }

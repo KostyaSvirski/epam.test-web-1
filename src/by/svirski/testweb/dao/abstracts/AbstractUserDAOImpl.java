@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -23,16 +22,12 @@ import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.dao.BeanDao;
 import by.svirski.testweb.dao.exception.DaoException;
 
-public abstract class AbstractUserDAOImpl implements BeanDao<User> {
+public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 	
 	private static Logger logger = LogManager.getLogger(AbstractUserDAOImpl.class);
 	
-	
-	
 	public AbstractUserDAOImpl() {	
 	}
-	
-	
 	
 	@Override
 	public boolean insert(List<String> parameters, Connection cn, String request) throws DaoException {
@@ -63,15 +58,26 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 
 
 	@Override
-	public boolean update(Map<String, String> parameters) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	@Override
-	public List<User> selectAll(String request, Connection cn) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean update(Map<UserType, String> parameters, String request, Connection cn) throws DaoException {
+		PreparedStatement ps = null;
+		try {
+			ps = cn.prepareStatement(request);
+			ps.setString(1, parameters.get(UserType.NAME));
+			ps.setString(2, parameters.get(UserType.SURNAME));
+			ps.setString(3, parameters.get(UserType.GENDER));
+			ps.setString(4, parameters.get(UserType.PASSPORT_ID));
+			ps.setString(5, parameters.get(UserType.PASSPORT_NUMBER));
+			ps.setString(6, parameters.get(UserType.DATE_OF_BIRTH));
+			ps.setString(7, parameters.get(UserType.PHONE_NUMBER));
+			ps.setString(8, parameters.get(UserType.ID));
+			int result = ps.executeUpdate();
+			return (result == -1) ? false : true;
+		} catch (SQLException e) {
+			throw new DaoException("error in creating PreparedStatement");		
+		} finally {
+			close(ps);
+		}
+
 	}
 
 	@Override
@@ -181,5 +187,6 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User> {
 
     public abstract boolean registrateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
     public abstract User authorizateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
+    public abstract User editUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 	
 }

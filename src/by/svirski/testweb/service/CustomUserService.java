@@ -10,4 +10,5 @@ public interface CustomUserService {
 	
 	boolean registrate(Map<TypeOfParameters.UserType, String> parameters) throws ServiceException;
 	User authorize(Map<TypeOfParameters.UserType, String> parameters) throws ServiceException;
+	User editUser(Map<TypeOfParameters.UserType, String> parameters) throws ServiceException;
 }

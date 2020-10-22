@@ -22,14 +22,14 @@
 	<main>
 	<h1 class="main_text">AUTHORITHATION</h1>
 	<div>
-	<form class="decor" action="MainController" method="GET">
+	<form class="decor" action="MainController" method="POST">
 		<div class="form-left-decoration"></div>
 		<div class="form-right-decoration"></div>
 		<div class="circle"></div>
 		<div class="form-inner">
 		<input type="hidden" name="command" value="authorization_command"> 
-		<input type="email" placeholder="Login" name="login">
-		<input type="password" placeholder="Password" name="pass">
+		<input type="email" placeholder="Login" name="login" required>
+		<input type="password" placeholder="Password" name="pass" required>
 		<input type="submit" value = "SIGN IN">
 		<p style="color: ${collor}; text-align: center">${message}</p>
 	</div>

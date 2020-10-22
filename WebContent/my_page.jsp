@@ -49,7 +49,7 @@
               <p>Date of birth: ${sessionScope.user.dateOfBirth}</p>
               <p>Phone: ${sessionScope.user.phoneNumber}</p>
             </div>
-            <a href = "#edit" class="button"> EDIT </a>
+            <a href = "edit_user.jsp" class="button"> EDIT </a>
             <a href = "log_out.jsp" class="button"> LOG OUT </a>
           </div>
          </section>

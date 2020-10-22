@@ -29,19 +29,19 @@
 
 		<div class="form-inner">
 		<input type="hidden" name="command" value="registration_command">
-		<input type="email" placeholder="Email" name="login">
-		<input type="password" placeholder="Password" name="pass">
-		<input type="password" placeholder="Repeat password" name="pass_repeat">
-		<input type="text" placeholder="Surname" name="surname">
-		<input type="text" placeholder="Name" name="name">
+		<input type="email" placeholder="Email" name="login" required>
+		<input type="password" placeholder="Password" name="pass" required>
+		<input type="password" placeholder="Repeat password" name="pass_repeat" required>
+		<input type="text" placeholder="Surname" name="surname" required>
+		<input type="text" placeholder="Name" name="name" required>
 		<div class="radio">
-			<input type="radio" name="gender" value="male">Male
+			<input type="radio" name="gender" value="male" checked>Male
 			<input type="radio" name="gender" value="female">Female<br>
 		</div>
-		<input type="text" placeholder="Passport id" name="passport_id">
-		<input type="text" placeholder="Passport number" name="passport_number">
-		<input type="text" placeholder="Date of birth DD.MM.YYYY" name="date_of_birth">
-		<input type="text" placeholder="Phone +123456789" name="phone">
+		<input type="text" placeholder="Passport id" name="passport_id" required>
+		<input type="text" placeholder="Passport number" name="passport_number" required>
+		<input type="text" placeholder="Date of birth DD.MM.YYYY" name="date_of_birth" required>
+		<input type="text" placeholder="Phone +123456789" name="phone" required>
 		<input type="submit" value = "SIGN UP">
 		<p style="color: ${collor}; text-align: center">${message}</p>
 	</div>

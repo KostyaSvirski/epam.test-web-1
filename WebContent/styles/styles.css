@@ -7,10 +7,10 @@ footer {
   background-color: black;
 }
 .header {
-	position: fixed;
-	z-index:4;
-	width:100%;
+  position: fixed;
+  z-index: 4;
   display: flex;
+  width: 100%;
   height: 12vh;
 }
 .logo {
@@ -29,7 +29,7 @@ nav {
   margin: 1.5vh 0vh 0vh 0vh;
   padding: 3vh 0vh;
   transition: all 0.3s;
-  width: 14.5%;
+  width: 16.6%;
   font-size: 1.1875rem;
   font-family: "Inconsolata", monospace;
   color: #f2f4f4;
@@ -41,6 +41,8 @@ nav {
 
 .main {
   overflow: hidden;
+  align-items: center;
+  justify-content: center;
   position: relative;
   background: url(https://images7.alphacoders.com/330/330793.jpg) center
     no-repeat;
@@ -60,6 +62,50 @@ nav {
   background: rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
+.main a {
+  margin-top: 45px;
+  display: inline-block;
+  width: 30px;
+  box-sizing: content-box;
+  color: #000000;
+  background-color: #ffffff;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 12px;
+  padding: 1.5vh 3vh;
+  white-space: nowrap;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+  font-family: "Inconsolata", monospace;
+  font-family: "Roboto Slab", serif;
+  display: block;
+}
+.en_ru {
+  display: flex;
+  margin: 0vh 45%;
+}
+.sign-in {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  border-radius: 50px 0px 0px 50px;
+  margin-right: -3px;
+  border-right: 1px solid #000;
+}
+.sign-up {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  border-radius: 0px 50px 50px 0px;
+  margin-left: -3px;
+  border-left: 1px solid #000;
+}
+.main a:hover {
+  color: white;
+  background-color: #000;
+}
 .main_text {
   position: relative;
   z-index: 3;
@@ -69,7 +115,7 @@ nav {
   color: #f2f4f4;
   font-size: 3.125rem;
   text-align: center;
-  margin: 17% 0% 0% 0%;
+  margin: 20% 0% 0% 0%;
 }
 .main_text2 {
   position: relative;
@@ -81,6 +127,7 @@ nav {
   text-align: center;
   text-decoration: underline;
 }
+
 .main_text3 {
   position: relative;
   z-index: 3;
@@ -119,56 +166,82 @@ iframe {
   padding: 1vh 1vh;
 }
 
-.autopark {
-  font-family: "Roboto Slab", serif;
-  background-color: white;
+.container {
+  max-width: 1200px;
   width: 100%;
-  height: 140vh;
-  display: table;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  overflow: hidden;
+  margin: 0 auto;
 }
-#autopark_h2 {
+.categories h2 {
   font-family: "Roboto Slab", serif;
   text-align: center;
   padding: 0vh;
 }
-.row {
-  display: table-cell;
-  align-items: center;
+.cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding-bottom: 50px;
 }
-.types_of_cars {
-  margin: 0vh;
-  padding: 3vh;
-  width: 100%;
-}
-.autopark_p {
-  text-decoration: none;
+.card {
+  margin-bottom: 4vh;
   text-align: center;
+  cursor: pointer;
+}
+
+.card a {
+  text-decoration: none;
+}
+
+.card h3 {
+  padding: 10px 0 0 0;
   font-size: 1.5625rem;
-  font-family: "Inconsolata", monospace;
-  color: black;
+  line-height: 1.23;
+  font-family: "Roboto Slab", serif;
+  font-weight: 300;
+  color: #000;
 }
-.autopark_p:hover {
-  text-decoration: underline;
-  color: #f25a14;
-}
-.cars_PH {
-  width: auto;
-  height: 100%;
-  margin: 0vh 0vh 0vh 18vh;
+
+.card img {
+  max-width: 460px;
+  width: 100%;
+  height: auto;
   opacity: 0.85;
-  -moz-transition: all 0.7s ease-out;
-  -o-transition: all 0.7s ease-out;
-  -webkit-transition: all 0.7s ease-out;
 }
-.cars_PH:hover {
+
+.card:hover img {
+  transform: scale(1.15);
   opacity: 1;
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  -o-transform: scale(1.1);
+  transition: 450ms;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.card:hover h3 {
+  transition: 450ms;
+  transform: translateY(50px);
+}
+
+.button {
+  position: relative;
+  z-index: 3;
+  display: block;
+  width: 30%;
+  padding: 0px 20px;
+  margin-bottom: 5vh;
+  line-height: 6vh;
+  border-width: 0;
+  border-radius: 30px;
+  font-family: "Inconsolata", monospace;
+  font-family: "Roboto Slab", serif;
+  margin-top: 10px;
+  background: #dc7633;
+  border-bottom: 4px solid #f25a14;
+  color: white;
+  font-size: 19px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .rent {
@@ -288,25 +361,6 @@ iframe {
   font-size: 1.3125rem;
 }
 
-.tariffs {
-  background-color: black;
-  overflow: hidden;
-  text-align: center;
-  padding: 20px 10px;
-  font-family: "Roboto Slab", serif;
-  color: #dc7633;
-}
-#tariffs_a {
-  text-decoration: none;
-  font-family: "Roboto Slab", serif;
-  color: #707071;
-}
-#tariffs_a:hover {
-  text-decoration: underline;
-  color: #dc7633;
-  font-size: 120%;
-}
-
 .list3b {
   position: relative;
   z-index: 3;
@@ -389,10 +443,13 @@ iframe {
   background: rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
-#carBrands_h2 {
+.carBrands h2 {
   position: relative;
   z-index: 3;
   font-family: "Roboto Slab", serif;
+  background-color: black;
+  margin: 0;
+  padding: 3vh;
   color: #f25a14;
   text-align: center;
   font-size: 1.5625rem;
@@ -443,10 +500,4 @@ footer {
 .t-sociallinks__svg {
   margin: 0vh 1vh;
   display: block;
-}
-/*#rights {
-  font-family: "Inconsolata", monospace;
-  font-family: "Roboto Slab", serif;
-  font-size: 0.875rem;
-
 }

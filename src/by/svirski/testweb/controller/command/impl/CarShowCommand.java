@@ -2,7 +2,7 @@ package by.svirski.testweb.controller.command.impl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,19 +19,20 @@ import by.svirski.testweb.service.CustomCarService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
-public class CarShowCommand implements ActionCommand{
-	
+public class CarShowCommand implements ActionCommand {
+
 	private final static String PATH_TO_CARS = "/cars.jsp";
 	private final static String PATH_TO_ERROR = "/error_page.jsp";
 
 	public CarShowCommand() {
-		
+
 	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {
-		Map<TypeOfParameters.CarType, String> parametersMap = new HashMap<TypeOfParameters.CarType, String>();
+		Map<TypeOfParameters.CarType, String> parametersMap = new EnumMap<TypeOfParameters.CarType, String>(
+				TypeOfParameters.CarType.class);
 		parametersMap = putParametersIntoMap(parametersMap, request);
 		ServiceFactory factory = ServiceFactory.getInstance();
 		CustomCarService service = factory.getCarService();
@@ -43,17 +44,16 @@ public class CarShowCommand implements ActionCommand{
 			request.setAttribute("type_error", e);
 			request.getServletContext().getRequestDispatcher(PATH_TO_ERROR).forward(request, response);
 		}
-		
-		
+
 	}
 
 	private Map<CarType, String> putParametersIntoMap(Map<CarType, String> parametersMap, HttpServletRequest request) {
 		Map<String, String[]> parametersFromPage = request.getParameterMap();
 		CarType[] carTypeValues = CarType.values();
-		for(Entry<String, String[]> entry : parametersFromPage.entrySet()) {
-			if(entry.getValue() != null && !entry.getValue()[0].isBlank() && !entry.getValue()[0].isEmpty()) {
-				for(CarType type : carTypeValues) {
-					if(type.name().equalsIgnoreCase(entry.getValue()[0])) {
+		for (Entry<String, String[]> entry : parametersFromPage.entrySet()) {
+			if (entry.getValue() != null && !entry.getValue()[0].isBlank() && !entry.getValue()[0].isEmpty()) {
+				for (CarType type : carTypeValues) {
+					if (type.name().equalsIgnoreCase(entry.getKey())) {
 						parametersMap.put(type, entry.getValue()[0]);
 					}
 				}
@@ -61,5 +61,5 @@ public class CarShowCommand implements ActionCommand{
 		}
 		return parametersMap;
 	}
-	
+
 }

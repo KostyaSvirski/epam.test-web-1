@@ -7,10 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +22,7 @@ import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
 import by.svirski.testweb.dao.BeanDao;
 import by.svirski.testweb.dao.exception.DaoException;
 
-public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
+public abstract class AbstractCarDAOImpl implements BeanDao<Car, CarType> {
 
 	private static Logger logger = LogManager.getLogger(AbstractCarDAOImpl.class);
 
@@ -39,29 +37,22 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
 	}
 
 	@Override
-	public boolean update(Map<String, String> parameters) {
+	public boolean update(Map<CarType, String> parameters, String request, Connection cn) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public List<Car> select(List<String> parameters, String request, Connection cn) throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean delete(Map<String, String> parameters) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<Car> selectAll(String request, Connection cn) throws DaoException {
 		PreparedStatement ps = null;
 		try {
 			try {
 				ps = cn.prepareStatement(request);
+				if (parameters != null) {
+					for (int i = 1; i <= parameters.size(); i++) {
+						ps.setString(i, parameters.get(i - 1));
+					}
+				}
 			} catch (SQLException e) {
 				logger.log(Level.ERROR, "ошибка при создании PreparedStatement");
 				throw new DaoException("ошибка при создании PreparedStatement");
@@ -70,7 +61,6 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
 				ResultSet rs = ps.executeQuery();
 				List<Car> carList = new ArrayList<Car>();
 				Builder<Car, CarType> builder = new CarBuilder();
-				//Car carPrev = null;
 				while (rs.next()) {
 					Map<CarType, String> parametersMap = new HashMap<TypeOfParameters.CarType, String>();
 					parametersMap.put(CarType.BRAND, rs.getString(1));
@@ -85,7 +75,6 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
 					parametersMap.put(CarType.IMG, rs.getString(10));
 					parametersMap.put(CarType.IS_BOOCKED, Boolean.toString(rs.getBoolean(11)));
 					Car car = builder.build(parametersMap);
-					//carPrev = car;
 					carList.add(car);
 				}
 				return carList;
@@ -96,7 +85,16 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
 		} finally {
 			close(ps);
 		}
+
+		
 	}
+
+	@Override
+	public boolean delete(Map<String, String> parameters) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 	protected void close(Statement statement) {
 		if (statement != null) {
@@ -121,4 +119,5 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car> {
 	}
 
 	public abstract List<Car> showAllCars() throws DaoException;
+	public abstract List<Car> showBrandOrClassCars(Map<CarType, String> parametersMap) throws DaoException;
 }

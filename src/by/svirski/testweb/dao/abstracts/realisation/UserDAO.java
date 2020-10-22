@@ -21,7 +21,7 @@ import by.svirski.testweb.dao.exception.DaoException;
 import by.svirski.testweb.dao.pool.ConnectionPool;
 
 public class UserDAO extends AbstractUserDAOImpl {
-	
+
 	private final Logger LOGGER = LogManager.getLogger(UserDAO.class);
 
 	private static final String REGISTRATE_USER_MAIN = "INSERT INTO USERS (login, password) VALUES (?, ?)";
@@ -32,12 +32,15 @@ public class UserDAO extends AbstractUserDAOImpl {
 	private static final String REGISTRATE_ROLE = "insert into role_in_project (id, role) values (?, ?)";
 	private static final String CHECK_REGISTRATION = "select (id) from users where login = ? and password = ?";
 	private static final String SELECT_USER = "select * from users join personal on personal.id_user = users.id where login = ? and password = ?";
+	private static final String SELECT_USER_BY_ID = "select * from users join personal on personal.id_user = users.id where users.id=?";
+
+	private static final String UPDATE_USER = "update personal join users on personal.id_user = users.id set personal.name=?,"
+			+ " personal.surname=?, personal.gender=?, personal.passport_id=?, "
+			+ "personal.passport_number=?, personal.date_of_birth=?, personal.phone=? where users.id=?";
 
 	public UserDAO() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 	@Override
 	public User authorizateUser(Map<UserType, String> parameters) throws DaoException {
@@ -59,10 +62,11 @@ public class UserDAO extends AbstractUserDAOImpl {
 				List<User> foundList = select(listOfParametersForRequest, SELECT_USER, cn);
 				if (foundList.size() == 1) {
 					user = (User) foundList.get(0);
+					user.setId(position);
 					LOGGER.log(Level.DEBUG, "пользователь найден");
-				} else if (foundList.size() > 1) {
-					LOGGER.log(Level.ERROR, "найдено более одного пользователя");
-					throw new DaoException("найдено более одного пользователя");
+				} else if (foundList.size() > 1 || foundList.isEmpty()) {
+					LOGGER.log(Level.ERROR, "найдено более одного или ни одного пользователя");
+					throw new DaoException("найдено более одного или ни одного пользователя");
 				}
 			}
 			return user;
@@ -107,6 +111,42 @@ public class UserDAO extends AbstractUserDAOImpl {
 			boolean isStatusRegistrated = insert(listOfParamters, cn, REGISTRATE_STATUS);
 			LOGGER.log(Level.DEBUG, "зарегистрирован статус");
 			return (isMainRegistrate && isPersonalRegistrated && isRoleRegistated && isStatusRegistrated);
+		} finally {
+			close(cn);
+		}
+	}
+
+	//TODO 22.10.2000 23:00 impossible to update user twice and more  
+	@Override
+	public User editUser(Map<UserType, String> parameters) throws DaoException {
+		User user = null;
+		Connection cn = null;
+		try {
+			try {
+				cn = ConnectionPool.getInstance().getConnection();
+			} catch (ConnectionPoolException e) {
+				throw new DaoException(e);
+			}	
+			boolean resultUpdate = update(parameters, UPDATE_USER, cn);
+			List<String> parametersList = new ArrayList<String>();
+			parametersList.add(parameters.get(UserType.ID));
+			if (resultUpdate) {
+				List<User> foundList = select(parametersList, SELECT_USER_BY_ID, cn);
+				if (foundList.size() == 1) {
+					user = (User) foundList.get(0);
+					LOGGER.log(Level.DEBUG, "пользователь найден");
+				} else if (foundList.size() > 1) {
+					LOGGER.log(Level.ERROR, "найдено более одного пользователя");
+					throw new DaoException("найдено более одного пользователя");
+				} else if(foundList.isEmpty()) {
+					LOGGER.log(Level.ERROR, "найдено ни одного пользователя");
+					throw new DaoException("найдено ни одного пользователя");
+				}
+			} else {
+				LOGGER.log(Level.ERROR, "пользователь не может быть изменен");
+				throw new DaoException("пользователь не может быть изменен");
+			}
+			return user;
 		} finally {
 			close(cn);
 		}

@@ -21,7 +21,7 @@ import by.svirski.testweb.util.validator.impl.DateValidator;
 import by.svirski.testweb.util.validator.impl.PhoneValidator;
 
 public class UserBuilder implements Builder<User, UserType> {
-	
+
 	private static Logger logger = LogManager.getLogger(UserBuilder.class);
 
 	public UserBuilder() {
@@ -41,7 +41,7 @@ public class UserBuilder implements Builder<User, UserType> {
 		user.setPassportId(parameters.get(UserType.PASSPORT_ID));
 		user.setPassportNumber(parameters.get(UserType.PASSPORT_NUMBER));
 		CustomValidator validator = new DateValidator();
-		if(validator.validate(parameters.get(UserType.DATE_OF_BIRTH))) {
+		if (validator.validate(parameters.get(UserType.DATE_OF_BIRTH))) {
 			CustomParser<Calendar> parser = new DateParser();
 			Calendar dateOfBirth = null;
 			try {
@@ -51,17 +51,18 @@ public class UserBuilder implements Builder<User, UserType> {
 				logger.log(Level.INFO, "не корректная дата");
 			}
 			user.setDateOfBirth(dateOfBirth);
-		} 
+		}
 		validator = new PhoneValidator();
-		if(validator.validate(parameters.get(UserType.PHONE_NUMBER))) {
+		if (validator.validate(parameters.get(UserType.PHONE_NUMBER))) {
 			user.setPhoneNumber(parameters.get(UserType.PHONE_NUMBER));
 		} else {
 			logger.log(Level.INFO, "не корректный номер телефона");
 			user.setPhoneNumber("no phone");
 		}
 		Gender[] genders = Gender.values();
-		for(Gender gender : genders) {
-			if(gender.name().equalsIgnoreCase(parameters.get(UserType.GENDER))) {
+		for (Gender gender : genders) {
+			if (gender.name().equalsIgnoreCase(parameters.get(UserType.GENDER))
+					|| gender.toString().equalsIgnoreCase(parameters.get(UserType.GENDER))) {
 				user.setGender(gender);
 			}
 		}
@@ -69,5 +70,4 @@ public class UserBuilder implements Builder<User, UserType> {
 		return user;
 	}
 
-	
 }

@@ -9,7 +9,8 @@ public enum TypeOfCommand {
 	LOG_OUT_COMMAND(new LogOutCommand()),
 	INCORRECT_COMMAND(new IncorrectCommand()),
 	COUNT_USERS_COMMAND(new CountUsersCommand()),
-	SHOW_CARS_COMMAND(new CarShowCommand());
+	SHOW_CARS_COMMAND(new CarShowCommand()),
+	EDIT_INFO_COMMAND(new EditInfoCommand());
 	
 	private ActionCommand command;
 

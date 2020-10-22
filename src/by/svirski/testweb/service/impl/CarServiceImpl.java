@@ -21,17 +21,17 @@ public class CarServiceImpl implements CustomCarService {
 	public List<Car> showCars(Map<CarType, String> parametersMap) throws ServiceException {
 		DaoFactory factory = DaoFactory.getInstance();
 		AbstractCarDAOImpl carDao = factory.getCarDao();
-		if(parametersMap.isEmpty()) {
-			try {
-				List<Car> carList = carDao.showAllCars();
-				return carList;
-			} catch (DaoException e) {
-				throw new ServiceException("ошибка в дао");
-			}			
-		} 
-		return null;
+		try {
+			List<Car> carList = null;
+			if (parametersMap.isEmpty()) {
+				carList = carDao.showAllCars();
+			} else {
+				carList = carDao.showBrandOrClassCars(parametersMap);
+			}
+			return carList;
+		} catch (DaoException e) {
+			throw new ServiceException("ошибка в дао");
+		}
 	}
-
-
 
 }

@@ -31,7 +31,7 @@
       />
       <nav>
         <a class="nav" href="#aboutUs">About Us</a>
-        <a class="nav" href="show_cars.jsp">Autopark</a>
+        <a class="nav" href="#autopark">Autopark</a>
         <a class="nav" href="#rent">Rent</a>
         <a class="nav" href="#tariffs">Tariffs</a>
         <a class="nav" href="#carBrands">Car Brands</a>
@@ -56,6 +56,10 @@
 	        <p class="main_text3">hello, ${sessionScope.user.name} ${sessionScope.user.surname}</p>    
         </c:if>
         <p class="main_text3">current count of users: ${count}</p> 
+        <div class="en_ru">
+          <a class="sign-in" href="#">En</a>
+          <a class="sign-up" href="#">Ru</a>
+        </div>
       </section>
 
       <section class="about_us" id="aboutUs">
@@ -80,48 +84,37 @@
         ></iframe>
       </section>
       
-    <section id="autopark">
-      <h2 id="autopark_h2">Autopark</h2>
-      <section class="autopark">
-        <section class="row">
-          <section class="types_of_cars">
-            <img
-              class="cars_PH"
-              src="https://i.imgur.com/oq3oyx3.jpg"
-              alt="Sports cars"
-            />
-            <p class="autopark_p"><a class="autopark_p" href="/Sportscars">Sports cars</a></p>
-          </section>
-          <section class="types_of_cars">
-            <img
-              class="cars_PH"
-              src="https://i.imgur.com/T4SfXoP.jpg"
-              alt="SUVs"
-            />
-            <p class="autopark_p"><a class="autopark_p" href="/SUVs">SUVs</a></p>
-          </section>
-        </section>
-        <section class="row">
-          <section class="types_of_cars">
-            <img
-              class="cars_PH"
-              src="https://i.imgur.com/tXE6BcT.jpg"
-              alt="Executive class"
-            />
-            <p class="autopark_p">
-              <a class="autopark_p" href="/Executive class">Executive class</a>
-            </p>
-          </section>
-          <section class="types_of_cars">
-            <img
-              class="cars_PH"
-              src="https://i.imgur.com/cpjy3r8.jpg"
-              alt="Convertibles"
-            />
-            <p class="autopark_p"><a class="autopark_p" href="/Convertibles">Convertibles</a></p>
-          </section>
-        </section>
-      </section>
+    <section class="categories" id="autopark">
+        <h2>Autopark</h2>
+        <div class="container">
+            <div class="cards">
+                <div class="card">
+                    <a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Суперкар">
+                        <h3>Sports cars</h3>
+                    <img src="https://i.imgur.com/oq3oyx3.jpg" alt="">
+                    </a>
+                </div>
+                <div class="card">
+                  <a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Внедорожник">
+                    <h3>SUVs</h3>
+                    <img src="https://i.imgur.com/T4SfXoP.jpg" alt="">
+                  </a>
+                </div>
+                <div class="card">
+                  <a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Представительская">
+                    <h3>Executive class</h3>
+                    <img src="https://i.imgur.com/tXE6BcT.jpg" alt="">
+                  </a>
+                </div>
+                <div class="card">
+                  <a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Кабриолет">
+                    <h3>Convertibles</h3>
+                    <img src="https://i.imgur.com/cpjy3r8.jpg" alt="">
+                  </a>
+                </div>
+            </div>
+        </div>
+        <a href="show_cars.jsp" class="button">SEE ALL CARS</a>
     </section>
 
       <section class="rent" id="rent">
@@ -184,34 +177,27 @@
         </section>
       </section>
 
-      <section class="tariffs" id="tariffs">
-        <h2>
-          You can find out about our tariffs by the
-          <a id="tariffs_a" href="/tariffs">link</a>.
-        </h2>
-      </section>
-
       <section class="carBrands" id="carBrands">
         <h2 id="carBrands_h2">Car brands</h2>
         <div class="spisok">
           <ul class="list3b">
             <section class="spisok1">
-              <li><a class="spis_a" href="/MERCEDES">MERCEDES</a></li>
-              <li><a class="spis_a" href="/BMW">BMW</a></li>
-              <li><a class="spis_a" href="/AUDI">AUDI</a></li>
-              <li><a class="spis_a" href="/PORSCHE">PORSCHE</a></li>
-              <li><a class="spis_a" href="/BENTLEY">BENTLEY</a></li>
-              <li><a class="spis_a" href="/ROLLS">ROLLS ROYCE</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Mercedes-Benz">MERCEDES</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=BMW">BMW</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Audi">AUDI</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Porsche">PORSCHE</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Audi">BENTLEY</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Audi">ROLLS ROYCE</a></li>
             </section>
           </ul>
           <ul class="list3b">
             <section class="spisok1">
-              <li><a class="spis_a" href="/RANGE">RANGE ROVER</a></li>
-              <li><a class="spis_a" href="/FERRARI">FERRARI</a></li>
-              <li><a class="spis_a" href="/LAMBORGHINI">LAMBORGHINI</a></li>
-              <li><a class="spis_a" href="/MUSTANG">MUSTANG</a></li>
-              <li><a class="spis_a" href="/CAMARO">CAMARO</a></li>
-              <li><a class="spis_a" href="/NISSAN">NISSAN GT-R</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Range Rover">RANGE ROVER</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Ferrari">FERRARI</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Lamborghini">LAMBORGHINI</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Ford">FORD</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Chevrolet">CHEVROLET</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Nissan">NISSAN</a></li>
             </section>
           </ul>
         </div>
