@@ -7,20 +7,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.svirski.testweb.controller.command.ActionCommand;
+import by.svirski.testweb.controller.PagePath;
+import by.svirski.testweb.controller.RequestParameters;
 
 public class IncorrectCommand implements ActionCommand {
 	
-	private static final String ERROR = "type_error";
-	private static final String PASS_TO_INCORRECT_JSP = "/error_page";
-
 	public IncorrectCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute(ERROR, "не распознана команда");
-		request.getServletContext().getRequestDispatcher(PASS_TO_INCORRECT_JSP).forward(request, response);
+		request.setAttribute(RequestParameters.ERROR, "не распознана команда");
+		request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
 	}
 
 }

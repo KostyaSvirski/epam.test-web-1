@@ -14,25 +14,25 @@
       href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Roboto+Slab&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles/page.css">
+    <link rel="stylesheet" href="../styles/page.css">
     <title>My page</title>
 </head>
 
 
 <body>
     <header class="header">
-        <a href="index.jsp"> <img
+        <a href="../index.jsp"> <img
            class="logo"
            src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
            alt="logo"
          />
          </a>
          <nav>
-           <a class="nav" href="welcome.jsp#aboutUs">About Us</a>
-           <a class="nav" href="welcome.jsp#autopark">Autopark</a>
-           <a class="nav" href="welcome.jsp#rent">Rent</a>
-           <a class="nav" href="welcome.jsp#carBrands">Car Brands</a>
-           <a class="nav" href="welcome.jsp#contacts">Contacts</a>
+           <a class="nav" href="../index.jsp#aboutUs">About Us</a>
+           <a class="nav" href="../index.jsp#autopark">Autopark</a>
+           <a class="nav" href="../index.jsp#rent">Rent</a>
+           <a class="nav" href="../index.jsp#carBrands">Car Brands</a>
+           <a class="nav" href="../index.jsp#contacts">Contacts</a>
            <a class="nav" href="#">My page</a>
          </nav>
        </header>
@@ -50,7 +50,7 @@
               <p>Phone: ${sessionScope.user.phoneNumber}</p>
             </div>
             <a href = "edit_user.jsp" class="button"> EDIT </a>
-            <a href = "log_out.jsp" class="button"> LOG OUT </a>
+            <a href = "sign_out.jsp" class="button"> LOG OUT </a>
           </div>
          </section>
          <section class="your_orders">

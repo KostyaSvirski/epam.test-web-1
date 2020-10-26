@@ -19,28 +19,13 @@ import by.svirski.testweb.controller.command.ActionCommand;
 import by.svirski.testweb.service.CustomUserService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
+import by.svirski.testweb.controller.PagePath;
+import by.svirski.testweb.controller.RequestParameters;
+
 
 public class RegistrationCommand implements ActionCommand {
 	
 	private static Logger logger = LogManager.getLogger(RegistrationCommand.class);
-
-	private static final String PASS_TO_SIGN_IN = "/sign_in.jsp";
-	private static final String PASS_TO_ERROR = "/error_page.jsp";
-	private static final String PASS_TO_REGISTRATION = "/registration.jsp";
-	
-	private static final String MESSAGE = "message"; 
-	private static final String NAME = "name";
-	private static final String SURNAME = "surname";
-	private static final String PASSWORD = "pass";
-	private static final String REPEAT_PASSWORD = "pass_repeat";
-	private static final String LOGIN = "login";
-	private static final String GENDER = "gender";
-	private static final String PASSPORT_ID = "passport_id";
-	private static final String PASSPORT_NUMBER = "passport_number";
-	private static final String DATE_OF_BIRTH = "date_of_birth";
-	private static final String PHONE = "phone";
-	private static final String ERROR = "type_error";
-	private static final String COLLOR = "collor";
 
 	public RegistrationCommand() {
 		// TODO Auto-generated constructor stub
@@ -48,23 +33,23 @@ public class RegistrationCommand implements ActionCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		request.setCharacterEncoding("UTF-8");
-		String name = request.getParameter(NAME);
-		String surname = request.getParameter(SURNAME);
-		String login = request.getParameter(LOGIN);
-		String pass = Integer.toString(encryptPassword(request.getParameter(PASSWORD)));
-		String repeatPass = Integer.toString(encryptPassword(request.getParameter(REPEAT_PASSWORD)));
-		if(!repeatPass.equalsIgnoreCase(pass)) {
+		request.setCharacterEncoding(RequestParameters.CHAR_ENCODDING);
+		String name = request.getParameter(RequestParameters.NAME);
+		String surname = request.getParameter(RequestParameters.SURNAME);
+		String login = request.getParameter(RequestParameters.LOGIN);
+		String pass = Integer.toString(encryptPassword(request.getParameter(RequestParameters.PASSWORD)));
+		String repeatPass = Integer.toString(encryptPassword(request.getParameter(RequestParameters.REPEAT_PASSWORD)));
+		if(!repeatPass.equals(pass)) {
 			logger.log(Level.INFO, "пароли не совпадают");
-			request.setAttribute(COLLOR, "red");
-			request.setAttribute(MESSAGE, "пароли не совпадают");
-			request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
+			request.setAttribute(RequestParameters.COLLOR, "red");
+			request.setAttribute(RequestParameters.MESSAGE, "пароли не совпадают");
+			request.getServletContext().getRequestDispatcher(PagePath.SIGN_UP_PAGE).forward(request, response);
 		} else {
-			String gender = request.getParameter(GENDER);
-			String passportId = request.getParameter(PASSPORT_ID);
-			String passportNumber = request.getParameter(PASSPORT_NUMBER);
-			String dateOfBirth = request.getParameter(DATE_OF_BIRTH);
-			String phone = request.getParameter(PHONE);
+			String gender = request.getParameter(RequestParameters.GENDER);
+			String passportId = request.getParameter(RequestParameters.PASSPORT_ID);
+			String passportNumber = request.getParameter(RequestParameters.PASSPORT_NUMBER);
+			String dateOfBirth = request.getParameter(RequestParameters.DATE_OF_BIRTH);
+			String phone = request.getParameter(RequestParameters.PHONE);
 			Map<TypeOfParameters.UserType, String> parametersMap = new HashMap<TypeOfParameters.UserType, String>();
 			parametersMap.put(TypeOfParameters.UserType.NAME, name);
 			parametersMap.put(TypeOfParameters.UserType.SURNAME, surname);
@@ -84,23 +69,23 @@ public class RegistrationCommand implements ActionCommand {
 				try {
 					result = service.registrate(parametersMap);
 					if (result) {
-						request.setAttribute(COLLOR, "green");
-						request.setAttribute(MESSAGE, "вы успешно зарегистрированы");
-						request.getServletContext().getRequestDispatcher(PASS_TO_SIGN_IN).forward(request, response);
+						request.setAttribute(RequestParameters.COLLOR, "green");
+						request.setAttribute(RequestParameters.MESSAGE, "вы успешно зарегистрированы");
+						request.getServletContext().getRequestDispatcher(PagePath.SIGN_IN_PAGE).forward(request, response);
 					} else {
-						request.setAttribute(COLLOR, "red");
-						request.setAttribute(MESSAGE, "такой пользователь уже существует!");
-						request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
+						request.setAttribute(RequestParameters.COLLOR, "red");
+						request.setAttribute(RequestParameters.MESSAGE, "такой пользователь уже существует!");
+						request.getServletContext().getRequestDispatcher(PagePath.SIGN_UP_PAGE).forward(request, response);
 					}
 				} catch (ServiceException e) {
-					request.setAttribute(ERROR, e.getMessage());
-					response.sendRedirect(request.getContextPath() + PASS_TO_ERROR);		
+					request.setAttribute(RequestParameters.ERROR, e.getMessage());
+					response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);		
 				}
 				
 			} else {
-				request.setAttribute(COLLOR, "red");
-				request.setAttribute(MESSAGE, "не все поля заполнены");
-				request.getServletContext().getRequestDispatcher(PASS_TO_REGISTRATION).forward(request, response);
+				request.setAttribute(RequestParameters.COLLOR, "red");
+				request.setAttribute(RequestParameters.MESSAGE, "не все поля заполнены");
+				request.getServletContext().getRequestDispatcher(PagePath.SIGN_UP_PAGE).forward(request, response);
 			}
 		}
 

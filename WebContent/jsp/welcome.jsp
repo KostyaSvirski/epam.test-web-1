@@ -1,7 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html lang="en">
+<c:if test="${sessionScope.lang == null}">
+  <c:set var="lang" value="en_EN" scope="session"/>
+</c:if>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="locale"/>
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -30,50 +36,43 @@
         alt="logo"
       />
       <nav>
-        <a class="nav" href="#aboutUs">About Us</a>
-        <a class="nav" href="#autopark">Autopark</a>
-        <a class="nav" href="#rent">Rent</a>
-        <a class="nav" href="#tariffs">Tariffs</a>
-        <a class="nav" href="#carBrands">Car Brands</a>
-        <a class="nav" href="#contacts">Contacts</a>
+        <a class="nav" href="#aboutUs"><fmt:message key="welcome_page.header.nav.about_us"/></a>
+        <a class="nav" href="#autopark"><fmt:message key="welcome_page.header.nav.autopark"/></a>
+        <a class="nav" href="#rent"><fmt:message key="welcome_page.header.nav.rent"/></a>
+        <a class="nav" href="#tariffs"><fmt:message key="welcome_page.header.nav.tariffs"/></a>
+        <a class="nav" href="#carBrands"><fmt:message key="welcome_page.header.nav.car_brands"/></a>
+        <a class="nav" href="#contacts"><fmt:message key="welcome_page.header.nav.contacts"/></a>
         <c:if test="${sessionScope.user.login == null}">
-	        <a class="nav" href="sign_in.jsp">Sign in</a>	        
+	        <a class="nav" href="jsp/sign_in.jsp"><fmt:message key="welcome_page.header.nav.sign_in"/></a>	        
         </c:if>
          <c:if test="${sessionScope.user.login != null}">
-	        <a class="nav" href="my_page.jsp">My Page</a>	        
+	        <a class="nav" href="jsp/my_page.jsp"><fmt:message key="welcome_page.header.nav.my_page"/></a>	        
         </c:if>
       </nav>
     </header>
 
     <main>
       <section class="main">
-        <p class="main_text">Premium car rental</p>
-        <p class="main_text2">The best quality</p>
+        <p class="main_text"><fmt:message key="welcome_page.title.text1"/></p>
+        <p class="main_text2"><fmt:message key="welcome_page.title.text2"/></p>
         <c:if test="${sessionScope.user.login == null}">
-	        <p class="main_text3">authorize please</p>    
+	        <p class="main_text3"><fmt:message key="welcome_page.title.require_authorize"/></p>    
         </c:if>
         <c:if test="${sessionScope.user.login != null}">
-	        <p class="main_text3">hello, ${sessionScope.user.name} ${sessionScope.user.surname}</p>    
+	        <p class="main_text3"><fmt:message key="welcome_page.title.welcome"/> ${sessionScope.user.name} ${sessionScope.user.surname}</p>    
         </c:if>
-        <p class="main_text3">current count of users: ${count}</p> 
+        <p class="main_text3"><fmt:message key="welcome_page.title.count_users"/> ${count}</p> 
         <div class="en_ru">
-          <a class="sign-in" href="#">En</a>
-          <a class="sign-up" href="#">Ru</a>
+          <a class="sign-in" href="MainController?command=CHANGE_LOCALE&lang=en_EN">En</a>
+          <a class="sign-up" href="MainController?command=CHANGE_LOCALE&lang=ru_BY">Ru</a>
         </div>
       </section>
 
       <section class="about_us" id="aboutUs">
         <div class="about_us_text">
           <p>
-            <p id="about_us_text1">About us</p>
-            Premium car rental service is your unique opportunity to touch your
-            dream and get unforgettable emotions. Each car in our fleet is a
-            pearl of the global automotive industry, capable of captivating
-            with
-            its dynamics, aesthetics and comfort. You don't have to be a
-            millionaire to enjoy the best models of Ferrari, Porsche, Bentley
-            and Lamborghini, you can choose a convenient and profitable
-            rental!
+            <p id="about_us_text1"><fmt:message key="welcome_page.about_us.about_us"/></p>
+            <fmt:message key="welcome_page.about_us.describtion"/>
           </p>
         </div>
         <iframe
@@ -85,100 +84,82 @@
       </section>
       
     <section class="categories" id="autopark">
-        <h2>Autopark</h2>
+        <h2><fmt:message key="welcome_page.autopark.autopark"/></h2>
         <div class="container">
             <div class="cards">
                 <div class="card">
                     <a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Суперкар">
-                        <h3>Sports cars</h3>
+                        <h3><fmt:message key="welcome_page.autopark.cars.sport"/></h3>
                     <img src="https://i.imgur.com/oq3oyx3.jpg" alt="">
                     </a>
                 </div>
                 <div class="card">
-                  <a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Внедорожник">
-                    <h3>SUVs</h3>
+                  	<a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Внедорожник">
+                    	<h3><fmt:message key="welcome_page.autopark.cars.suvs"/></h3>
                     <img src="https://i.imgur.com/T4SfXoP.jpg" alt="">
-                  </a>
+                  	</a>
                 </div>
                 <div class="card">
-                  <a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Представительская">
-                    <h3>Executive class</h3>
+                  	<a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Представительская">
+                    	<h3><fmt:message key="welcome_page.autopark.cars.prem"/></h3>
                     <img src="https://i.imgur.com/tXE6BcT.jpg" alt="">
-                  </a>
+                  	</a>
                 </div>
                 <div class="card">
-                  <a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Кабриолет">
-                    <h3>Convertibles</h3>
+                  	<a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Кабриолет">
+                    	<h3><fmt:message key="welcome_page.autopark.cars.cabrio"/></h3>
                     <img src="https://i.imgur.com/cpjy3r8.jpg" alt="">
-                  </a>
+                  	</a>
                 </div>
             </div>
         </div>
-        <a href="show_cars.jsp" class="button">SEE ALL CARS</a>
+        <a href="MainController?command=SHOW_CARS_COMMAND" class="button"><fmt:message key="welcome_page.autopark.cars.all"/></a>
     </section>
 
       <section class="rent" id="rent">
-        <h2 id="rent_h2">Rental rules</h2>
+        <h2 id="rent_h2"><fmt:message key="welcome_page.rent.rent"/></h2>
         <section class="spis">
           <div class="spis1">
-            <h3 id="rent_h3_1">ALLOWED</h3>
+            <h3 id="rent_h3_1"><fmt:message key="welcome_page.rent.allowed"/></h3>
             <ul class="push">
               <li>
-                The minimum age is from 19 years. Work experience-from 1 year.
-                The lessee must provide an original passport with a residence
-                permit, 
-                a selfie with a passport and a driver's license on both sides.
+                <fmt:message key="welcome_page.rent.allowed.first"/>
               </li>
               <li>
-                We provide a car rental service for foreign citizens. The
-                amount
-                of the security deposit can be increased.
+                <fmt:message key="welcome_page.rent.allowed.second"/>
               </li>
               <li>
-                To rent a car, a returnable security deposit is required, the
-                amount of which depends on the chosen car, as well as the
-                driving experience and citizenship of the renter. The minimum
-                deposit is 30,000 rubles, see the section
-                <a class="rent_a" href="/tariffs">tariffs</a>.
+                <fmt:message key="welcome_page.rent.allowed.third"/>
               </li>
               <li>
-                An additional driver must be declared before the start of the
-                car rental, providing the original passport and driver's
-                license. The price includes 2 drivers. The insurance of each
-                subsequent driver takes place at an additional cost.
+                <fmt:message key="welcome_page.rent.allowed.fourth"/>
               </li>
               <li>
-                To reserve a car for a certain date, you must make an advance
-                payment of 50% of the cost.
+                <fmt:message key="welcome_page.rent.allowed.fifth"/>
               </li>
             </ul>
           </div>
           <div class="spis2">
-            <h3 id="rent_h3_2">FORBIDDEN</h3>
+            <h3 id="rent_h3_2"><fmt:message key="welcome_page.rent.forbidden"/></h3>
             <ul class="push1">
               <li>
-                Transfer control of the car to a third party not included in the
-                contract
+                <fmt:message key="welcome_page.rent.forbidden.first"/>
               </li>
               <li>
-                Using the car for criminal purposes (fraud, smuggling, drug
-                trafficking)
+                <fmt:message key="welcome_page.rent.forbidden.second"/>
               </li>
-              <li>Using a car for profit</li>
-              <li>Violation of the established speed limits</li>
+              <li><fmt:message key="welcome_page.rent.forbidden.third"/></li>
+              <li><fmt:message key="welcome_page.rent.forbidden.fourth"/></li>
             </ul>
             <p id="atten">
-              !!! In case of revealing any of these 
-              violations, the car can be forcibly withdrawn,
-              without reimbursement of the funds paid and 
-              the insurance deposit !!!
+              <fmt:message key="welcome_page.rent.forbidden.attent"/>
             </p>
           </div>
         </section>
       </section>
 
       <section class="carBrands" id="carBrands">
-        <h2 id="carBrands_h2">Car brands</h2>
+        <h2 id="carBrands_h2"><fmt:message key="welcome_page.car_brands.car_brands"/></h2>
         <div class="spisok">
           <ul class="list3b">
             <section class="spisok1">
@@ -214,12 +195,12 @@
           />
         </section>
         <div class="cont">
-          <p><strong>Contacts</strong></p>
+          <p><strong><fmt:message key="welcome_page.footer.contacts.contacts"/></strong></p>
           <p>+375(12)-345-67-89</p>
         </div>
         <div class="cont">
-          <p><strong>Adress</strong></p>
-          <p>Minsk, Yakub Kolas street, building 5, office 13</p>
+          <p><strong><fmt:message key="welcome_page.footer.contacts.adress"/></strong></p>
+          <p><fmt:message key="welcome_page.footer.contacts.adress.describe"/></p>
         </div>
         <div class="cont">
           <p><strong>Mail</strong></p>

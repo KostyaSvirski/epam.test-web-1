@@ -15,17 +15,11 @@ import by.svirski.testweb.controller.command.ActionCommand;
 import by.svirski.testweb.service.CustomUserService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
+import by.svirski.testweb.controller.PagePath;
+import by.svirski.testweb.controller.RequestParameters;
 
 public class AuthorizationCommand implements ActionCommand {
 			
-	private static final String LOGIN = "login";
-	private static final String PASSWORD = "pass";
-	private static final String PASS_TO_WELCOME_JSP = "/index.jsp";
-	private static final String PASS_TO_INCORRECT_JSP = "/error_page.jsp";
-	private static final String PASS_TO_SIGN_IN = "/sign_in.jsp"; 
-	private static final String ERROR = "type_error";
-	private static final String MESSAGE = "message"; 
-	private static final String COLLOR = "collor"; 
 
 	public AuthorizationCommand() {
 		// TODO Auto-generated constructor stub
@@ -34,10 +28,10 @@ public class AuthorizationCommand implements ActionCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {
-		request.setCharacterEncoding("UTF-8");
-		if (request.getParameter(LOGIN) != null && request.getParameter(PASSWORD) != null) {
-			String login = request.getParameter(LOGIN);
-			String password = Integer.toString(encryptPassword(request.getParameter(PASSWORD)));
+		request.setCharacterEncoding(RequestParameters.CHAR_ENCODDING);
+		if (request.getParameter(RequestParameters.LOGIN) != null && request.getParameter(RequestParameters.PASSWORD) != null) {
+			String login = request.getParameter(RequestParameters.LOGIN);
+			String password = Integer.toString(encryptPassword(request.getParameter(RequestParameters.PASSWORD)));
 			Map<TypeOfParameters.UserType, String> mapParameters = new HashMap<TypeOfParameters.UserType, String>();
 			mapParameters.put(TypeOfParameters.UserType.PASSWORD, password);
 			mapParameters.put(TypeOfParameters.UserType.LOGIN, login);
@@ -47,21 +41,21 @@ public class AuthorizationCommand implements ActionCommand {
 				User user = service.authorize(mapParameters);
 				if (user != null) {
 					request.getSession().setAttribute("user", user);
-					response.sendRedirect(request.getContextPath() + PASS_TO_WELCOME_JSP);
+					response.sendRedirect(request.getContextPath() + PagePath.INDEX_PAGE);
 				} else {
-					request.setAttribute(COLLOR, "red");
-					request.setAttribute(MESSAGE, "неверный пароль или логин");
-					request.getServletContext().getRequestDispatcher(PASS_TO_SIGN_IN).forward(request, response);
+					request.setAttribute(RequestParameters.COLLOR, "red");
+					request.setAttribute(RequestParameters.MESSAGE, "неверный пароль или логин");
+					request.getServletContext().getRequestDispatcher(PagePath.SIGN_IN_PAGE).forward(request, response);
 				}
 			} catch (ServiceException e) {
-				request.setAttribute(ERROR, e.getMessage());
-				response.sendRedirect(request.getContextPath() + PASS_TO_INCORRECT_JSP);
+				request.setAttribute(RequestParameters.ERROR, e.getMessage());
+				response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);
 			}
 
 		} else {
-			request.setAttribute(COLLOR, "red");
-			request.setAttribute(MESSAGE, "не все поля указаны");
-			request.getServletContext().getRequestDispatcher(PASS_TO_SIGN_IN).forward(request, response);
+			request.setAttribute(RequestParameters.COLLOR, "red");
+			request.setAttribute(RequestParameters.MESSAGE, "не все поля указаны");
+			request.getServletContext().getRequestDispatcher(PagePath.SIGN_IN_PAGE).forward(request, response);
 		}
 
 	}

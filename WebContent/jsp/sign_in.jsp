@@ -14,7 +14,7 @@
 	  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Roboto+Slab&display=swap"
 	  rel="stylesheet"
 	/>
-	<link rel="stylesheet" href="styles/sign_in.css" />
+	<link rel="stylesheet" href="../styles/sign_in.css" />
 	<title>Authorization Page</title>
  </head>
 
@@ -22,7 +22,7 @@
 	<main>
 	<h1 class="main_text">AUTHORITHATION</h1>
 	<div>
-	<form class="decor" action="MainController" method="POST">
+	<form class="decor" action="../MainController" method="POST">
 		<div class="form-left-decoration"></div>
 		<div class="form-right-decoration"></div>
 		<div class="circle"></div>
@@ -35,7 +35,7 @@
 	</div>
 	</form>
 	</div>
-	<a href = "registration.jsp" class="register"> REGISTRATION </a>
+	<a href ="sign_up.jsp" class="register"> REGISTRATION </a>
 	</main>
 </body>
 </html>

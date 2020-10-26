@@ -14,7 +14,7 @@
 	  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Roboto+Slab&display=swap"
 	  rel="stylesheet"
 	/>
-	<link rel="stylesheet" href="styles/registration.css" />
+	<link rel="stylesheet" href="../styles/registration.css" />
 	<title>Registration Page</title>
  </head>	
 
@@ -22,7 +22,7 @@
 	<main class="main">
 	<h1  class="main_text">REGISTRATION</h1>
 	<div class="main">
-	<form class="decor" action="MainController" method="POST">
+	<form class="decor" action="../MainController" method="POST">
 		<div class="form-left-decoration"></div>
 		<div class="form-right-decoration"></div>
 		<div class="circle"></div>

@@ -28,10 +28,10 @@
 			<a class="nav" href="index.jsp#carBrands">Car Brands</a> 
 			<a class="nav" href="#contacts">Contacts</a> 
 			<c:if test="${sessionScope.user.login == null}">
-	        	<a class="nav" href="sign_in.jsp">Sign in</a>	        
+	        	<a class="nav" href="jsp/sign_in.jsp">Sign in</a>	        
         	</c:if>
          	<c:if test="${sessionScope.user.login != null}">
-	        	<a class="nav" href="my_page.jsp">My Page</a>	        
+	        	<a class="nav" href="jsp/my_page.jsp">My Page</a>	        
         	</c:if>
 		</nav>
 	</header>

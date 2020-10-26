@@ -18,11 +18,10 @@ import by.svirski.testweb.controller.command.ActionCommand;
 import by.svirski.testweb.service.CustomCarService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
+import by.svirski.testweb.controller.PagePath;
+import by.svirski.testweb.controller.RequestParameters;
 
 public class CarShowCommand implements ActionCommand {
-
-	private final static String PATH_TO_CARS = "/cars.jsp";
-	private final static String PATH_TO_ERROR = "/error_page.jsp";
 
 	public CarShowCommand() {
 
@@ -38,11 +37,11 @@ public class CarShowCommand implements ActionCommand {
 		CustomCarService service = factory.getCarService();
 		try {
 			List<Car> listOfBeans = service.showCars(parametersMap);
-			request.setAttribute("cars", listOfBeans);
-			request.getServletContext().getRequestDispatcher(PATH_TO_CARS).forward(request, response);
+			request.setAttribute(RequestParameters.CARS, listOfBeans);
+			request.getServletContext().getRequestDispatcher(PagePath.CARS_PAGE).forward(request, response);
 		} catch (ServiceException e) {
-			request.setAttribute("type_error", e);
-			request.getServletContext().getRequestDispatcher(PATH_TO_ERROR).forward(request, response);
+			request.setAttribute(RequestParameters.ERROR, e);
+			request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
 		}
 
 	}

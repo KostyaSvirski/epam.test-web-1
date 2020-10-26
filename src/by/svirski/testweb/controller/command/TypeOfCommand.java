@@ -10,7 +10,8 @@ public enum TypeOfCommand {
 	INCORRECT_COMMAND(new IncorrectCommand()),
 	COUNT_USERS_COMMAND(new CountUsersCommand()),
 	SHOW_CARS_COMMAND(new CarShowCommand()),
-	EDIT_INFO_COMMAND(new EditInfoCommand());
+	EDIT_INFO_COMMAND(new EditInfoCommand()),
+	CHANGE_LOCALE(new ChangeLocale());
 	
 	private ActionCommand command;
 
