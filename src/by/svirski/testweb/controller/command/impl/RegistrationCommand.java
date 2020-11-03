@@ -22,9 +22,8 @@ import by.svirski.testweb.service.exception.ServiceException;
 import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 
-
 public class RegistrationCommand implements ActionCommand {
-	
+
 	private static Logger logger = LogManager.getLogger(RegistrationCommand.class);
 
 	public RegistrationCommand() {
@@ -39,7 +38,7 @@ public class RegistrationCommand implements ActionCommand {
 		String login = request.getParameter(RequestParameters.LOGIN);
 		String pass = Integer.toString(encryptPassword(request.getParameter(RequestParameters.PASSWORD)));
 		String repeatPass = Integer.toString(encryptPassword(request.getParameter(RequestParameters.REPEAT_PASSWORD)));
-		if(!repeatPass.equals(pass)) {
+		if (!repeatPass.equals(pass)) {
 			logger.log(Level.INFO, "пароли не совпадают");
 			request.setAttribute(RequestParameters.COLLOR, "red");
 			request.setAttribute(RequestParameters.MESSAGE, "пароли не совпадают");
@@ -62,7 +61,7 @@ public class RegistrationCommand implements ActionCommand {
 			parametersMap.put(TypeOfParameters.UserType.PHONE_NUMBER, phone);
 			parametersMap.put(TypeOfParameters.UserType.IS_BLOCKED, "false");
 			parametersMap.put(TypeOfParameters.UserType.ROLE_IN_PROJECT, "user");
-			if(checkParameters(parametersMap)) {
+			if (checkParameters(parametersMap)) {
 				ServiceFactory factory = ServiceFactory.getInstance();
 				CustomUserService service = factory.getUserService();
 				boolean result = false;
@@ -71,34 +70,42 @@ public class RegistrationCommand implements ActionCommand {
 					if (result) {
 						request.setAttribute(RequestParameters.COLLOR, "green");
 						request.setAttribute(RequestParameters.MESSAGE, "вы успешно зарегистрированы");
-						request.getServletContext().getRequestDispatcher(PagePath.SIGN_IN_PAGE).forward(request, response);
+						request.getServletContext()
+								.getRequestDispatcher(PagePath.SIGN_IN_PAGE.substring(
+										PagePath.SIGN_IN_PAGE.indexOf("/"), PagePath.SIGN_IN_PAGE.length()))
+								.forward(request, response);
+						logger.log(Level.DEBUG, "пользователь зарегистрирован");
 					} else {
 						request.setAttribute(RequestParameters.COLLOR, "red");
 						request.setAttribute(RequestParameters.MESSAGE, "такой пользователь уже существует!");
-						request.getServletContext().getRequestDispatcher(PagePath.SIGN_UP_PAGE).forward(request, response);
+						request.getServletContext().getRequestDispatcher(PagePath.SIGN_UP_PAGE).forward(request,
+								response);
+						logger.log(Level.DEBUG, "такой пользователь уже существует!");
 					}
 				} catch (ServiceException e) {
 					request.setAttribute(RequestParameters.ERROR, e.getMessage());
-					response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);		
+					request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
+					logger.log(Level.DEBUG, e.getMessage());
 				}
-				
+
 			} else {
 				request.setAttribute(RequestParameters.COLLOR, "red");
 				request.setAttribute(RequestParameters.MESSAGE, "не все поля заполнены");
 				request.getServletContext().getRequestDispatcher(PagePath.SIGN_UP_PAGE).forward(request, response);
+				logger.log(Level.DEBUG, "не все поля заполнены");
 			}
 		}
 
 	}
 
 	private boolean checkParameters(Map<UserType, String> parametersMap) {
-		for(Entry<UserType, String> entry : parametersMap.entrySet()) {
+		for (Entry<UserType, String> entry : parametersMap.entrySet()) {
 			String value = entry.getValue();
-			if(value == null) {
+			if (value == null) {
 				return false;
 			}
-			if(value.isEmpty() || value.isBlank()) {
-				return false; 
+			if (value.isEmpty() || value.isBlank()) {
+				return false;
 			}
 		}
 		return true;

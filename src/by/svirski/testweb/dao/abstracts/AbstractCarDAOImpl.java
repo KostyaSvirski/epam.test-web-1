@@ -74,6 +74,7 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car, CarType> {
 					parametersMap.put(CarType.COST, Long.toString(rs.getLong(9)));
 					parametersMap.put(CarType.IMG, rs.getString(10));
 					parametersMap.put(CarType.IS_BOOCKED, Boolean.toString(rs.getBoolean(11)));
+					parametersMap.put(CarType.ID, Integer.toString(rs.getInt(12)));
 					Car car = builder.build(parametersMap);
 					carList.add(car);
 				}
@@ -120,4 +121,5 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car, CarType> {
 
 	public abstract List<Car> showAllCars() throws DaoException;
 	public abstract List<Car> showBrandOrClassCars(Map<CarType, String> parametersMap) throws DaoException;
+	
 }

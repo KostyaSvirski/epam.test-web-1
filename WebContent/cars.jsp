@@ -1,8 +1,14 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<c:if test="${sessionScope.lang == null}">
+  <c:set var="lang" value="en_EN" scope="session"/>
+</c:if>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="locale"/>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,22 +22,23 @@
 <title>Cars</title>
 </head>
 <body>
+
 	<header class="header">
 		<a href="index.jsp"> <img class="logo"
 			src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
 			alt="logo" />
 		</a>
 		<nav>
-			<a class="nav" href="index.jsp#aboutUs">About Us</a> 
-			<a class="nav" href="index.jsp#autopark">Autopark</a> 
-			<a class="nav" href="index.jsp#rent">Rent</a> 
-			<a class="nav" href="index.jsp#carBrands">Car Brands</a> 
-			<a class="nav" href="#contacts">Contacts</a> 
+			<a class="nav" href="index.jsp#aboutUs"><fmt:message key="welcome_page.header.nav.about_us"/></a> 
+			<a class="nav" href="index.jsp#autopark"><fmt:message key="welcome_page.header.nav.autopark"/></a> 
+			<a class="nav" href="index.jsp#rent"><fmt:message key="welcome_page.header.nav.rent"/></a> 
+			<a class="nav" href="index.jsp#carBrands"><fmt:message key="welcome_page.header.nav.car_brands"/></a> 
+			<a class="nav" href="index.jsp#contacts"><fmt:message key="welcome_page.header.nav.contacts"/></a> 
 			<c:if test="${sessionScope.user.login == null}">
-	        	<a class="nav" href="jsp/sign_in.jsp">Sign in</a>	        
+	        	<a class="nav" href="sign_in.jsp"><fmt:message key="welcome_page.header.nav.sign_in"/></a>	        
         	</c:if>
          	<c:if test="${sessionScope.user.login != null}">
-	        	<a class="nav" href="jsp/my_page.jsp">My Page</a>	        
+	        	<a class="nav" href="my_page.jsp"><fmt:message key="welcome_page.header.nav.my_page"/></a>	        
         	</c:if>
 		</nav>
 	</header>
@@ -46,26 +53,26 @@
 				<p align="center">
 					<b>${car.brand} ${car.model}</b>
 				</p>
-				<p>Class: ${car.carClass}</p>
-				<p>Power: ${car.power} hp</p>
-				<p>Engine: ${car.engine}</p>
-				<p>Acceleration: ${car.acceleration} seconds</p>
-				<p>Drive unit: ${car.driveUnit}</p>
-				<p>Fuel: ${car.fuel}</p>
-				<p>Cost: ${car.cost} $</p>
+				<p><fmt:message key="cars.info.class"/> ${car.carClass}</p>
+				<p><fmt:message key="cars.info.power"/> ${car.power} hp</p>
+				<p><fmt:message key="cars.info.engine"/> ${car.engine}</p>
+				<p><fmt:message key="cars.info.acceleration"/> ${car.acceleration} seconds</p>
+				<p><fmt:message key="cars.info.unit"/> ${car.driveUnit}</p>
+				<p><fmt:message key="cars.info.fuel"/> ${car.fuel}</p>
+				<p><fmt:message key="cars.info.cost"/> ${car.cost} $</p>
 				<div class="all_button">
 					<c:if test="${sessionScope.user.login != null}">
 						<c:if test="${car.isBooked == true}">
-							<p>this car is already booked</p>
+							<p><fmt:message key="cars.info.text.booked"/></p>
 						</c:if>
 						<c:if test="${car.isBooked == false}">
-							<a href="#rent" class="button">RENT</a> 
+							<a href="rent_auto.jsp?id=${car.id}&image=${car.image}&brand=${car.brand}&model=${car.model}&cost=${car.cost}" class="button"><fmt:message key="cars.button.rent"/></a> 
 						</c:if>
 					</c:if>
 					<c:if test="${sessionScope.user.login == null}">
-						<p>sign in please to rent</p>
+						<p><fmt:message key="cars.info.text.not_sign_in"/></p>
 					</c:if>
-					<a href="#detail" class="button">DETAIL</a>
+					<a href="#detail" class="button"><fmt:message key="cars.button.detail"/></a>
 				</div>
 			</div>
 		</section>
@@ -81,15 +88,15 @@
 			</section>
 			<div class="cont">
 				<p>
-					<strong>Contacts</strong>
+					<strong><fmt:message key="welcome_page.footer.contacts.contacts"/></strong>
 				</p>
 				<p>+375(12)-345-67-89</p>
 			</div>
 			<div class="cont">
 				<p>
-					<strong>Adress</strong>
+					<strong><fmt:message key="welcome_page.footer.contacts.adress"/></strong>
 				</p>
-				<p>Minsk, Yakub Kolas street, building 5, office 13</p>
+				<p><fmt:message key="welcome_page.footer.contacts.adress.describe"/></p>
 			</div>
 			<div class="cont">
 				<p>

@@ -1,7 +1,8 @@
 package by.svirski.testweb.bean;
 
-public class Car implements BeanIndicator {
+public class Car {
 	
+	private int id;
 	private String brand;
 	private String model;
 	private String carClass;
@@ -18,9 +19,10 @@ public class Car implements BeanIndicator {
 		
 	}
 
-	public Car(String brand, String model, String carClass, int power, String engine, float acceleration,
+	public Car(int id, String brand, String model, String carClass, int power, String engine, float acceleration,
 			DriveUnit driveUnit, Fuel fuel, long cost, String image, boolean isBooked) {
 		super();
+		this.id = id;
 		this.brand = brand;
 		this.model = model;
 		this.carClass = carClass;
@@ -32,6 +34,10 @@ public class Car implements BeanIndicator {
 		this.cost = cost;
 		this.image = image;
 		this.isBooked = isBooked;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getBrand() {
@@ -66,16 +72,20 @@ public class Car implements BeanIndicator {
 		return fuel.toString();
 	}
 
-	public String getCost() {
-		return String.valueOf(cost);
+	public long getCost() {
+		return cost;
 	}
 
 	public String getImage() {
 		return image;
 	}
 
-	public boolean getIsBooked() {
+	public boolean getIsBooked(){
 		return isBooked;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setBrand(String brand) {
@@ -133,6 +143,7 @@ public class Car implements BeanIndicator {
 		result = prime * result + ((driveUnit == null) ? 0 : driveUnit.hashCode());
 		result = prime * result + ((engine == null) ? 0 : engine.hashCode());
 		result = prime * result + ((fuel == null) ? 0 : fuel.hashCode());
+		result = prime * result + id;
 		result = prime * result + ((image == null) ? 0 : image.hashCode());
 		result = prime * result + (isBooked ? 1231 : 1237);
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
@@ -185,6 +196,9 @@ public class Car implements BeanIndicator {
 		if (fuel != other.fuel) {
 			return false;
 		}
+		if (id != other.id) {
+			return false;
+		}
 		if (image == null) {
 			if (other.image != null) {
 				return false;
@@ -211,7 +225,9 @@ public class Car implements BeanIndicator {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Car [brand=");
+		builder.append("Car [id=");
+		builder.append(id);
+		builder.append(", brand=");
 		builder.append(brand);
 		builder.append(", model=");
 		builder.append(model);
@@ -237,6 +253,7 @@ public class Car implements BeanIndicator {
 		return builder.toString();
 	}
 
+	
 	
 	
 }

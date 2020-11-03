@@ -34,7 +34,23 @@ public final class RequestParameters {
 	
 	//CARS
 	public static final String CARS = "cars";
+	public static final String CAR = "car";
+	public static final String CAR_ID = "id";
 	
 	//EDIT
 	public static final String USER = "user";
+	
+	//REQUEST
+	public static final String CURRENT_PAGE = "currentPage";
+	
+	//RENT
+	public static final String DATE_OF_START = "startDate";
+	public static final String DATE_OF_FINISH = "finishDate";
+	public static final String USER_SIGNATURE = "signature";
+	public static final String ORDER_COST = "cost";
+	public static final String CONDITION = "condition";
+	public static final String ORDERS = "orders";
+	public static final String ORDER_ID = "order_id";
+	
+	
 }

@@ -2,7 +2,7 @@ package by.svirski.testweb.bean;
 
 import java.util.Calendar;
 
-public class User implements BeanIndicator{
+public class User{
 	
 	private int id;
 	private String login;

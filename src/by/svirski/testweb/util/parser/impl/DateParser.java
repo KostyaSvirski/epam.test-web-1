@@ -26,13 +26,13 @@ public class DateParser implements CustomParser<Calendar> {
 			}
 		}
 		Calendar date = new GregorianCalendar();
-		if (Integer.parseInt(values[2]) <= 2020 && Integer.parseInt(values[2]) >= 1800) {
-			date.set(Calendar.YEAR, Integer.parseInt(values[2]));
+		if (Integer.parseInt(values[0]) <= 2020 && Integer.parseInt(values[0]) >= 1800) {
+			date.set(Calendar.YEAR, Integer.parseInt(values[0]));
 			if (Integer.parseInt(values[1]) >= 1 && Integer.parseInt(values[1]) <= 12) {
 				date.set(Calendar.MONTH, Integer.parseInt(values[1]) - 1);
-				if (Integer.parseInt(values[0]) >= date.getActualMinimum(Calendar.DAY_OF_MONTH)
-						&& Integer.parseInt(values[0]) <= date.getActualMaximum(Calendar.DAY_OF_MONTH)) {
-					date.set(Calendar.DAY_OF_MONTH, Integer.parseInt(values[0]));
+				if (Integer.parseInt(values[2]) >= date.getActualMinimum(Calendar.DAY_OF_MONTH)
+						&& Integer.parseInt(values[2]) <= date.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+					date.set(Calendar.DAY_OF_MONTH, Integer.parseInt(values[2]));
 					return date;
 				}
 

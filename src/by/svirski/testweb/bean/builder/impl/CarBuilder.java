@@ -23,6 +23,7 @@ public class CarBuilder implements Builder<Car, CarType> {
 	public Car build(Map<CarType, String> parameters) {
 		Car car = new Car();
 		try {
+			car.setId(Integer.parseInt(parameters.get(CarType.ID)));
 			car.setBrand(parameters.get(CarType.BRAND));
 			car.setModel(parameters.get(CarType.MODEL));
 			car.setCarClass(parameters.get(CarType.CAR_CLASS));

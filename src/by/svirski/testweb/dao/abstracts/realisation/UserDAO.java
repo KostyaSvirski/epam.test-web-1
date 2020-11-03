@@ -116,7 +116,6 @@ public class UserDAO extends AbstractUserDAOImpl {
 		}
 	}
 
-	//TODO 22.10.2000 23:00 impossible to update user twice and more  
 	@Override
 	public User editUser(Map<UserType, String> parameters) throws DaoException {
 		User user = null;
@@ -124,27 +123,37 @@ public class UserDAO extends AbstractUserDAOImpl {
 		try {
 			try {
 				cn = ConnectionPool.getInstance().getConnection();
-			} catch (ConnectionPoolException e) {
+				cn.setAutoCommit(false);
+			} catch (ConnectionPoolException | SQLException e) {
 				throw new DaoException(e);
-			}	
-			boolean resultUpdate = update(parameters, UPDATE_USER, cn);
-			List<String> parametersList = new ArrayList<String>();
-			parametersList.add(parameters.get(UserType.ID));
-			if (resultUpdate) {
-				List<User> foundList = select(parametersList, SELECT_USER_BY_ID, cn);
-				if (foundList.size() == 1) {
-					user = (User) foundList.get(0);
-					LOGGER.log(Level.DEBUG, "пользователь найден");
-				} else if (foundList.size() > 1) {
-					LOGGER.log(Level.ERROR, "найдено более одного пользователя");
-					throw new DaoException("найдено более одного пользователя");
-				} else if(foundList.isEmpty()) {
-					LOGGER.log(Level.ERROR, "найдено ни одного пользователя");
-					throw new DaoException("найдено ни одного пользователя");
+			}
+			try {
+				boolean resultUpdate = update(parameters, UPDATE_USER, cn);
+				List<String> parametersList = new ArrayList<String>();
+				parametersList.add(parameters.get(UserType.ID));
+				if (resultUpdate) {
+					List<User> foundList = select(parametersList, SELECT_USER_BY_ID, cn);
+					if (foundList.size() == 1) {
+						user = foundList.get(0);
+						LOGGER.log(Level.DEBUG, "пользователь найден");
+						cn.commit();
+					} else if (foundList.size() > 1) {
+						cn.rollback();
+						LOGGER.log(Level.ERROR, "найдено более одного пользователя");
+						throw new DaoException("найдено более одного пользователя");
+					} else if (foundList.isEmpty()) {
+						cn.rollback();
+						LOGGER.log(Level.ERROR, "найдено ни одного пользователя");
+						throw new DaoException("найдено ни одного пользователя");
+					}
+				} else {
+					cn.rollback();
+					LOGGER.log(Level.ERROR, "пользователь не может быть изменен");
+					throw new DaoException("пользователь не может быть изменен");
 				}
-			} else {
-				LOGGER.log(Level.ERROR, "пользователь не может быть изменен");
-				throw new DaoException("пользователь не может быть изменен");
+			} catch (SQLException e) {
+				LOGGER.log(Level.ERROR, "ошибка коммита");
+				throw new DaoException("ошибка коммита");
 			}
 			return user;
 		} finally {

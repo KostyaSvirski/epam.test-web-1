@@ -7,7 +7,11 @@ public final class TypeOfParameters {
 	}
 	
 	public static enum CarType {
-		BRAND, MODEL, CAR_CLASS, POWER, ENGINE, ACCELERATION, DRIVE_UNIT, FUEL, COST, IMG, IS_BOOCKED;
+		BRAND, MODEL, CAR_CLASS, POWER, ENGINE, ACCELERATION, DRIVE_UNIT, FUEL, COST, IMG, IS_BOOCKED, ID;
+	}
+	
+	public static enum OrderType {
+		USER_SIGNATURE, ORDER_ID, USER_ID, CAR_ID, DATE_OF_START, DATE_OF_FINISH, COST, CONDITION, BRAND, MODEL;
 	}
 	
 	private TypeOfParameters() {}

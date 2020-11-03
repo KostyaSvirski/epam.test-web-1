@@ -39,14 +39,13 @@
         <a class="nav" href="#aboutUs"><fmt:message key="welcome_page.header.nav.about_us"/></a>
         <a class="nav" href="#autopark"><fmt:message key="welcome_page.header.nav.autopark"/></a>
         <a class="nav" href="#rent"><fmt:message key="welcome_page.header.nav.rent"/></a>
-        <a class="nav" href="#tariffs"><fmt:message key="welcome_page.header.nav.tariffs"/></a>
         <a class="nav" href="#carBrands"><fmt:message key="welcome_page.header.nav.car_brands"/></a>
         <a class="nav" href="#contacts"><fmt:message key="welcome_page.header.nav.contacts"/></a>
         <c:if test="${sessionScope.user.login == null}">
-	        <a class="nav" href="jsp/sign_in.jsp"><fmt:message key="welcome_page.header.nav.sign_in"/></a>	        
+	        <a class="nav" href="sign_in.jsp"><fmt:message key="welcome_page.header.nav.sign_in"/></a>	        
         </c:if>
          <c:if test="${sessionScope.user.login != null}">
-	        <a class="nav" href="jsp/my_page.jsp"><fmt:message key="welcome_page.header.nav.my_page"/></a>	        
+	        <a class="nav" href="my_page.jsp"><fmt:message key="welcome_page.header.nav.my_page"/></a>	        
         </c:if>
       </nav>
     </header>

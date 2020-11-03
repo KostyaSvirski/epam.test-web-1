@@ -12,9 +12,9 @@ import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 import by.svirski.testweb.controller.command.ActionCommand;
 
-public class ChangeLocale implements ActionCommand {
+public class ChangeLocaleCommand implements ActionCommand {
 
-	public ChangeLocale() {
+	public ChangeLocaleCommand() {
 		// TODO Auto-generated constructor stub
 	}
 

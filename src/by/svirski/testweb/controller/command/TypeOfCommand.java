@@ -11,7 +11,10 @@ public enum TypeOfCommand {
 	COUNT_USERS_COMMAND(new CountUsersCommand()),
 	SHOW_CARS_COMMAND(new CarShowCommand()),
 	EDIT_INFO_COMMAND(new EditInfoCommand()),
-	CHANGE_LOCALE(new ChangeLocale());
+	CHANGE_LOCALE(new ChangeLocaleCommand()),
+	RENT_COMMAND(new RentCommand()),
+	SHOW_RENT_LIST_COMMAND(new ShowRentListCommand()),
+	RELEASE_ORDER_COMMAND(new ReleaseOrderCommand());
 	
 	private ActionCommand command;
 

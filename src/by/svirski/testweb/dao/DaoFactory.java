@@ -1,6 +1,7 @@
 package by.svirski.testweb.dao;
 
 import by.svirski.testweb.dao.abstracts.realisation.CarDAO;
+import by.svirski.testweb.dao.abstracts.realisation.OrderDAO;
 import by.svirski.testweb.dao.abstracts.realisation.SystemDAOImpl;
 import by.svirski.testweb.dao.abstracts.realisation.UserDAO;
 
@@ -11,6 +12,7 @@ public class DaoFactory {
 	private final UserDAO userDao = new UserDAO();
 	private final SystemDAOImpl siteDao = new SystemDAOImpl();
 	private final CarDAO carDao = new CarDAO();
+	private final OrderDAO orderDao = new OrderDAO();
 	
 	private DaoFactory() {
 	}
@@ -30,6 +32,12 @@ public class DaoFactory {
 	public SystemDAOImpl getSiteDao() {
 		return siteDao;
 	}
+
+	public OrderDAO getOrderDao() {
+		return orderDao;
+	}
+	
+	
 	
 	
 }

@@ -7,7 +7,7 @@ import by.svirski.testweb.util.validator.CustomValidator;
 
 public class DateValidator implements CustomValidator {
 
-	private final static String REG_EXP_DATE = "\\d{1,2}[.-]{1}\\d{1,2}[.-]{1}\\d{4}";
+	private final static String REG_EXP_DATE = "\\d{4}[.-]{1}\\d{1,2}[.-]{1}\\d{1,2}";
 	
 	public DateValidator() {
 		

@@ -22,13 +22,13 @@ public class CarDAO extends AbstractCarDAOImpl {
 	private static Logger logger = LogManager.getLogger(CarDAO.class);
 
 	private static final String SQL_REQUEST_ALL_CARS_SHOW = 
-			"select brand, model, class, power, engine, acceleration, drive_unit, fuel, cost, img, is_booked from car "
+			"select brand, model, class, power, engine, acceleration, drive_unit, fuel, cost, img, is_booked, car.id_car from car "
 			+ "left join book_list on book_list.id_car = car.id_car";
 	private static final String SQL_REQUEST_CLASS_CARS_SHOW = 
-			"select brand, model, class, power, engine, acceleration, drive_unit, fuel, cost, img, is_booked from car "
+			"select brand, model, class, power, engine, acceleration, drive_unit, fuel, cost, img, is_booked, car.id_car from car "
 			+ "left join book_list on book_list.id_car = car.id_car where class=?";
 	private static final String SQL_REQUEST_BRAND_CARS_SHOW = 
-			"select brand, model, class, power, engine, acceleration, drive_unit, fuel, cost, img, is_booked from car "
+			"select brand, model, class, power, engine, acceleration, drive_unit, fuel, cost, img, is_booked, car.id_car from car "
 			+ "left join book_list on book_list.id_car = car.id_car where brand=?";
 	
 	public CarDAO() {

@@ -14,7 +14,6 @@ import by.svirski.testweb.service.exception.ServiceException;
 public class UserServiceImpl implements CustomUserService{
 
 	public UserServiceImpl() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -55,8 +54,6 @@ public class UserServiceImpl implements CustomUserService{
 			throw new ServiceException(e); 
 		}
 		return updatedUser;
-	}
-
-	
+	}	
 	
 }
