@@ -19,15 +19,13 @@ import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.controller.command.ActionCommand;
 import by.svirski.testweb.service.CustomUserService;
 import by.svirski.testweb.service.ServiceFactory;
+import by.svirski.testweb.service.exception.InvalidParameterException;
 import by.svirski.testweb.service.exception.ServiceException;
-import by.svirski.testweb.util.validator.CustomValidator;
-import by.svirski.testweb.util.validator.impl.DateValidator;
-import by.svirski.testweb.util.validator.impl.PhoneValidator;
 import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 
 public class EditInfoCommand implements ActionCommand {
-	
+
 	private static Logger logger = LogManager.getLogger(EditInfoCommand.class);
 
 	public EditInfoCommand() {
@@ -37,66 +35,51 @@ public class EditInfoCommand implements ActionCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {
-		Map<UserType, String> userParametersMap = new EnumMap<TypeOfParameters.UserType, String>(TypeOfParameters.UserType.class);
+		Map<UserType, String> userParametersMap = new EnumMap<TypeOfParameters.UserType, String>(
+				TypeOfParameters.UserType.class);
+		User user = null;
 		try {
-			User user = (User) request.getSession().getAttribute(RequestParameters.USER);
-			if(user == null) {
+			user = (User) request.getSession().getAttribute(RequestParameters.USER);
+			if (user == null) {
 				logger.log(Level.FATAL, "пользователь не получен");
 				throw new RuntimeException("пользователь не получен");
 			}
-			userParametersMap.put(UserType.ID, Integer.toString(user.getId()));
-			userParametersMap.put(UserType.NAME, request.getParameter(RequestParameters.NAME));
-			userParametersMap.put(UserType.SURNAME, request.getParameter(RequestParameters.SURNAME));
-			userParametersMap.put(UserType.GENDER, request.getParameter(RequestParameters.GENDER));
-			userParametersMap.put(UserType.PASSPORT_ID, request.getParameter(RequestParameters.PASSPORT_ID));
-			userParametersMap.put(UserType.PASSPORT_NUMBER, request.getParameter(RequestParameters.PASSPORT_NUMBER));
-			CustomValidator validatorDate = new DateValidator();
-			if(validatorDate.validate(request.getParameter(RequestParameters.DATE_OF_BIRTH))) {
-				userParametersMap.put(UserType.DATE_OF_BIRTH, request.getParameter(RequestParameters.DATE_OF_BIRTH));				
-			} else {
-				logger.log(Level.INFO, "не валидная дата");
-				request.setAttribute(RequestParameters.COLLOR, "red");
-				request.setAttribute(RequestParameters.MESSAGE, "не валидная дата");
-				request.getServletContext().getRequestDispatcher(PagePath.EDIT_USER_PAGE).forward(request, response);
-				return;
-			}
-			CustomValidator validatorPhone = new PhoneValidator(); 
-			if(validatorPhone.validate(request.getParameter(RequestParameters.PHONE))) {
-				userParametersMap.put(UserType.PHONE_NUMBER, request.getParameter(RequestParameters.PHONE));				
-			} else {
-				logger.log(Level.INFO, "не валидный телефон");
-				request.setAttribute(RequestParameters.COLLOR, "red");
-				request.setAttribute(RequestParameters.MESSAGE, "не валидный телефон");
-				request.getServletContext().getRequestDispatcher(PagePath.EDIT_USER_PAGE).forward(request, response);
-				return;
-			}
-			
-			ServiceFactory factory = ServiceFactory.getInstance();
-			CustomUserService service = factory.getUserService();
-			try {
-				User updatedUser = service.editUser(userParametersMap);
-				if(updatedUser != null) {
-					request.getSession().removeAttribute(RequestParameters.USER);
-					request.getSession().setAttribute(RequestParameters.USER, updatedUser);					
-					request.getServletContext().getRequestDispatcher(PagePath.INDEX_PAGE).forward(request, response);
-				} else {
-					logger.log(Level.ERROR, "пользователь оказался null");
-					request.setAttribute(RequestParameters.ERROR, "что-то пошло не так");
-					response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);
-				}
-			} catch (ServiceException e) {
-				logger.log(Level.ERROR, "ошибка в сервисе");
-				request.setAttribute(RequestParameters.ERROR, e.getMessage());
-				response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);
-			}
-			
 		} catch (ClassCastException e) {
 			logger.log(Level.FATAL, "ошибка при касте пользователя");
 			request.setAttribute(RequestParameters.ERROR, "что-то пошло не так");
 			response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);
 		}
-		
-	}
+		userParametersMap.put(UserType.ID, Integer.toString(user.getId()));
+		userParametersMap.put(UserType.NAME, request.getParameter(RequestParameters.NAME));
+		userParametersMap.put(UserType.SURNAME, request.getParameter(RequestParameters.SURNAME));
+		userParametersMap.put(UserType.GENDER, request.getParameter(RequestParameters.GENDER));
+		userParametersMap.put(UserType.PASSPORT_ID, request.getParameter(RequestParameters.PASSPORT_ID));
+		userParametersMap.put(UserType.PASSPORT_NUMBER, request.getParameter(RequestParameters.PASSPORT_NUMBER));
+		userParametersMap.put(UserType.DATE_OF_BIRTH, request.getParameter(RequestParameters.DATE_OF_BIRTH));
+		userParametersMap.put(UserType.PHONE_NUMBER, request.getParameter(RequestParameters.PHONE));
+		ServiceFactory factory = ServiceFactory.getInstance();
+		CustomUserService service = factory.getUserService();
+		try {
+			User updatedUser = service.editUser(userParametersMap);
+			if (updatedUser != null) {
+				request.getSession().removeAttribute(RequestParameters.USER);
+				request.getSession().setAttribute(RequestParameters.USER, updatedUser);
+				response.sendRedirect(request.getContextPath() + PagePath.INDEX_PAGE);
+			} else {
+				logger.log(Level.ERROR, "пользователь оказался null");
+				request.setAttribute(RequestParameters.ERROR, "что-то пошло не так");
+				response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);
+			}
+		} catch (ServiceException e) {
+			logger.log(Level.ERROR, "ошибка в сервисе");
+			request.setAttribute(RequestParameters.ERROR, e.getMessage());
+			response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);
+		} catch (InvalidParameterException e) {
+			request.setAttribute(RequestParameters.COLLOR, "red");
+			request.setAttribute(RequestParameters.MESSAGE, e.getMessage());
+			request.getServletContext().getRequestDispatcher(PagePath.EDIT_USER_PAGE).forward(request, response);
+		}
 
+	}
 
 }

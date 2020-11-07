@@ -7,6 +7,7 @@ public final class RequestParameters {
 	
 	//LOCALE
 	public static final String LANGUAGE = "lang";
+	public static final String DEFAULT_LANG = "en_EN";
 	
 	//CONTROLLER
 	public static final String COMMAND = "command";

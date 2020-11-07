@@ -62,8 +62,8 @@
         </c:if>
         <p class="main_text3"><fmt:message key="welcome_page.title.count_users"/> ${count}</p> 
         <div class="en_ru">
-          <a class="sign-in" href="MainController?command=CHANGE_LOCALE&lang=en_EN">En</a>
-          <a class="sign-up" href="MainController?command=CHANGE_LOCALE&lang=ru_BY">Ru</a>
+          <a class="sign-in" href="MainController?command=CHANGE_LOCALE&lang=en_EN&currentPage=<c:url value="/index.jsp"/>">En</a>
+          <a class="sign-up" href="MainController?command=CHANGE_LOCALE&lang=ru_BY&currentPage=<c:url value="/index.jsp"/>">Ru</a>
         </div>
       </section>
 

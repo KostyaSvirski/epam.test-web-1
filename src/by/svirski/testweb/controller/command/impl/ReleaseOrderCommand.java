@@ -27,7 +27,6 @@ public class ReleaseOrderCommand implements ActionCommand {
 	private static Logger logger = LogManager.getLogger(ReleaseOrderCommand.class);
 	
 	public ReleaseOrderCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

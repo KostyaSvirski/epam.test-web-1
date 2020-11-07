@@ -31,10 +31,15 @@ public class UserBuilder implements Builder<User, UserType> {
 	@Override
 	public User build(Map<UserType, String> parameters) {
 		User user = new User();
-		user.setLogin(parameters.get(UserType.LOGIN));
-		user.setPassword(parameters.get(UserType.PASSWORD));
-		user.setBlocked(false);
-		user.setRoleInProject(RoleInProject.USER);
+		user.setId(Integer.parseInt(parameters.get(UserType.ID)));
+		user.setLogin(parameters.get(UserType.LOGIN));		
+		user.setBlocked(Boolean.parseBoolean(parameters.get(UserType.IS_BLOCKED)));
+		RoleInProject[] roles = RoleInProject.values();
+		for(RoleInProject role : roles) {
+			if(role.toString().equalsIgnoreCase(parameters.get(UserType.ROLE_IN_PROJECT))) {
+				user.setRoleInProject(role);
+			}
+		}
 		user.setEmail(parameters.get(UserType.EMAIL));
 		user.setName(parameters.get(UserType.NAME));
 		user.setSurname(parameters.get(UserType.SURNAME));

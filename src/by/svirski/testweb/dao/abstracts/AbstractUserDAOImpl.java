@@ -92,16 +92,19 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Map<TypeOfParameters.UserType, String> parametersMap = new HashMap<TypeOfParameters.UserType, String>();
+				parametersMap.put(UserType.ID, Integer.toString(rs.getInt(1)));
 				parametersMap.put(UserType.LOGIN, rs.getString(2));
-				parametersMap.put(UserType.PASSWORD, rs.getString(3));
-				parametersMap.put(UserType.SURNAME, rs.getString(5));
-				parametersMap.put(UserType.NAME, rs.getString(6));
-				parametersMap.put(UserType.GENDER, rs.getString(7));
-				parametersMap.put(UserType.PASSPORT_ID, rs.getString(8));
-				parametersMap.put(UserType.PASSPORT_NUMBER, rs.getString(9));
-				parametersMap.put(UserType.DATE_OF_BIRTH, rs.getString(10));
-				parametersMap.put(UserType.EMAIL, rs.getString(11));
-				parametersMap.put(UserType.PHONE_NUMBER, rs.getString(12));
+				parametersMap.put(UserType.SURNAME, rs.getString(3));
+				parametersMap.put(UserType.NAME, rs.getString(4));
+				parametersMap.put(UserType.GENDER, rs.getString(5));
+				parametersMap.put(UserType.PASSPORT_ID, rs.getString(6));
+				parametersMap.put(UserType.PASSPORT_NUMBER, rs.getString(7));
+				parametersMap.put(UserType.DATE_OF_BIRTH, rs.getString(8));
+				parametersMap.put(UserType.EMAIL, rs.getString(9));
+				parametersMap.put(UserType.PHONE_NUMBER, rs.getString(10));
+				parametersMap.put(UserType.ROLE_IN_PROJECT, rs.getString(11));
+				parametersMap.put(UserType.IS_BLOCKED, rs.getString(12));
+				
 				Builder<User, UserType> builder = new UserBuilder();
 				User user = builder.build(parametersMap);
 				listOfBeans.add(user);

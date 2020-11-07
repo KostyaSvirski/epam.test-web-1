@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 import by.svirski.testweb.controller.command.ActionCommand;
 
@@ -25,7 +24,8 @@ public class ChangeLocaleCommand implements ActionCommand {
 		session.removeAttribute(RequestParameters.LANGUAGE);
 		String newLocale = request.getParameter(RequestParameters.LANGUAGE);
 		session.setAttribute(RequestParameters.LANGUAGE, newLocale);
-		request.getServletContext().getRequestDispatcher(PagePath.INDEX_PAGE).forward(request, response);
+		String page = request.getParameter(RequestParameters.CURRENT_PAGE);
+		response.sendRedirect(page);
 	}
 
 }

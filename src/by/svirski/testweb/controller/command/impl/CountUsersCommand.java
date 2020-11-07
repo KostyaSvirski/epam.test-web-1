@@ -17,7 +17,7 @@ import by.svirski.testweb.controller.RequestParameters;
 public class CountUsersCommand implements ActionCommand {
 	
 	public CountUsersCommand() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override

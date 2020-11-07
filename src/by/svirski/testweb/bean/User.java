@@ -6,7 +6,6 @@ public class User{
 	
 	private int id;
 	private String login;
-	private String password;
 	private boolean isBlocked;
 	private RoleInProject roleInProject;
 	private String name;
@@ -22,14 +21,12 @@ public class User{
 		
 	}
 
-	
-	public User(int id, String login, String password, boolean isBlocked, RoleInProject roleInProject, String name,
-			String surname, String passportId, String passportNumber, Calendar dateOfBirth, String email,
-			String phoneNumber, Gender gender) {
+	public User(int id, String login, boolean isBlocked, RoleInProject roleInProject, String name, String surname,
+			String passportId, String passportNumber, Calendar dateOfBirth, String email, String phoneNumber,
+			Gender gender) {
 		super();
 		this.id = id;
 		this.login = login;
-		this.password = password;
 		this.isBlocked = isBlocked;
 		this.roleInProject = roleInProject;
 		this.name = name;
@@ -46,24 +43,16 @@ public class User{
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getLogin() {
 		return login;
-	}
-
-	public String getPassword() {
-		return password;
 	}
 
 	public boolean isBlocked() {
 		return isBlocked;
 	}
 
-	public String getRoleInProject() {
-		return roleInProject.toString();
+	public RoleInProject getRoleInProject() {
+		return roleInProject;
 	}
 
 	public String getName() {
@@ -103,16 +92,16 @@ public class User{
 		return phoneNumber;
 	}
 
-	public String getGender() {
-		return gender.toString();
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setLogin(String login) {
 		this.login = login;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public void setBlocked(boolean isBlocked) {
@@ -155,7 +144,6 @@ public class User{
 		this.gender = gender;
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -169,13 +157,11 @@ public class User{
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((passportId == null) ? 0 : passportId.hashCode());
 		result = prime * result + ((passportNumber == null) ? 0 : passportNumber.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
 		result = prime * result + ((roleInProject == null) ? 0 : roleInProject.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -240,13 +226,6 @@ public class User{
 		} else if (!passportNumber.equals(other.passportNumber)) {
 			return false;
 		}
-		if (password == null) {
-			if (other.password != null) {
-				return false;
-			}
-		} else if (!password.equals(other.password)) {
-			return false;
-		}
 		if (phoneNumber == null) {
 			if (other.phoneNumber != null) {
 				return false;
@@ -267,7 +246,6 @@ public class User{
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -275,8 +253,6 @@ public class User{
 		builder.append(id);
 		builder.append(", login=");
 		builder.append(login);
-		builder.append(", password=");
-		builder.append(password);
 		builder.append(", isBlocked=");
 		builder.append(isBlocked);
 		builder.append(", roleInProject=");

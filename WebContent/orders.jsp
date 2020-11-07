@@ -53,7 +53,7 @@
                    <p class="el">${order.dateOfStart} - ${order.dateOfFinish}</p>
                    <p class="el">${order.carBrand} ${order.carModel}</p>
                    <c:if test="${order.condition == 'обрабатывается'}">
-	                   <p style="collor: yellow" class="el" style="collor: yellow">${order.condition}</p>                   
+	                   <p class="el" ><font color = "yellow">${order.condition}</font></p>                    
 	                   <form action="MainController" method="POST">
 	                   	   <input type="hidden" name="command" value="RELEASE_ORDER_COMMAND">
 	                   	   <input type="hidden" name="order_id" value="${order.id}">
@@ -61,7 +61,7 @@
 	                   </form>
                    </c:if>
                    <c:if test="${order.condition == 'одобрено'}">
-	                   <p style="collor: green" class="el" >${order.condition}</p>
+	                   <p class="el" ><font color = "green">${order.condition}</font></p> 
 	                   <form action="MainController" method="POST">
 	                   	   <input type="hidden" name="command" value="RELEASE_ORDER_COMMAND">
 	                   	   <input type="hidden" name="order_id" value="${order.id}">
@@ -69,11 +69,11 @@
 	                   </form>                   
                    </c:if>
 				   <c:if test="${order.condition == 'отказано'}">
-	                   <p style="collor: red" class="el" >${order.condition}</p>
+	                   <p class="el"><font color = "red">${order.condition}</font></p>
 	                   <p>${coase}</p>                   
                    </c:if>
                    <c:if test="${order.condition == 'завершено'}">
-	                   <p style="collor: black" class="el" >${order.condition}</p>                   
+	                   <p class="el" ><font color = "black">${order.condition}</font></p>                   
                    </c:if>
                   </div>
                 </section>

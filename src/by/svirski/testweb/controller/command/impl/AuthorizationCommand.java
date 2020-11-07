@@ -2,7 +2,7 @@ package by.svirski.testweb.controller.command.impl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -19,7 +19,6 @@ import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 
 public class AuthorizationCommand implements ActionCommand {
-			
 
 	public AuthorizationCommand() {
 		// TODO Auto-generated constructor stub
@@ -28,11 +27,12 @@ public class AuthorizationCommand implements ActionCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {
-		request.setCharacterEncoding(RequestParameters.CHAR_ENCODDING);
-		if (request.getParameter(RequestParameters.LOGIN) != null && request.getParameter(RequestParameters.PASSWORD) != null) {
+		if (request.getParameter(RequestParameters.LOGIN) != null
+				&& request.getParameter(RequestParameters.PASSWORD) != null) {
 			String login = request.getParameter(RequestParameters.LOGIN);
 			String password = Integer.toString(encryptPassword(request.getParameter(RequestParameters.PASSWORD)));
-			Map<TypeOfParameters.UserType, String> mapParameters = new HashMap<TypeOfParameters.UserType, String>();
+			Map<TypeOfParameters.UserType, String> mapParameters = new EnumMap<TypeOfParameters.UserType, String>(
+					TypeOfParameters.UserType.class);
 			mapParameters.put(TypeOfParameters.UserType.PASSWORD, password);
 			mapParameters.put(TypeOfParameters.UserType.LOGIN, login);
 			ServiceFactory factory = ServiceFactory.getInstance();

@@ -40,18 +40,18 @@
 		<input type="text" value="${sessionScope.user.surname}" name="surname" required>
 		<input type="text" value="${sessionScope.user.name}" name="name" required>
 		<div class="radio">
-			<c:if test="${sessionScope.user.gender == 'Мужчина'}">
+			<c:if test="${sessionScope.user.gender == 'MALE'}">
 				<input type="radio" name="gender" value="male" checked><fmt:message key="edit_user.edit.male"/>
 				<input type="radio" name="gender" value="female"><fmt:message key="edit_user.edit.female"/><br>			
 			</c:if>
-			<c:if test="${sessionScope.user.gender == 'Женщина'}">
+			<c:if test="${sessionScope.user.gender == 'FEMALE'}">
 				<input type="radio" name="gender" value="male"><fmt:message key="edit_user.edit.male"/>
 				<input type="radio" name="gender" value="female" checked><fmt:message key="edit_user.edit.female"/><br>
 			</c:if>
 		</div>
 		<input  type="text" value="${sessionScope.user.passportId}" name="passport_id" required>
 		<input type="text" value="${sessionScope.user.passportNumber}" name="passport_number" required>
-		<input type="text" value="${sessionScope.user.dateOfBirth}" name="date_of_birth" required>
+		<input type="date" value="${sessionScope.user.dateOfBirth}" name="date_of_birth" required>
 		<input type="text" value="${sessionScope.user.phoneNumber}" name="phone" required>
 		<input type="submit" value = "<fmt:message key="edit_user.edit.button.confirm"/>">
 		<p style="color: ${collor}; text-align: center">${message}</p>

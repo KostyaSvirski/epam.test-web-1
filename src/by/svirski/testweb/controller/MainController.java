@@ -23,7 +23,6 @@ public class MainController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		String commandToExecute = request.getParameter(COMMAND);
 		CommandProvider provider = new CommandProvider();
 		ActionCommand command = provider.defineCommand(commandToExecute);
