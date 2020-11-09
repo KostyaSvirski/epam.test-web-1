@@ -247,7 +247,7 @@ public class Car {
 		builder.append(cost);
 		builder.append(", image=");
 		builder.append(image);
-		builder.append(", isBooked=");
+		builder.append(", isBoocked=");
 		builder.append(isBooked);
 		builder.append("]");
 		return builder.toString();

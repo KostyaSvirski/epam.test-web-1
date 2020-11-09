@@ -12,12 +12,12 @@ import by.svirski.testweb.controller.RequestParameters;
  *
  */
 @WebListener
-public class SessionListener implements HttpSessionListener {
+public class SessionListenerImpl implements HttpSessionListener {
 
     /**
      * Default constructor. 
      */
-    public SessionListener() {
+    public SessionListenerImpl() {
         
     }
 
@@ -27,7 +27,6 @@ public class SessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se)  { 
          HttpSession session = se.getSession();
          session.setAttribute(RequestParameters.LANGUAGE, RequestParameters.DEFAULT_LANG);
-         
     }
 
 	/**

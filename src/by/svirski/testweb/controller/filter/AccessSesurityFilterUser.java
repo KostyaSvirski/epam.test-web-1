@@ -21,15 +21,15 @@ import by.svirski.testweb.controller.UrlPatterns;
 /**
  * Servlet Filter implementation class AccessSesurity
  */
-@WebFilter(urlPatterns = { UrlPatterns.URL_PATTERN_MY_PAGE, UrlPatterns.URL_PATTERN_EDIT_USER,
-		UrlPatterns.URL_PATTERN_ERROR_PAGE, UrlPatterns.URL_PATTERN_ORDERS, UrlPatterns.URL_PATTERN_RENT_AUTO,
-		UrlPatterns.URL_PATTERN_SIGN_OUT }, initParams = {
+@WebFilter(urlPatterns = { UrlPatterns.MY_PAGE, UrlPatterns.EDIT_USER,
+		UrlPatterns.ERROR_PAGE, UrlPatterns.ORDERS, UrlPatterns.RENT_AUTO,
+		UrlPatterns.SIGN_OUT }, initParams = {
 				@WebInitParam(name = "page", value = PagePath.SIGN_IN_PAGE) })
-public class AccessSesurityFilter implements Filter {
+public class AccessSesurityFilterUser implements Filter {
 
 	private String page;
 	
-	public AccessSesurityFilter() {
+	public AccessSesurityFilterUser() {
 	}
 
 	/**

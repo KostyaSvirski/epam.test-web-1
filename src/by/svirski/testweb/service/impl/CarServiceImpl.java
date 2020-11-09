@@ -27,11 +27,7 @@ public class CarServiceImpl implements CustomCarService {
 		AbstractCarDAOImpl carDao = factory.getCarDao();
 		try {
 			List<Car> carList = null;
-			if (parametersMap.isEmpty()) {
-				carList = carDao.showAllCars();
-			} else {
-				carList = carDao.showBrandOrClassCars(parametersMap);
-			}
+			carList = carDao.showCars(parametersMap);
 			return carList;
 		} catch (DaoException e) {
 			throw new ServiceException(e);

@@ -16,7 +16,7 @@ import by.svirski.testweb.controller.UrlPatterns;
 /**
  * Servlet Filter implementation class RedirectSecurityFilter
  */
-@WebFilter(urlPatterns = { UrlPatterns.URL_PATTERN_ALL }, initParams = {
+@WebFilter(urlPatterns = { UrlPatterns.ALL }, initParams = {
 		@WebInitParam(name = "encoding", value = "UTF-8") })
 public class EncodingFilter implements Filter {
 	
@@ -41,7 +41,6 @@ public class EncodingFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
 		request.setCharacterEncoding(encoding);
 		response.setCharacterEncoding(encoding);
 		chain.doFilter(request, response);

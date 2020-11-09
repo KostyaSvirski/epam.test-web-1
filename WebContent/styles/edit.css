@@ -1,3 +1,19 @@
+.lang {
+  width: 7.1%;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  margin: 1.5vh 0vh 0vh 0vh;
+  padding: 3vh 0vh;
+  transition: all 0.3s;
+  font-size: 1.1875rem;
+  font-family: "Inconsolata", monospace;
+  color: #f2f4f4;
+}
+.lang:hover {
+  color: #f25a14;
+  box-shadow: 0vh -0.5vh 0vh #f25a14 inset;
+}
 body {
   margin: 0;
   height: 100vh;

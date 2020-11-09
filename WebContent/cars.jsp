@@ -40,10 +40,50 @@
          	<c:if test="${sessionScope.user.login != null}">
 	        	<a class="nav" href="my_page.jsp"><fmt:message key="welcome_page.header.nav.my_page"/></a>	        
         	</c:if>
+        	<a class="lang" href="MainController?command=CHANGE_LOCALE&lang=en_EN&currentPage=<c:url value="/cars.jsp"/>">En</a>
+        	<a class="lang" href="MainController?command=CHANGE_LOCALE&lang=ru_BY&currentPage=<c:url value="/cars.jsp"/>">Ru</a>
 		</nav>
 	</header>
 
 	<main class="main">
+	 <section class="filter">
+	 	<form class = "sort-form" action="MainController" method="GET">
+			<input type="hidden" name="command" value="SHOW_CARS_COMMAND">
+           <select class="inner" id="brand-of-car" name="BRAND" >
+             <option class="opt1" value="">Car Brands</option>
+             <option class="opt" value="Mercedes-Benz">MERCEDES</option>
+             <option class="opt" value="BMW">BMW</option>
+             <option class="opt" value="Audi">AUDI</option>
+             <option class="opt" value="Porsche">PORSCHE</option>
+             <option class="opt" value="Bentley">BENTLEY</option>
+             <option class="opt" value="Rolls Royce">ROLLS ROYCE</option>
+             <option class="opt" value="Range Rover">RANGE ROVER</option>
+             <option class="opt" value="Ferrari">FERRARI</option>
+             <option class="opt" value="Lamborghini">LAMBORGHINI</option>
+             <option class="opt" value="Ford">FORD</option>
+             <option class="opt" value="Chevrolet">CHEVROLET</option>
+             <option class="opt" value="Nissan">NISSAN</option>
+           </select>
+           <select class="inner" id="class-of-car" name="CLASS">
+             <option class="opt1" value="">Class</option>
+             <option class="opt" value="Суперкар">Sports cars</option>
+             <option class="opt" value="Внедорожник">SUVs</option>
+             <option class="opt" value="Представительская">Executive class</option>
+             <option class="opt" value="Кабриолет">Convertibles</option>
+           </select>
+           <select class="inner" id="cost-of-car" name="COST" >
+             <option class="opt1" value="">Cost</option>
+             <option class="opt" value="200.00-400.00">200$-400$</option>
+             <option class="opt" value="400.00-600.00">400$-600$</option>
+             <option class="opt" value="600.00-1000.00">600$-1000$</option>
+           </select>
+           <select class="inner" id="status-of-car" name="IS_BOOKED">
+             <option class="opt1" value="">Status</option>
+             <option class="opt" value="false">Available</option>
+           </select>
+           <input class="submit-button" type="submit" value="CONFIRM">
+		</form>
+    </section>
 	<c:forEach var="car" items="${requestScope.cars}">
 		<section class="info">
 			<img
@@ -144,5 +184,25 @@
 			</div>
 		</section>
 	</footer>
+	<script> 
+		/* document.getElementById('brand-of-car').addEventListener('change', function() {
+		  const brand = this.value;
+		  document.querySelector('.brand-hidden').value = brand;
+		})
+		
+		document.getElementById('class-of-car').addEventListener('change', function() {
+		  const classOfCar = this.value;
+		  document.querySelector('.class-hidden').value = classOfCar;		  
+		})
+		document.getElementById('status-of-car').addEventListener('change', function() {
+		  const status = this.value;
+		  document.querySelector('.status-hidden').value = status;
+		})
+		document.getElementById('cost-of-car').addEventListener('change', function() {
+		  const cost = this.value;
+		  document.querySelector('.cost-hidden').value = cost;
+		}) */
+		
+	</script>
 </body>
 </html>

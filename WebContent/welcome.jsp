@@ -87,25 +87,25 @@
         <div class="container">
             <div class="cards">
                 <div class="card">
-                    <a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Суперкар">
+                    <a href="MainController?command=SHOW_CARS_COMMAND&CLASS=Суперкар">
                         <h3><fmt:message key="welcome_page.autopark.cars.sport"/></h3>
                     <img src="https://i.imgur.com/oq3oyx3.jpg" alt="">
                     </a>
                 </div>
                 <div class="card">
-                  	<a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Внедорожник">
+                  	<a href="MainController?command=SHOW_CARS_COMMAND&CLASS=Внедорожник">
                     	<h3><fmt:message key="welcome_page.autopark.cars.suvs"/></h3>
                     <img src="https://i.imgur.com/T4SfXoP.jpg" alt="">
                   	</a>
                 </div>
                 <div class="card">
-                  	<a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Представительская">
+                  	<a href="MainController?command=SHOW_CARS_COMMAND&CLASS=Представительская">
                     	<h3><fmt:message key="welcome_page.autopark.cars.prem"/></h3>
                     <img src="https://i.imgur.com/tXE6BcT.jpg" alt="">
                   	</a>
                 </div>
                 <div class="card">
-                  	<a href="MainController?command=SHOW_CARS_COMMAND&CAR_CLASS=Кабриолет">
+                  	<a href="MainController?command=SHOW_CARS_COMMAND&CLASS=Кабриолет">
                     	<h3><fmt:message key="welcome_page.autopark.cars.cabrio"/></h3>
                     <img src="https://i.imgur.com/cpjy3r8.jpg" alt="">
                   	</a>
@@ -166,8 +166,8 @@
               <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=BMW">BMW</a></li>
               <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Audi">AUDI</a></li>
               <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Porsche">PORSCHE</a></li>
-              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Audi">BENTLEY</a></li>
-              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Audi">ROLLS ROYCE</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Bentley">BENTLEY</a></li>
+              <li><a class="spis_a" href="MainController?command=SHOW_CARS_COMMAND&BRAND=Rolls Royce">ROLLS ROYCE</a></li>
             </section>
           </ul>
           <ul class="list3b">

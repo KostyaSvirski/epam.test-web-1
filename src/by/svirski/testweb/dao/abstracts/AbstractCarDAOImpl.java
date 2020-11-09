@@ -48,9 +48,13 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car, CarType> {
 		try {
 			try {
 				ps = cn.prepareStatement(request);
-				if (parameters != null) {
+				if (!parameters.isEmpty()) {
 					for (int i = 1; i <= parameters.size(); i++) {
-						ps.setString(i, parameters.get(i - 1));
+						try {
+							ps.setLong(i, Long.parseLong(parameters.get(i - 1)));							
+						} catch(NumberFormatException e) {
+							ps.setString(i, parameters.get(i - 1));							
+						}
 					}
 				}
 			} catch (SQLException e) {
@@ -65,7 +69,7 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car, CarType> {
 					Map<CarType, String> parametersMap = new HashMap<TypeOfParameters.CarType, String>();
 					parametersMap.put(CarType.BRAND, rs.getString(1));
 					parametersMap.put(CarType.MODEL, rs.getString(2));
-					parametersMap.put(CarType.CAR_CLASS, rs.getString(3));
+					parametersMap.put(CarType.CLASS, rs.getString(3));
 					parametersMap.put(CarType.POWER, rs.getString(4));
 					parametersMap.put(CarType.ENGINE, rs.getString(5));
 					parametersMap.put(CarType.ACCELERATION, rs.getString(6));
@@ -73,7 +77,7 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car, CarType> {
 					parametersMap.put(CarType.FUEL, rs.getString(8));
 					parametersMap.put(CarType.COST, Long.toString(rs.getLong(9)));
 					parametersMap.put(CarType.IMG, rs.getString(10));
-					parametersMap.put(CarType.IS_BOOCKED, Boolean.toString(rs.getBoolean(11)));
+					parametersMap.put(CarType.IS_BOOKED, Boolean.toString(rs.getBoolean(11)));
 					parametersMap.put(CarType.ID, Integer.toString(rs.getInt(12)));
 					Car car = builder.build(parametersMap);
 					carList.add(car);
@@ -119,7 +123,6 @@ public abstract class AbstractCarDAOImpl implements BeanDao<Car, CarType> {
 		}
 	}
 
-	public abstract List<Car> showAllCars() throws DaoException;
-	public abstract List<Car> showBrandOrClassCars(Map<CarType, String> parametersMap) throws DaoException;
+	public abstract List<Car> showCars(Map<CarType, String> parametersMap) throws DaoException;
 	
 }

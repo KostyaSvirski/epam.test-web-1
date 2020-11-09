@@ -41,10 +41,12 @@
            <a class="nav" href="index.jsp#carBrands"><fmt:message key="welcome_page.header.nav.car_brands"/></a>
            <a class="nav" href="index.jsp#contacts"><fmt:message key="welcome_page.header.nav.contacts"/></a>
            <a class="nav" href="#"><fmt:message key="welcome_page.header.nav.my_page"/></a>
+           <a class="lang" href="MainController?command=CHANGE_LOCALE&lang=en_EN&currentPage=<c:url value="/my_page.jsp"/>">En</a>
+           <a class="lang" href="MainController?command=CHANGE_LOCALE&lang=ru_BY&currentPage=<c:url value="/my_page.jsp"/>">Ru</a>
          </nav>
        </header>
        <main>
-         <section class="info">
+         <section class="info" id="orders-info">
           <h2 id="info_h2"><fmt:message key="my_page.profile"/></h2>
           <div class="decor">
             <div class="inner">
@@ -58,19 +60,44 @@
             </div>
             <a href = "edit_user.jsp" class="button"> <fmt:message key="my_page.profile.button.edit"/> </a>
             <a href = "sign_out.jsp" class="button"> <fmt:message key="my_page.profile.button.log_out"/> </a>
-          </div>
+          </div>  
+          
+          
          </section>
          <section class="info" id="orders-info">
-         <h2 id="info_h2"><fmt:message key="my_page.orders"/></h2>
-         <div class="decor">
- 			<form action="MainController" method="POST">
-            	<input type="hidden" name="command" value="SHOW_RENT_LIST_COMMAND">
-                <input type="submit" id="button-form" value="ORDERS">
-            </form>         
-          </div>
-           
+         <c:if test="${sessionScope.user.roleInProject == 'ADMIN'}">
+	         <h2 id="info_h2"><fmt:message key="my_page.orders"/></h2>
+	         <div class="decor">
+	 			<form action="MainController" method="POST">
+	            	<input type="hidden" name="command" value="SHOW_RENT_LIST_COMMAND">
+	                <input type="submit" id="button-form" value="ORDERS">
+	            </form>         
+	          </div>
+	         <h2 id="info_h2" class="a1">SHOW ALL USERS</h2>
+	         <div class="decor">
+	 			<form action="MainController" method="POST">
+	            	<input type="hidden" name="command" value="SHOW_RENT_LIST_COMMAND">
+	                <input type="submit" id="button-form" value="SHOW ALL USERS">
+	            </form>         
+	          </div>
+	          <h2 id="info_h2" class="a1">ADD CARS</h2>
+	          <div class="decor">
+	 			<form action="MainController" method="POST">
+	            	<input type="hidden" name="command" value="SHOW_RENT_LIST_COMMAND">
+	                <input type="submit" id="button-form" value="ADD CARS">
+	            </form>         
+	          </div>  
+          </c:if>
+          <c:if test="${sessionScope.user.roleInProject == 'USER'}">
+             <h2 id="info_h2"><fmt:message key="my_page.orders"/></h2>
+	         <div class="decor">
+	 			<form action="MainController" method="POST">
+	            	<input type="hidden" name="command" value="SHOW_RENT_LIST_COMMAND">
+	                <input type="submit" id="button-form" value="ORDERS">
+	            </form>         
+	          </div>
+          </c:if>         
           </section>
-         </section>
        </main>
 </body>
 </html>    

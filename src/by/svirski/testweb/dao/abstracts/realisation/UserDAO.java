@@ -26,18 +26,21 @@ public class UserDAO extends AbstractUserDAOImpl {
 
 	private static final String REGISTRATE_USER_MAIN = "INSERT INTO USERS (login, password) VALUES (?, ?)";
 	private static final String FIND_ID_USER = "select (id) from users where login = ?";
-	private static final String REGISTRATE_USER_PERSONAL = "insert into personal (id_user, surname, name, gender, passport_id, passport_number, date_of_birth, email, phone) values"
+	private static final String REGISTRATE_USER_PERSONAL = "insert into personal "
+			+ "(id_user, surname, name, gender, passport_id, passport_number, date_of_birth, email, phone)"
+			+ " values"
 			+ "	(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String REGISTRATE_STATUS = "insert into status_in_project (id, is_blocked) values (?, ?)";
 	private static final String REGISTRATE_ROLE = "insert into role_in_project (id, role) values (?, ?)";
 	private static final String CHECK_REGISTRATION = "select (id) from users where login = ? and password = ?";
 	private static final String SELECT_USER = "select users.id, users.login,"
-			+ "	personal.surname, personal.name, personal.gender, personal.passport_id,"
-			+ " personal.passport_number, personal.date_of_birth,"
-			+ "	personal.email, personal.phone, role_in_project.role, status_in_project.is_blocked"
-			+ "	from users join personal join role_in_project join status_in_project on"
-			+ " users.id = personal.id_user = role_in_project.id = status_in_project.id where users.id = ?";
-	
+			+ " personal.surname, personal.name, personal.gender, personal.passport_id,"
+			+ " personal.passport_number, personal.date_of_birth, personal.email, personal.phone,"
+			+ " role_in_project.role, status_in_project.is_blocked from users inner join personal inner join status_in_project"
+			+ " right join role_in_project  on users.id = personal.id_user and role_in_project.id = status_in_project.id and"
+			+ "	personal.id_user = role_in_project.id" 
+			+ "	where users.id = ?";
+
 	private static final String UPDATE_USER = "update personal join users on personal.id_user = users.id set personal.name=?,"
 			+ " personal.surname=?, personal.gender=?, personal.passport_id=?, "
 			+ "personal.passport_number=?, personal.date_of_birth=?, personal.phone=? where users.id=?";
@@ -77,7 +80,7 @@ public class UserDAO extends AbstractUserDAOImpl {
 		}
 	}
 
-	//FIXME 2020.11.06. 12:44 buitify
+	// FIXME 2020.11.06. 12:44 buitify
 	@Override
 	public boolean registrateUser(Map<UserType, String> parameters) throws DaoException {
 		Connection cn = null;

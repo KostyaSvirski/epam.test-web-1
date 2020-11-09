@@ -26,7 +26,7 @@ public class CarBuilder implements Builder<Car, CarType> {
 			car.setId(Integer.parseInt(parameters.get(CarType.ID)));
 			car.setBrand(parameters.get(CarType.BRAND));
 			car.setModel(parameters.get(CarType.MODEL));
-			car.setCarClass(parameters.get(CarType.CAR_CLASS));
+			car.setCarClass(parameters.get(CarType.CLASS));
 			car.setPower(Integer.parseInt(parameters.get(CarType.POWER)));
 			car.setEngine(parameters.get(CarType.ENGINE));
 			car.setAcceleration(Float.parseFloat(parameters.get(CarType.ACCELERATION)));
@@ -56,7 +56,7 @@ public class CarBuilder implements Builder<Car, CarType> {
 			}
 			car.setCost(Long.parseLong(parameters.get(CarType.COST)));
 			car.setImage(parameters.get(CarType.IMG));
-			car.setBooked(Boolean.parseBoolean(parameters.get(CarType.IS_BOOCKED)));
+			car.setBooked(Boolean.parseBoolean(parameters.get(CarType.IS_BOOKED)));
 		} catch (NumberFormatException e) {
 			logger.log(Level.INFO, "ошибка при парсинге", e);
 		}

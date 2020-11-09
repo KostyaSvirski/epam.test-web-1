@@ -13,12 +13,6 @@ public enum RoleInProject {
 		public String toString() {
 			return "user";
 		}
-	},
-	VIP {
-		@Override
-		public String toString() {
-			return "vip";
-		}
 	};
 	
 	public abstract String toString();

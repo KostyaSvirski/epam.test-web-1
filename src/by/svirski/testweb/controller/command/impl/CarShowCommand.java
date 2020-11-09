@@ -50,7 +50,7 @@ public class CarShowCommand implements ActionCommand {
 		Map<String, String[]> parametersFromPage = request.getParameterMap();
 		CarType[] carTypeValues = CarType.values();
 		for (Entry<String, String[]> entry : parametersFromPage.entrySet()) {
-			if (entry.getValue() != null && !entry.getValue()[0].isBlank() && !entry.getValue()[0].isEmpty()) {
+			if (entry.getValue() != null && (!entry.getValue()[0].isBlank() || !entry.getValue()[0].isEmpty())) {
 				for (CarType type : carTypeValues) {
 					if (type.name().equalsIgnoreCase(entry.getKey())) {
 						parametersMap.put(type, entry.getValue()[0]);
