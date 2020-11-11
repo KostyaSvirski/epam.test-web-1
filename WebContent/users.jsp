@@ -56,14 +56,14 @@
                   	<input class="name" type="submit" value="${user.name} ${user.surname}"/>
                   </form>
                   <div class="info_about_rent">
-                   <p class="el">${user.email}</p>
+                   <p class="el">Email: ${user.email}</p>
                    <c:if test="${user.isBlocked == true}">
-	                   <p class="el">Blocked</p>               
+	                   <p class="el">status: Blocked</p>               
                    </c:if>
                    <c:if test="${user.isBlocked == false}">
-	                   <p class="el">Active</p>               
+	                   <p class="el">Status: Active</p>               
                    </c:if>
-                   <p class="el">${user.roleInProject}</p>
+                   <p class="el">Role: ${user.roleInProject}</p>
                    <c:if test="${user.roleInProject != 'ADMIN'}">
 	                   <form action="MainController" method="GET">
 		                  <input type="hidden" name="command" value="MAKE_ADMIN_COMMAND"/>

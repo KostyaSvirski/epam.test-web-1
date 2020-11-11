@@ -57,6 +57,19 @@ public class AdminServiceImpl implements CustomAdminService {
 	}
 
 	@Override
+	public boolean makeAdmin(Map<UserType, String> parametersMap) throws ServiceException {
+		DaoFactory factory = DaoFactory.getInstance();
+		AbstractUserDAOImpl dao = factory.getUserDao();
+		boolean flag = false;
+		try {
+			flag = dao.makeAdmin(parametersMap);
+		} catch (DaoException e) {
+			throw new ServiceException("ошибка в дао");
+		}
+		return flag;
+	}
+
+	@Override
 	public List<Order> showAllOrders() {
 		// TODO Auto-generated method stub
 		return null;

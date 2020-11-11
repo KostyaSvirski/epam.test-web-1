@@ -18,4 +18,6 @@ public interface CustomAdminService {
 	boolean addCar(Map<CarType, String> parametersMap) throws ServiceException;
 	
 	boolean blockOrUnblockUser(Map<UserType, String> parametersMap) throws ServiceException;
+	
+	boolean makeAdmin(Map<UserType, String> parametersMap) throws ServiceException;
 }

@@ -18,7 +18,8 @@ public enum TypeOfCommand {
 	SHOW_USERS_RENT_LIST_COMMAND(new ShowUsersRentListCommand()),
 	SHOW_USERS_COMMAND(new ShowUsersCommand()),
 	ADD_CARS_COMMAND(new AddCarCommand()),
-	BLOCK_UNBLOCK_COMMAND(new BlockOrUnblockCommand());
+	BLOCK_UNBLOCK_COMMAND(new BlockOrUnblockCommand()),
+	MAKE_ADMIN_COMMAND(new MakeAdminCommand());
 	
 	private ActionCommand command;
 

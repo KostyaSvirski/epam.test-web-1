@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import org.apache.logging.log4j.Level;
 
 import by.svirski.testweb.bean.User;
@@ -18,19 +19,22 @@ import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.dao.abstracts.AbstractUserDAOImpl;
 import by.svirski.testweb.dao.exception.ConnectionPoolException;
 import by.svirski.testweb.dao.exception.DaoException;
+import by.svirski.testweb.dao.exception.TransactionException;
 import by.svirski.testweb.dao.pool.ConnectionPool;
 
 public class UserDAO extends AbstractUserDAOImpl {
 
 	private final Logger logger = LogManager.getLogger(UserDAO.class);
 
+	// INSERT
 	private static final String REGISTRATE_USER_MAIN = "INSERT INTO USERS (login, password) VALUES (?, ?)";
-	private static final String FIND_ID_USER = "select (id) from users where login = ?";
 	private static final String REGISTRATE_USER_PERSONAL = "insert into personal "
 			+ "(id_user, surname, name, gender, passport_id, passport_number, date_of_birth, email, phone)" + " values"
 			+ "	(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String REGISTRATE_STATUS = "insert into status_in_project (id, is_blocked) values (?, ?)";
 	private static final String REGISTRATE_ROLE = "insert into role_in_project (id, role) values (?, ?)";
+
+	// SELECT
 	private static final String CHECK_REGISTRATION = "select (id) from users where login = ? and password = ?";
 	private static final String SELECT_USER = "select users.id, users.login,"
 			+ " personal.surname, personal.name, personal.gender, personal.passport_id,"
@@ -38,20 +42,24 @@ public class UserDAO extends AbstractUserDAOImpl {
 			+ " role_in_project.role, status_in_project.is_blocked from users inner join personal inner join status_in_project"
 			+ " right join role_in_project  on users.id = personal.id_user and role_in_project.id = status_in_project.id and"
 			+ "	personal.id_user = role_in_project.id" + "	where users.id = ?";
-
+	private static final String FIND_ID_USER = "select (id) from users where login = ?";
 	private static final String SELECT_ALL_USERS = "select users.id, users.login,"
 			+ " personal.surname, personal.name, personal.gender, personal.passport_id,"
 			+ " personal.passport_number, personal.date_of_birth, personal.email, personal.phone,"
 			+ " role_in_project.role, status_in_project.is_blocked from users inner join personal inner join status_in_project"
 			+ " right join role_in_project  on users.id = personal.id_user and role_in_project.id = status_in_project.id and"
 			+ "	personal.id_user = role_in_project.id";
+	private static final String FIND_RENT_CAR_ID_OF_NEW_ADMIN = "select (id_car) from order_list where id_user = ?";
 
+	// UPDATE
 	private static final String UPDATE_USER_PERSONAL = "update personal join users on personal.id_user = users.id set personal.name=?,"
 			+ " personal.surname=?, personal.gender=?, personal.passport_id=?, "
 			+ "personal.passport_number=?, personal.date_of_birth=?, personal.phone=? where users.id=?";
-
-	private static final String UPDATE_STATUS_UNBLOCK = "update status_in_project set is_blocked = false where id = ?";
-	private static final String UPDATE_STATUS_BLOCK = "update status_in_project set is_blocked = true where id = ?";
+	private static final String UPDATE_STATUS_UNBLOCK = "update status_in_project set is_blocked = 'not_blocked' where id = ?";
+	private static final String UPDATE_STATUS_BLOCK = "update status_in_project set is_blocked = 'blocked' where id = ?";
+	private static final String UPDATE_ROLE_ADMIN = "update role_in_project set role = 'admin' where id = ?";
+	private static final String UPDATE_ORDER_LIST_OF_NEW_ADMIN = "update order_list set order_condition = 'завершено' where id_user = ?";
+	private static final String UPDATE_BOOK_LIST_OF_NEW_ADMIN_CARS = "update book_list set is_booked = false where id_car = ?";
 
 	public UserDAO() {
 		// TODO Auto-generated constructor stub
@@ -142,7 +150,13 @@ public class UserDAO extends AbstractUserDAOImpl {
 				throw new DaoException(e);
 			}
 			try {
-				boolean resultUpdate = super.update(parameters, UPDATE_USER_PERSONAL, cn);
+				boolean resultUpdate = false;
+				try {
+					resultUpdate = super.update(parameters, UPDATE_USER_PERSONAL, cn);
+				} catch (TransactionException e) {
+					logger.log(Level.ERROR, "пользователь найден");
+					throw new DaoException(e);
+				}
 				List<String> parametersList = new ArrayList<String>();
 				parametersList.add(parameters.get(UserType.ID));
 				if (resultUpdate) {
@@ -201,7 +215,13 @@ public class UserDAO extends AbstractUserDAOImpl {
 			} catch (ConnectionPoolException e) {
 				throw new DaoException(e);
 			}
-			boolean result = update(parameters, UPDATE_STATUS_BLOCK, cn);
+			boolean result = false;
+			try {
+				result = update(parameters, UPDATE_STATUS_BLOCK, cn);
+			} catch (TransactionException e) {
+				logger.log(Level.ERROR, "пользователь не может быть заблокирован");
+				throw new DaoException(e);
+			}
 			logger.log(Level.INFO, "пользователь заблокирован");
 			return result;
 		} finally {
@@ -218,7 +238,13 @@ public class UserDAO extends AbstractUserDAOImpl {
 			} catch (ConnectionPoolException e) {
 				throw new DaoException(e);
 			}
-			boolean result = update(parameters, UPDATE_STATUS_UNBLOCK, cn);
+			boolean result = false;
+			try {
+				result = update(parameters, UPDATE_STATUS_UNBLOCK, cn);
+			} catch (TransactionException e) {
+				logger.log(Level.ERROR, "пользователь не может быть разблокирован");
+				throw new DaoException(e);
+			}
 			logger.log(Level.INFO, "пользователь разблокирован");
 			return result;
 		} finally {
@@ -227,7 +253,8 @@ public class UserDAO extends AbstractUserDAOImpl {
 	}
 
 	@Override
-	public boolean update(Map<UserType, String> parameters, String request, Connection cn) throws DaoException {
+	public boolean update(Map<UserType, String> parameters, String request, Connection cn)
+			throws DaoException, TransactionException {
 		PreparedStatement ps = null;
 		try {
 			ps = cn.prepareStatement(request);
@@ -236,7 +263,65 @@ public class UserDAO extends AbstractUserDAOImpl {
 			return (result == -1) ? false : true;
 		} catch (SQLException e) {
 			logger.log(Level.ERROR, "ошибка в апдейте пользователя");
-			throw new DaoException("ошибка в апдейте пользователя");
+			throw new TransactionException("ошибка в апдейте пользователя");
+		}
+
+	}
+
+	@Override
+	public boolean makeAdmin(Map<UserType, String> parameters) throws DaoException {
+		Connection cn = null;
+		try {
+			try {
+				cn = ConnectionPool.getInstance().getConnection();
+				cn.setAutoCommit(false);
+			} catch (ConnectionPoolException | SQLException e) {
+				throw new DaoException(e);
+			}
+			boolean result = false;
+			try {
+				try {
+					result = update(parameters, UPDATE_ROLE_ADMIN, cn)
+							&& update(parameters, UPDATE_ORDER_LIST_OF_NEW_ADMIN, cn);
+					logger.log(Level.DEBUG, "выполнены апдейт роли и апдейт списка заказов нового админа");
+					List<Integer> listOfIdCars = findAllOrdersIdFromUser(parameters, FIND_RENT_CAR_ID_OF_NEW_ADMIN, cn);
+					logger.log(Level.DEBUG, "найдены айди авто что заказывал новый админ");
+					for (int id : listOfIdCars) {
+						parameters.remove(UserType.ID);
+						parameters.put(UserType.ID, Integer.toString(id));
+						result = update(parameters, UPDATE_BOOK_LIST_OF_NEW_ADMIN_CARS, cn);
+						logger.log(Level.DEBUG, "машина вернулась в список активных");
+					}
+					cn.commit();
+					logger.log(Level.DEBUG, "пользователь стал админом");
+				} catch (TransactionException e) {
+					logger.log(Level.ERROR, "ошибка транзакции");
+					cn.rollback();
+					result = false;
+				}
+			} catch (SQLException e1) {
+				throw new DaoException("ошибка роллбека или коммита");
+			}
+			return result;
+		} finally {
+			close(cn);
+		}
+	}
+
+	private List<Integer> findAllOrdersIdFromUser(Map<UserType, String> parameters, String request, Connection cn)
+			throws TransactionException {
+		List<Integer> foundList = new ArrayList<Integer>();
+		PreparedStatement ps = null;
+		try {
+			ps = cn.prepareStatement(request);
+			ps.setInt(1, Integer.parseInt(parameters.get(UserType.ID)));
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				foundList.add(rs.getInt(1));
+			}
+			return foundList;
+		} catch (SQLException e) {
+			throw new TransactionException("не возможно найти заказы");
 		}
 
 	}

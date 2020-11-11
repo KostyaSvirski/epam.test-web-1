@@ -21,6 +21,7 @@ import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.dao.BeanDao;
 import by.svirski.testweb.dao.exception.DaoException;
+import by.svirski.testweb.dao.exception.TransactionException;
 
 public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 
@@ -57,7 +58,7 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 	}
 
 	@Override
-	public boolean update(Map<UserType, String> parameters, String request, Connection cn) throws DaoException {
+	public boolean update(Map<UserType, String> parameters, String request, Connection cn) throws DaoException, TransactionException {
 		PreparedStatement ps = null;
 		try {
 			ps = cn.prepareStatement(request);
@@ -119,6 +120,8 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 		}
 
 	}
+	
+	
 
 	@Override
 	public boolean delete(Map<String, String> parameters) {
@@ -203,4 +206,6 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 	public abstract boolean blockUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 
 	public abstract boolean unblockUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
+	
+	public abstract boolean makeAdmin(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 }
