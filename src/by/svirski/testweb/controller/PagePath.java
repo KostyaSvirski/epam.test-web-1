@@ -14,6 +14,7 @@ public final class PagePath {
 	public static final String CARS_PAGE = "/cars.jsp";
 	public static final String RENT_AUTO_PAGE = "/rent_auto.jsp";
 	public static final String ORDERS_PAGE = "/orders.jsp";
+	public static final String ALL_USERS_PAGE = "/users.jsp";
 	
 	
 	private PagePath() {}

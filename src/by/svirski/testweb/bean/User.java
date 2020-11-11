@@ -47,7 +47,7 @@ public class User{
 		return login;
 	}
 
-	public boolean isBlocked() {
+	public boolean getIsBlocked() {
 		return isBlocked;
 	}
 

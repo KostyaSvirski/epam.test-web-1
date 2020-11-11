@@ -69,21 +69,21 @@
 	         <h2 id="info_h2"><fmt:message key="my_page.orders"/></h2>
 	         <div class="decor">
 	 			<form action="MainController" method="POST">
-	            	<input type="hidden" name="command" value="SHOW_RENT_LIST_COMMAND">
-	                <input type="submit" id="button-form" value="ORDERS">
+	            	<input type="hidden" name="command" value="SHOW_USERS_RENT_LIST_COMMAND">
+	                <input type="submit" id="button-form" value="USER ORDERS">
 	            </form>         
 	          </div>
 	         <h2 id="info_h2" class="a1">SHOW ALL USERS</h2>
 	         <div class="decor">
 	 			<form action="MainController" method="POST">
-	            	<input type="hidden" name="command" value="SHOW_RENT_LIST_COMMAND">
+	            	<input type="hidden" name="command" value="SHOW_USERS_COMMAND">
 	                <input type="submit" id="button-form" value="SHOW ALL USERS">
 	            </form>         
 	          </div>
 	          <h2 id="info_h2" class="a1">ADD CARS</h2>
 	          <div class="decor">
 	 			<form action="MainController" method="POST">
-	            	<input type="hidden" name="command" value="SHOW_RENT_LIST_COMMAND">
+	            	<input type="hidden" name="command" value="ADD_CARS_COMMAND">
 	                <input type="submit" id="button-form" value="ADD CARS">
 	            </form>         
 	          </div>  

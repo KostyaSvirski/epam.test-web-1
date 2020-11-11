@@ -53,38 +53,6 @@ public class CarDAO extends AbstractCarDAOImpl {
 		}
 	}
 
-//	private String createCurrentRequest(Map<CarType, String> parametersMap) {
-//		if (parametersMap.isEmpty()) {
-//			return ABSTRACT_CARS_SHOW;
-//		}
-//		StringBuffer sb = new StringBuffer(ABSTRACT_CARS_SHOW);
-//		sb.append(" where ");
-//		int count = 0;
-//		for (Entry<CarType, String> entry : parametersMap.entrySet()) {
-//			count++;
-//			if (count >= 2) {
-//				sb.append(" and ");
-//			}
-//			String key = entry.getKey().name().toLowerCase();
-//			if(key.equals(CarType.IS_BOOKED.name())) {
-//				sb.append("book_list.");
-//			}
-//			if(key.equals(CarType.COST.name())) {
-//				sb.append(key);
-//				sb.append(" between ");
-//				sb.append("?");
-//				sb.append(" and ");
-//				sb.append("?");
-//			} else {
-//				sb.append(key);
-//				sb.append(" = ");
-//				sb.append("?");				
-//			}
-//
-//		}
-//		return sb.toString();
-//	}
-
 	private List<String> createParametersList(Map<CarType, String> parametersMap) {
 		List<String> parametersList = new ArrayList<String>();
 		for (Entry<CarType, String> entry : parametersMap.entrySet()) {

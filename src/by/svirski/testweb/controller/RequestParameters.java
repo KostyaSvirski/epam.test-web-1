@@ -40,6 +40,10 @@ public final class RequestParameters {
 	
 	//EDIT
 	public static final String USER = "user";
+	public static final String USER_ID = "id_user";
+	public static final String ACTION = "action";
+	public static final String BLOCK = "block";
+	public static final String UNBLOCK = "unblock";
 	
 	//PAGE
 	public static final String CURRENT_PAGE = "currentPage";
@@ -52,6 +56,12 @@ public final class RequestParameters {
 	public static final String CONDITION = "condition";
 	public static final String ORDERS = "orders";
 	public static final String ORDER_ID = "order_id";
+	
+	//ADMIN
+	public static final String USERS = "users";
+	
+	//RESPONSE
+	public static final String DEFAULT_ERROR = "Что-то пошло не так соре";
 	
 	
 }

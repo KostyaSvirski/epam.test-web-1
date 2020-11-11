@@ -23,12 +23,12 @@ import by.svirski.testweb.dao.BeanDao;
 import by.svirski.testweb.dao.exception.DaoException;
 
 public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
-	
+
 	private static Logger logger = LogManager.getLogger(AbstractUserDAOImpl.class);
-	
-	public AbstractUserDAOImpl() {	
+
+	public AbstractUserDAOImpl() {
 	}
-	
+
 	@Override
 	public boolean insert(List<String> parameters, Connection cn, String request) throws DaoException {
 		PreparedStatement ps = null;
@@ -56,7 +56,6 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 		}
 	}
 
-
 	@Override
 	public boolean update(Map<UserType, String> parameters, String request, Connection cn) throws DaoException {
 		PreparedStatement ps = null;
@@ -73,7 +72,7 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 			int result = ps.executeUpdate();
 			return (result == -1) ? false : true;
 		} catch (SQLException e) {
-			throw new DaoException("error in creating PreparedStatement");		
+			throw new DaoException("error in creating PreparedStatement");
 		} finally {
 			close(ps);
 		}
@@ -86,11 +85,13 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 		PreparedStatement ps = null;
 		try {
 			ps = cn.prepareStatement(request);
-			for(int i = 1; i <= parameters.size(); i++) {
-				ps.setString(i, parameters.get(i-1));
+			if (!parameters.isEmpty()) {
+				for (int i = 1; i <= parameters.size(); i++) {
+					ps.setString(i, parameters.get(i - 1));
+				}
 			}
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				Map<TypeOfParameters.UserType, String> parametersMap = new HashMap<TypeOfParameters.UserType, String>();
 				parametersMap.put(UserType.ID, Integer.toString(rs.getInt(1)));
 				parametersMap.put(UserType.LOGIN, rs.getString(2));
@@ -104,7 +105,7 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 				parametersMap.put(UserType.PHONE_NUMBER, rs.getString(10));
 				parametersMap.put(UserType.ROLE_IN_PROJECT, rs.getString(11));
 				parametersMap.put(UserType.IS_BLOCKED, rs.getString(12));
-				
+
 				Builder<User, UserType> builder = new UserBuilder();
 				User user = builder.build(parametersMap);
 				listOfBeans.add(user);
@@ -116,7 +117,7 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 		} finally {
 			close(ps);
 		}
-		
+
 	}
 
 	@Override
@@ -124,72 +125,82 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
-	
+
 	protected List<String> createListOfMainParameters(Map<TypeOfParameters.UserType, String> parametersMap) {
 		List<String> listOfParameters = new ArrayList<String>();
 		listOfParameters.add(parametersMap.get(TypeOfParameters.UserType.LOGIN));
 		listOfParameters.add(parametersMap.get(TypeOfParameters.UserType.PASSWORD));
 		return listOfParameters;
 	}
-	
+
 	protected List<String> createListOfPersonalParameters(Map<TypeOfParameters.UserType, String> parametersMap) {
-		List<String> listOfParameters = new ArrayList<String>() {{
-			add(parametersMap.get(TypeOfParameters.UserType.ID));
-			add(parametersMap.get(TypeOfParameters.UserType.SURNAME));
-			add(parametersMap.get(TypeOfParameters.UserType.NAME));
-			add(parametersMap.get(TypeOfParameters.UserType.GENDER));
-			add(parametersMap.get(TypeOfParameters.UserType.PASSPORT_ID));
-			add(parametersMap.get(TypeOfParameters.UserType.PASSPORT_NUMBER));
-			add(parametersMap.get(TypeOfParameters.UserType.DATE_OF_BIRTH));
-			add(parametersMap.get(TypeOfParameters.UserType.LOGIN));
-			add(parametersMap.get(TypeOfParameters.UserType.PHONE_NUMBER));			
-		}};
+		List<String> listOfParameters = new ArrayList<String>() {
+			{
+				add(parametersMap.get(TypeOfParameters.UserType.ID));
+				add(parametersMap.get(TypeOfParameters.UserType.SURNAME));
+				add(parametersMap.get(TypeOfParameters.UserType.NAME));
+				add(parametersMap.get(TypeOfParameters.UserType.GENDER));
+				add(parametersMap.get(TypeOfParameters.UserType.PASSPORT_ID));
+				add(parametersMap.get(TypeOfParameters.UserType.PASSPORT_NUMBER));
+				add(parametersMap.get(TypeOfParameters.UserType.DATE_OF_BIRTH));
+				add(parametersMap.get(TypeOfParameters.UserType.LOGIN));
+				add(parametersMap.get(TypeOfParameters.UserType.PHONE_NUMBER));
+			}
+		};
 		return listOfParameters;
 	}
-	
+
 	protected List<String> createListOfRoleParameters(Map<TypeOfParameters.UserType, String> parametersMap) {
-		List<String> listOfParameters = new ArrayList<String>() {{
-			add(parametersMap.get(TypeOfParameters.UserType.ID));
-			add(parametersMap.get(TypeOfParameters.UserType.ROLE_IN_PROJECT));
-		}};
+		List<String> listOfParameters = new ArrayList<String>() {
+			{
+				add(parametersMap.get(TypeOfParameters.UserType.ID));
+				add(parametersMap.get(TypeOfParameters.UserType.ROLE_IN_PROJECT));
+			}
+		};
 		return listOfParameters;
 	}
-	
+
 	protected List<String> createListOfStatusParameters(Map<TypeOfParameters.UserType, String> parametersMap) {
-		List<String> listOfParameters = new ArrayList<String>() {{
-			add(parametersMap.get(TypeOfParameters.UserType.ID));
-			add(parametersMap.get(TypeOfParameters.UserType.IS_BLOCKED));
-		}};
+		List<String> listOfParameters = new ArrayList<String>() {
+			{
+				add(parametersMap.get(TypeOfParameters.UserType.ID));
+				add(parametersMap.get(TypeOfParameters.UserType.IS_BLOCKED));
+			}
+		};
 		return listOfParameters;
 	}
-	
-	
+
 	protected void close(Statement statement) {
-        if (statement != null) {
-            try {
-                statement.close();
-                logger.log(Level.DEBUG, "Statement был закрыт");
-            } catch (SQLException e) {
+		if (statement != null) {
+			try {
+				statement.close();
+				logger.log(Level.DEBUG, "Statement был закрыт");
+			} catch (SQLException e) {
 				logger.log(Level.ERROR, "Statement не был закрыт");
-            }
-        }
-    }
+			}
+		}
+	}
 
-    protected void close(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-                logger.log(Level.DEBUG, "Connection был закрыт");
-            } catch (SQLException e) {
+	protected void close(Connection connection) {
+		if (connection != null) {
+			try {
+				connection.close();
+				logger.log(Level.DEBUG, "Connection был закрыт");
+			} catch (SQLException e) {
 				logger.log(Level.ERROR, "Connection не был закрыт");
-            }
-        }
-    }
+			}
+		}
+	}
 
-    public abstract boolean registrateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
-    public abstract User authorizateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
-    public abstract User editUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
-	
+	public abstract boolean registrateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
+
+	public abstract User authorizateUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
+
+	public abstract User editUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
+
+	public abstract List<User> showAllUsers() throws DaoException;
+
+	public abstract boolean blockUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
+
+	public abstract boolean unblockUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 }

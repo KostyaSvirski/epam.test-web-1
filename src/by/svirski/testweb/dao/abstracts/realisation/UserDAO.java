@@ -27,8 +27,7 @@ public class UserDAO extends AbstractUserDAOImpl {
 	private static final String REGISTRATE_USER_MAIN = "INSERT INTO USERS (login, password) VALUES (?, ?)";
 	private static final String FIND_ID_USER = "select (id) from users where login = ?";
 	private static final String REGISTRATE_USER_PERSONAL = "insert into personal "
-			+ "(id_user, surname, name, gender, passport_id, passport_number, date_of_birth, email, phone)"
-			+ " values"
+			+ "(id_user, surname, name, gender, passport_id, passport_number, date_of_birth, email, phone)" + " values"
 			+ "	(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String REGISTRATE_STATUS = "insert into status_in_project (id, is_blocked) values (?, ?)";
 	private static final String REGISTRATE_ROLE = "insert into role_in_project (id, role) values (?, ?)";
@@ -38,12 +37,21 @@ public class UserDAO extends AbstractUserDAOImpl {
 			+ " personal.passport_number, personal.date_of_birth, personal.email, personal.phone,"
 			+ " role_in_project.role, status_in_project.is_blocked from users inner join personal inner join status_in_project"
 			+ " right join role_in_project  on users.id = personal.id_user and role_in_project.id = status_in_project.id and"
-			+ "	personal.id_user = role_in_project.id" 
-			+ "	where users.id = ?";
+			+ "	personal.id_user = role_in_project.id" + "	where users.id = ?";
 
-	private static final String UPDATE_USER = "update personal join users on personal.id_user = users.id set personal.name=?,"
+	private static final String SELECT_ALL_USERS = "select users.id, users.login,"
+			+ " personal.surname, personal.name, personal.gender, personal.passport_id,"
+			+ " personal.passport_number, personal.date_of_birth, personal.email, personal.phone,"
+			+ " role_in_project.role, status_in_project.is_blocked from users inner join personal inner join status_in_project"
+			+ " right join role_in_project  on users.id = personal.id_user and role_in_project.id = status_in_project.id and"
+			+ "	personal.id_user = role_in_project.id";
+
+	private static final String UPDATE_USER_PERSONAL = "update personal join users on personal.id_user = users.id set personal.name=?,"
 			+ " personal.surname=?, personal.gender=?, personal.passport_id=?, "
 			+ "personal.passport_number=?, personal.date_of_birth=?, personal.phone=? where users.id=?";
+
+	private static final String UPDATE_STATUS_UNBLOCK = "update status_in_project set is_blocked = false where id = ?";
+	private static final String UPDATE_STATUS_BLOCK = "update status_in_project set is_blocked = true where id = ?";
 
 	public UserDAO() {
 		// TODO Auto-generated constructor stub
@@ -134,7 +142,7 @@ public class UserDAO extends AbstractUserDAOImpl {
 				throw new DaoException(e);
 			}
 			try {
-				boolean resultUpdate = update(parameters, UPDATE_USER, cn);
+				boolean resultUpdate = super.update(parameters, UPDATE_USER_PERSONAL, cn);
 				List<String> parametersList = new ArrayList<String>();
 				parametersList.add(parameters.get(UserType.ID));
 				if (resultUpdate) {
@@ -165,6 +173,72 @@ public class UserDAO extends AbstractUserDAOImpl {
 		} finally {
 			close(cn);
 		}
+	}
+
+	@Override
+	public List<User> showAllUsers() throws DaoException {
+		Connection cn = null;
+		try {
+			try {
+				cn = ConnectionPool.getInstance().getConnection();
+			} catch (ConnectionPoolException e) {
+				throw new DaoException(e);
+			}
+			List<User> resultList = select(new ArrayList<String>(), SELECT_ALL_USERS, cn);
+			logger.log(Level.DEBUG, "построен список пользователей");
+			return resultList;
+		} finally {
+			close(cn);
+		}
+	}
+
+	@Override
+	public boolean blockUser(Map<UserType, String> parameters) throws DaoException {
+		Connection cn = null;
+		try {
+			try {
+				cn = ConnectionPool.getInstance().getConnection();
+			} catch (ConnectionPoolException e) {
+				throw new DaoException(e);
+			}
+			boolean result = update(parameters, UPDATE_STATUS_BLOCK, cn);
+			logger.log(Level.INFO, "пользователь заблокирован");
+			return result;
+		} finally {
+			close(cn);
+		}
+	}
+
+	@Override
+	public boolean unblockUser(Map<UserType, String> parameters) throws DaoException {
+		Connection cn = null;
+		try {
+			try {
+				cn = ConnectionPool.getInstance().getConnection();
+			} catch (ConnectionPoolException e) {
+				throw new DaoException(e);
+			}
+			boolean result = update(parameters, UPDATE_STATUS_UNBLOCK, cn);
+			logger.log(Level.INFO, "пользователь разблокирован");
+			return result;
+		} finally {
+			close(cn);
+		}
+	}
+
+	@Override
+	public boolean update(Map<UserType, String> parameters, String request, Connection cn) throws DaoException {
+		PreparedStatement ps = null;
+		try {
+			ps = cn.prepareStatement(request);
+			ps.setInt(1, Integer.parseInt(parameters.get(UserType.ID)));
+			int result = ps.executeUpdate();
+			return (result == -1) ? false : true;
+		} catch (SQLException e) {
+			logger.log(Level.ERROR, "ошибка в апдейте пользователя");
+			throw new DaoException("ошибка в апдейте пользователя");
+		}
+
 	}
 
 	private int findUserId(Connection cn, String login, String password) throws DaoException {

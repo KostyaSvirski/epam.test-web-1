@@ -33,7 +33,11 @@ public class UserBuilder implements Builder<User, UserType> {
 		User user = new User();
 		user.setId(Integer.parseInt(parameters.get(UserType.ID)));
 		user.setLogin(parameters.get(UserType.LOGIN));		
-		user.setBlocked(Boolean.parseBoolean(parameters.get(UserType.IS_BLOCKED)));
+		if(parameters.get(UserType.IS_BLOCKED).equalsIgnoreCase("not_blocked")) {
+			user.setBlocked(false);			
+		} else {
+			user.setBlocked(true);
+		}
 		RoleInProject[] roles = RoleInProject.values();
 		for(RoleInProject role : roles) {
 			if(role.toString().equalsIgnoreCase(parameters.get(UserType.ROLE_IN_PROJECT))) {

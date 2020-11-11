@@ -54,7 +54,7 @@ public class RegistrationCommand implements ActionCommand {
 		parametersMap.put(UserType.PASSPORT_NUMBER, passportNumber);
 		parametersMap.put(UserType.DATE_OF_BIRTH, dateOfBirth);
 		parametersMap.put(UserType.PHONE_NUMBER, phone);
-		parametersMap.put(UserType.IS_BLOCKED, "false");
+		parametersMap.put(UserType.IS_BLOCKED, "not_blocked");
 		parametersMap.put(UserType.ROLE_IN_PROJECT, "user");
 		ServiceFactory factory = ServiceFactory.getInstance();
 		CustomUserService service = factory.getUserService();
