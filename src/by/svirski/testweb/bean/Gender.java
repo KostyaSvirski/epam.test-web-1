@@ -4,17 +4,17 @@ public enum Gender {
 	
 	MALE {
 		@Override
-		public String ToString() {
+		public String toString() {
 			return "Мужчина";
 		}
 	},
 	FEMALE {
 		@Override
-		public String ToString() {
+		public String toString() {
 			return "Женщина";
 		}
 	};
 	
-	public abstract String ToString();
+	public abstract String toString();
 
 }

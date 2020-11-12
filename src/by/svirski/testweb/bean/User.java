@@ -2,10 +2,10 @@ package by.svirski.testweb.bean;
 
 import java.util.Calendar;
 
-public class User implements BeanIndicator{
+public class User{
 	
+	private int id;
 	private String login;
-	private String password;
 	private boolean isBlocked;
 	private RoleInProject roleInProject;
 	private String name;
@@ -21,12 +21,12 @@ public class User implements BeanIndicator{
 		
 	}
 
-	public User(String login, String password, boolean isBlocked, RoleInProject roleInProject, String name,
-			String surname, String passportId, String passportNumber, Calendar dateOfBirth, String email,
-			String phoneNumber, Gender gender) {
+	public User(int id, String login, boolean isBlocked, RoleInProject roleInProject, String name, String surname,
+			String passportId, String passportNumber, Calendar dateOfBirth, String email, String phoneNumber,
+			Gender gender) {
 		super();
+		this.id = id;
 		this.login = login;
-		this.password = password;
 		this.isBlocked = isBlocked;
 		this.roleInProject = roleInProject;
 		this.name = name;
@@ -39,26 +39,15 @@ public class User implements BeanIndicator{
 		this.gender = gender;
 	}
 
-	public User(String login, String password, boolean isBlocked, RoleInProject roleInProject, String name,
-			String surname) {
-		super();
-		this.login = login;
-		this.password = password;
-		this.isBlocked = isBlocked;
-		this.roleInProject = roleInProject;
-		this.name = name;
-		this.surname = surname;
+	public int getId() {
+		return id;
 	}
 
 	public String getLogin() {
 		return login;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public boolean isBlocked() {
+	public boolean getIsBlocked() {
 		return isBlocked;
 	}
 
@@ -82,8 +71,17 @@ public class User implements BeanIndicator{
 		return passportNumber;
 	}
 
-	public Calendar getDateOfBirth() {
-		return dateOfBirth;
+	public String getDateOfBirth() {
+		String dayOfMonth = Integer.toString(dateOfBirth.get(Calendar.DAY_OF_MONTH));
+		String month = Integer.toString(dateOfBirth.get(Calendar.MONTH)+1);
+		String year = Integer.toString(dateOfBirth.get(Calendar.YEAR));
+		StringBuilder sb = new StringBuilder();
+		sb.append(dayOfMonth);
+		sb.append(".");
+		sb.append(month);
+		sb.append(".");
+		sb.append(year);
+		return sb.toString();
 	}
 
 	public String getEmail() {
@@ -98,12 +96,12 @@ public class User implements BeanIndicator{
 		return gender;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public void setBlocked(boolean isBlocked) {
@@ -153,12 +151,12 @@ public class User implements BeanIndicator{
 		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + id;
 		result = prime * result + (isBlocked ? 1231 : 1237);
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((passportId == null) ? 0 : passportId.hashCode());
 		result = prime * result + ((passportNumber == null) ? 0 : passportNumber.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
 		result = prime * result + ((roleInProject == null) ? 0 : roleInProject.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
@@ -194,6 +192,9 @@ public class User implements BeanIndicator{
 		if (gender != other.gender) {
 			return false;
 		}
+		if (id != other.id) {
+			return false;
+		}
 		if (isBlocked != other.isBlocked) {
 			return false;
 		}
@@ -225,13 +226,6 @@ public class User implements BeanIndicator{
 		} else if (!passportNumber.equals(other.passportNumber)) {
 			return false;
 		}
-		if (password == null) {
-			if (other.password != null) {
-				return false;
-			}
-		} else if (!password.equals(other.password)) {
-			return false;
-		}
 		if (phoneNumber == null) {
 			if (other.phoneNumber != null) {
 				return false;
@@ -255,10 +249,10 @@ public class User implements BeanIndicator{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("User [login=");
+		builder.append("User [id=");
+		builder.append(id);
+		builder.append(", login=");
 		builder.append(login);
-		builder.append(", password=");
-		builder.append(password);
 		builder.append(", isBlocked=");
 		builder.append(isBlocked);
 		builder.append(", roleInProject=");
@@ -282,8 +276,5 @@ public class User implements BeanIndicator{
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
-
 	
 }

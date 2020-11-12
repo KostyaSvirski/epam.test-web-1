@@ -1,33 +1,43 @@
 package by.svirski.testweb.bean;
 
-public class Car implements BeanIndicator {
+public class Car {
 	
+	private int id;
 	private String brand;
 	private String model;
 	private String carClass;
 	private int power;
-	private double engineCapacity;
+	private String engine;
 	private float acceleration;
 	private DriveUnit driveUnit;
 	private Fuel fuel;
 	private long cost;
+	private String image;
+	private boolean isBooked;
 
 	public Car() {
 		
 	}
 
-	public Car(String brand, String model, String carClass, int power, double engineCapacity, float acceleration,
-			DriveUnit driveUnit, Fuel fuel, long cost) {
+	public Car(int id, String brand, String model, String carClass, int power, String engine, float acceleration,
+			DriveUnit driveUnit, Fuel fuel, long cost, String image, boolean isBooked) {
 		super();
+		this.id = id;
 		this.brand = brand;
 		this.model = model;
 		this.carClass = carClass;
 		this.power = power;
-		this.engineCapacity = engineCapacity;
+		this.engine = engine;
 		this.acceleration = acceleration;
 		this.driveUnit = driveUnit;
 		this.fuel = fuel;
 		this.cost = cost;
+		this.image = image;
+		this.isBooked = isBooked;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getBrand() {
@@ -46,24 +56,36 @@ public class Car implements BeanIndicator {
 		return power;
 	}
 
-	public double getEngineCapacity() {
-		return engineCapacity;
+	public String getEngine() {
+		return engine;
 	}
 
 	public float getAcceleration() {
 		return acceleration;
 	}
 
-	public DriveUnit getDriveUnit() {
-		return driveUnit;
+	public String getDriveUnit() {
+		return driveUnit.toString();
 	}
 
-	public Fuel getFuel() {
-		return fuel;
+	public String getFuel() {
+		return fuel.toString();
 	}
 
 	public long getCost() {
 		return cost;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public boolean getIsBooked(){
+		return isBooked;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setBrand(String brand) {
@@ -82,8 +104,8 @@ public class Car implements BeanIndicator {
 		this.power = power;
 	}
 
-	public void setEngineCapacity(double engineCapacity) {
-		this.engineCapacity = engineCapacity;
+	public void setEngine(String engine) {
+		this.engine = engine;
 	}
 
 	public void setAcceleration(float acceleration) {
@@ -102,6 +124,14 @@ public class Car implements BeanIndicator {
 		this.cost = cost;
 	}
 
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public void setBooked(boolean isBooked) {
+		this.isBooked = isBooked;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -111,10 +141,11 @@ public class Car implements BeanIndicator {
 		result = prime * result + ((carClass == null) ? 0 : carClass.hashCode());
 		result = prime * result + (int) (cost ^ (cost >>> 32));
 		result = prime * result + ((driveUnit == null) ? 0 : driveUnit.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(engineCapacity);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((engine == null) ? 0 : engine.hashCode());
 		result = prime * result + ((fuel == null) ? 0 : fuel.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((image == null) ? 0 : image.hashCode());
+		result = prime * result + (isBooked ? 1231 : 1237);
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
 		result = prime * result + power;
 		return result;
@@ -155,10 +186,27 @@ public class Car implements BeanIndicator {
 		if (driveUnit != other.driveUnit) {
 			return false;
 		}
-		if (Double.doubleToLongBits(engineCapacity) != Double.doubleToLongBits(other.engineCapacity)) {
+		if (engine == null) {
+			if (other.engine != null) {
+				return false;
+			}
+		} else if (!engine.equals(other.engine)) {
 			return false;
 		}
 		if (fuel != other.fuel) {
+			return false;
+		}
+		if (id != other.id) {
+			return false;
+		}
+		if (image == null) {
+			if (other.image != null) {
+				return false;
+			}
+		} else if (!image.equals(other.image)) {
+			return false;
+		}
+		if (isBooked != other.isBooked) {
 			return false;
 		}
 		if (model == null) {
@@ -177,7 +225,9 @@ public class Car implements BeanIndicator {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Car [brand=");
+		builder.append("Car [id=");
+		builder.append(id);
+		builder.append(", brand=");
 		builder.append(brand);
 		builder.append(", model=");
 		builder.append(model);
@@ -185,8 +235,8 @@ public class Car implements BeanIndicator {
 		builder.append(carClass);
 		builder.append(", power=");
 		builder.append(power);
-		builder.append(", engineCapacity=");
-		builder.append(engineCapacity);
+		builder.append(", engine=");
+		builder.append(engine);
 		builder.append(", acceleration=");
 		builder.append(acceleration);
 		builder.append(", driveUnit=");
@@ -195,10 +245,15 @@ public class Car implements BeanIndicator {
 		builder.append(fuel);
 		builder.append(", cost=");
 		builder.append(cost);
+		builder.append(", image=");
+		builder.append(image);
+		builder.append(", isBoocked=");
+		builder.append(isBooked);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 
+	
+	
+	
 }
