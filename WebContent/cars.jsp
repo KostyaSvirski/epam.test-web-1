@@ -112,7 +112,10 @@
 					<c:if test="${sessionScope.user.login == null}">
 						<p><fmt:message key="cars.info.text.not_sign_in"/></p>
 					</c:if>
-					<a href="#detail" class="button"><fmt:message key="cars.button.detail"/></a>
+					<a href="detail.jsp?id=${car.id}&image=${car.image}&brand=${car.brand}&model=${car.model}&cost=${car.cost}&carClass=${car.carClass}
+					&power=${car.power}&engine=${car.engine}&acceleration=${car.acceleration}&driveUnit=${car.driveUnit}&fuel=${car.fuel}&discription=${car.discription}
+					&isBooked=${car.isBooked}"
+						 class="button"><fmt:message key="cars.button.detail"/></a>
 				</div>
 			</div>
 		</section>

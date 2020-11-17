@@ -50,11 +50,16 @@
               <section class="inner2">
 	        	<c:forEach var="user" items="${requestScope.users}">
                 <section>
+                <c:if test="${user.id != sessionScope.user.id}">
                   <form action="MainController" method="GET">
-                  	<input type="hidden" name="command" value="SHOW_THIS_USER"/>
+                  	<input type="hidden" name="command" value="SHOW_THIS_USER_COMMAND"/>
                   	<input type="hidden" name="id_user" value="${user.id}"/>
                   	<input class="name" type="submit" value="${user.name} ${user.surname}"/>
-                  </form>
+                  </form>                
+                </c:if>
+                <c:if test="${user.id == sessionScope.user.id}">
+                	<a class="name" href = "my_page.jsp">${user.name} ${user.surname}</a>
+                </c:if>
                   <div class="info_about_rent">
                    <p class="el">Email: ${user.email}</p>
                    <c:if test="${user.isBlocked == true}">
@@ -64,14 +69,14 @@
 	                   <p class="el">Status: Active</p>               
                    </c:if>
                    <p class="el">Role: ${user.roleInProject}</p>
-                   <c:if test="${user.roleInProject != 'ADMIN'}">
-	                   <form action="MainController" method="GET">
-		                  <input type="hidden" name="command" value="MAKE_ADMIN_COMMAND"/>
-		                  <input type="hidden" name="id_user" value="${user.id}"/>
-		                  <input class="button1" type="submit" value="MAKE ADMIN"/>
-	                   </form>
-                   </c:if>
                    <c:if test="${user.id != sessionScope.user.id}">
+	                   <c:if test="${user.roleInProject != 'ADMIN'}">
+		                   <form action="MainController" method="GET">
+			                  <input type="hidden" name="command" value="MAKE_ADMIN_COMMAND"/>
+			                  <input type="hidden" name="id_user" value="${user.id}"/>
+			                  <input class="button1" type="submit" value="MAKE ADMIN"/>
+		                   </form>
+	                   </c:if>
 	                   <c:if test="${user.isBlocked == 'false'}">
 		                   <form action="MainController" method="GET">
 			                  <input type="hidden" name="command" value="BLOCK_UNBLOCK_COMMAND"/>

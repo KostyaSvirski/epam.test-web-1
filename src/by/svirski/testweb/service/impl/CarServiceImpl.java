@@ -53,7 +53,7 @@ public class CarServiceImpl implements CustomCarService {
 		AbstractOrderDAOImpl dao = factory.getOrderDao();
 		List<Order> orders = null;
 		try {
-			orders = dao.showOrders(parameters);
+			orders = dao.showOrdersForCurrentUser(parameters);
 		} catch (DaoException e) {
 			throw new ServiceException(e);
 		}

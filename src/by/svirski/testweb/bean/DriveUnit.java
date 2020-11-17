@@ -1,6 +1,6 @@
 package by.svirski.testweb.bean;
 
-public enum DriveUnit {
+public enum DriveUnit{
 
 	AWD {
 		@Override

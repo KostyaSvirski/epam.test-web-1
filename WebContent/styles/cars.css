@@ -86,28 +86,27 @@ main{
 .all_button {
   display: flex;
 }
+
 .button {
-  position: relative;
-  z-index: 3;
-  display: block;
-  width: 40%;
-  padding: 0px 20px;
-  margin-bottom: 10px;
-  line-height: 5vh;
-  border-width: 0;
-  border-radius: 30px;
-  font-family: "Inconsolata", monospace;
-  font-family: "Roboto Slab", serif;
-  margin-top: 10px;
-  background: #dc7633;
-  border-bottom: 4px solid #f25a14;
-  color: white;
-  font-size: 14px;
-  text-align: center;
-  text-decoration: none;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+    position: relative;
+    z-index: 3;
+    display: block;
+    padding: 0px 15vh;
+    margin-bottom: 10px;
+    line-height: 5vh;
+    border-width: 0;
+    border-radius: 30px;
+    font-family: "Inconsolata", monospace;
+    font-family: "Roboto Slab", serif;
+    margin-top: 10px;
+    background: #dc7633;
+    border-bottom: 4px solid #f25a14;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin-left: 2.5vh;
 }
 
 footer {

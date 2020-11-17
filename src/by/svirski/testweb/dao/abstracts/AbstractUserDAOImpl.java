@@ -208,4 +208,6 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 	public abstract boolean unblockUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 	
 	public abstract boolean makeAdmin(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
+	
+	public abstract User findThisUser(Map<TypeOfParameters.UserType, String> parameters) throws DaoException;
 }

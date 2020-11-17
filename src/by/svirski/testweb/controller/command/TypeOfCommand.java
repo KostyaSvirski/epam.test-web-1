@@ -19,7 +19,10 @@ public enum TypeOfCommand {
 	SHOW_USERS_COMMAND(new ShowUsersCommand()),
 	ADD_CARS_COMMAND(new AddCarCommand()),
 	BLOCK_UNBLOCK_COMMAND(new BlockOrUnblockCommand()),
-	MAKE_ADMIN_COMMAND(new MakeAdminCommand());
+	MAKE_ADMIN_COMMAND(new MakeAdminCommand()),
+	SHOW_THIS_USER_COMMAND(new ShowThisUserCommand()),
+	CONFIRM_USER_ORDER_COMMAND(new ConfirmUserOrderCommand()),
+	DENY_USER_ORDER_COMMAND(new DenyUserOrderCommand());
 	
 	private ActionCommand command;
 

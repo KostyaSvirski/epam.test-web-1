@@ -14,12 +14,14 @@ public class Order {
 	private Calendar dateOfFinish;
 	private long totalPrice;
 	private String condition;
+	private String info;
 	
 	public Order() {
 	}
-
+	
 	public Order(int id, int idCar, int idUser, String carBrand, String carModel, String signature,
-			Calendar dateOfStart, Calendar dateOfFinish, long totalPrice, String condition) {
+			Calendar dateOfStart, Calendar dateOfFinish, long totalPrice, String condition, String info) {
+		super();
 		this.id = id;
 		this.idCar = idCar;
 		this.idUser = idUser;
@@ -30,10 +32,20 @@ public class Order {
 		this.dateOfFinish = dateOfFinish;
 		this.totalPrice = totalPrice;
 		this.condition = condition;
+		this.info = info;
 	}
-	
+
+
 	public Order(int id) {
 		this.id = id;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+	
+	public void setInfo(String info) {
+		this.info = info;
 	}
 
 	public int getId() {
@@ -146,6 +158,7 @@ public class Order {
 		result = prime * result + id;
 		result = prime * result + idCar;
 		result = prime * result + idUser;
+		result = prime * result + ((info == null) ? 0 : info.hashCode());
 		result = prime * result + ((signature == null) ? 0 : signature.hashCode());
 		result = prime * result + (int) (totalPrice ^ (totalPrice >>> 32));
 		return result;
@@ -207,6 +220,13 @@ public class Order {
 		if (idUser != other.idUser) {
 			return false;
 		}
+		if (info == null) {
+			if (other.info != null) {
+				return false;
+			}
+		} else if (!info.equals(other.info)) {
+			return false;
+		}
 		if (signature == null) {
 			if (other.signature != null) {
 				return false;
@@ -243,10 +263,10 @@ public class Order {
 		builder.append(totalPrice);
 		builder.append(", condition=");
 		builder.append(condition);
+		builder.append(", info=");
+		builder.append(info);
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
 	
 }

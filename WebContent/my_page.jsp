@@ -66,7 +66,7 @@
          </section>
          <section class="info" id="orders-info">
          <c:if test="${sessionScope.user.roleInProject == 'ADMIN'}">
-	         <h2 id="info_h2"><fmt:message key="my_page.orders"/></h2>
+	         <h2 id="info_h2">USERS ORDERS</h2>
 	         <div class="decor">
 	 			<form action="MainController" method="POST">
 	            	<input type="hidden" name="command" value="SHOW_USERS_RENT_LIST_COMMAND">
@@ -81,12 +81,13 @@
 	            </form>         
 	          </div>
 	          <h2 id="info_h2" class="a1">ADD CARS</h2>
-	          <div class="decor">
+	          <!-- <div class="decor">
 	 			<form action="MainController" method="POST">
 	            	<input type="hidden" name="command" value="ADD_CARS_COMMAND">
 	                <input type="submit" id="button-form" value="ADD CARS">
 	            </form>         
-	          </div>  
+	          </div>   -->
+	          <a href = "add_car.jsp" class="button">ADD CAR</a>
           </c:if>
           <c:if test="${sessionScope.user.roleInProject == 'USER'}">
              <h2 id="info_h2"><fmt:message key="my_page.orders"/></h2>

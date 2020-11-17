@@ -37,6 +37,18 @@ public final class RequestParameters {
 	public static final String CARS = "cars";
 	public static final String CAR = "car";
 	public static final String CAR_ID = "id";
+	public static final String CAR_PHOTO = "photo";
+	public static final String CAR_BRAND = "brand";
+	public static final String CAR_MODEL = "model";
+	public static final String CAR_CLASS = "class";
+	public static final String CAR_POWER = "power";
+	public static final String CAR_ENGINE = "engine";
+	public static final String CAR_ACCELERATION = "acceleration";
+	public static final String CAR_DRIVE_UNIT= "drive_unit";
+	public static final String CAR_FUEL= "fuel";
+	public static final String CAR_COST= "cost";
+	public static final String CAR_DETAIL= "detail";
+
 	
 	//EDIT
 	public static final String USER = "user";
@@ -56,6 +68,11 @@ public final class RequestParameters {
 	public static final String CONDITION = "condition";
 	public static final String ORDERS = "orders";
 	public static final String ORDER_ID = "order_id";
+	public static final String PROBLEMS = "problems";
+	public static final String PENALTY = "penalty";
+	public static final String HAVE_PROBLEMS = "YES";
+	public static final String NO_PROBLEMS = "NO";
+	public static final String INFO = "info";
 	
 	//ADMIN
 	public static final String USERS = "users";

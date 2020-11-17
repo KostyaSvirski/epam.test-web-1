@@ -14,13 +14,17 @@ public class Car {
 	private long cost;
 	private String image;
 	private boolean isBooked;
+	private String discription;
 
 	public Car() {
-		
+	}
+
+	public Car(int id) {
+		this.id = id;
 	}
 
 	public Car(int id, String brand, String model, String carClass, int power, String engine, float acceleration,
-			DriveUnit driveUnit, Fuel fuel, long cost, String image, boolean isBooked) {
+			DriveUnit driveUnit, Fuel fuel, long cost, String image, boolean isBooked, String discription) {
 		super();
 		this.id = id;
 		this.brand = brand;
@@ -34,6 +38,7 @@ public class Car {
 		this.cost = cost;
 		this.image = image;
 		this.isBooked = isBooked;
+		this.discription = discription;
 	}
 
 	public int getId() {
@@ -132,6 +137,15 @@ public class Car {
 		this.isBooked = isBooked;
 	}
 
+	public String getDiscription() {
+		return discription;
+	}
+
+	public void setDiscription(String discription) {
+		this.discription = discription;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -140,6 +154,7 @@ public class Car {
 		result = prime * result + ((brand == null) ? 0 : brand.hashCode());
 		result = prime * result + ((carClass == null) ? 0 : carClass.hashCode());
 		result = prime * result + (int) (cost ^ (cost >>> 32));
+		result = prime * result + ((discription == null) ? 0 : discription.hashCode());
 		result = prime * result + ((driveUnit == null) ? 0 : driveUnit.hashCode());
 		result = prime * result + ((engine == null) ? 0 : engine.hashCode());
 		result = prime * result + ((fuel == null) ? 0 : fuel.hashCode());
@@ -150,6 +165,7 @@ public class Car {
 		result = prime * result + power;
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -181,6 +197,13 @@ public class Car {
 			return false;
 		}
 		if (cost != other.cost) {
+			return false;
+		}
+		if (discription == null) {
+			if (other.discription != null) {
+				return false;
+			}
+		} else if (!discription.equals(other.discription)) {
 			return false;
 		}
 		if (driveUnit != other.driveUnit) {
@@ -222,6 +245,7 @@ public class Car {
 		return true;
 	}
 
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -247,13 +271,12 @@ public class Car {
 		builder.append(cost);
 		builder.append(", image=");
 		builder.append(image);
-		builder.append(", isBoocked=");
+		builder.append(", isBooked=");
 		builder.append(isBooked);
+		builder.append(", discription=");
+		builder.append(discription);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	
-	
+	}	
 	
 }

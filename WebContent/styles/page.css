@@ -127,7 +127,7 @@ main:after {
   position: relative;
   z-index: 3;
   display: block;
-  width: 75%;
+  width: 63%;
   padding: 0px 20px;
   margin-bottom: 10px;
   line-height: 6vh;
@@ -204,4 +204,48 @@ main:after {
 .element {
   width: 100%;
   text-align: right;
+}
+
+.button1 {
+  position: relative;
+  z-index: 3;
+  padding: 15px 30px;
+  margin-bottom: 10px;
+  border-width: 0;
+  border-radius: 30px;
+  font-family: "Inconsolata", monospace;
+  font-family: "Roboto Slab", serif;
+  font-size: 13px;
+  margin-top: 20px;
+  background: #aaf0b5;
+  border-bottom: 4px solid #3d7f46;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  margin: 1vh 2vh;
+  MARGIN-LEFT: 7vh;
+  width: 80%;
+ 
+}
+.button2 {
+  position: relative;
+  z-index: 3;
+  padding: 15px 30px;
+  margin-bottom: 10px;
+  border-width: 0;
+  border-radius: 30px;
+  font-family: "Inconsolata", monospace;
+  font-family: "Roboto Slab", serif;
+  font-size: 13px;
+  margin-top: 20px;
+  background: #ff9393;
+  border-bottom: 4px solid #b81f1f;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  margin: 1vh 2vh;
+  MARGIN-LEFT: 7vh;
+  width: 80%;
 }
