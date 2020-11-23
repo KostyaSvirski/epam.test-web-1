@@ -52,6 +52,7 @@ public class OrderBuilder implements Builder<Order, OrderType> {
 		order.setSignature(parameters.get(OrderType.USER_SIGNATURE));
 		order.setCarBrand(parameters.get(OrderType.BRAND));
 		order.setCarModel(parameters.get(OrderType.MODEL));
+		order.setInfo(parameters.get(OrderType.INFO));
 		return order;
 	}
 	

@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import by.svirski.testweb.bean.Car;
+import by.svirski.testweb.bean.Comment;
 import by.svirski.testweb.bean.Order;
 import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
+import by.svirski.testweb.bean.type.TypeOfParameters.CommentType;
 import by.svirski.testweb.bean.type.TypeOfParameters.OrderType;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.dao.DaoFactory;
 import by.svirski.testweb.dao.abstracts.AbstractCarDAOImpl;
+import by.svirski.testweb.dao.abstracts.AbstractCommentDAOImpl;
 import by.svirski.testweb.dao.abstracts.AbstractOrderDAOImpl;
 import by.svirski.testweb.dao.exception.DaoException;
 import by.svirski.testweb.service.CustomCarService;
@@ -53,7 +56,7 @@ public class CarServiceImpl implements CustomCarService {
 		AbstractOrderDAOImpl dao = factory.getOrderDao();
 		List<Order> orders = null;
 		try {
-			orders = dao.showOrders(parameters);
+			orders = dao.showOrdersForCurrentUser(parameters);
 		} catch (DaoException e) {
 			throw new ServiceException(e);
 		}
@@ -61,21 +64,17 @@ public class CarServiceImpl implements CustomCarService {
 	}
 
 	@Override
-	public boolean releaseRent(Map<OrderType, String> parameters) throws ServiceException {
+	public List<Comment> showComments(Map<CommentType, String> parameters) throws ServiceException {
 		DaoFactory factory = DaoFactory.getInstance();
-		AbstractOrderDAOImpl dao = factory.getOrderDao();
-		boolean result = false;
+		AbstractCommentDAOImpl dao = factory.getCommentDao();
+		List<Comment> comments = null;
 		try {
-			result = dao.releaseRent(parameters);
-			if(result) {
-				return result;
-			} else {
-				throw new ServiceException("ошибка в дао");
-			}
+			comments = dao.findCommentToCar(parameters);
 		} catch (DaoException e) {
 			throw new ServiceException(e);
 		}
-	}
+		return comments;
+	}	
 	
 	
 

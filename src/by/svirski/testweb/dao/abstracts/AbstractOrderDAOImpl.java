@@ -65,6 +65,27 @@ public abstract class AbstractOrderDAOImpl implements BeanDao<Order, OrderType> 
 			close(ps);
 		}
 	}
+	
+	public boolean update(List<String> params, String request, Connection cn)
+			throws DaoException, TransactionException {
+		PreparedStatement ps = null;
+		try {
+			ps = cn.prepareStatement(request);
+			for(int i = 1; i <= params.size(); i++) {
+				if(i == 2) {
+					ps.setInt(i, Integer.parseInt(params.get(i-1)));									
+				} else {
+					ps.setString(i, params.get(i-1));
+				}			
+			}
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			throw new TransactionException("ошибка в выполнении запроса", e);
+		} finally {
+			close(ps);
+		}
+	}
 
 	@Override
 	public List<Order> select(List<String> parameters, String request, Connection cn)
@@ -72,7 +93,11 @@ public abstract class AbstractOrderDAOImpl implements BeanDao<Order, OrderType> 
 		PreparedStatement ps = null;
 		try {
 			ps = cn.prepareStatement(request);
-			ps.setInt(1, Integer.parseInt(parameters.get(0)));
+			if(parameters!= null && !parameters.isEmpty()) {
+				for(int i = 1; i <=parameters.size(); i++) {
+					ps.setInt(i, Integer.parseInt(parameters.get(i-1)));					
+				}
+			}
 			ResultSet rs = ps.executeQuery();
 			Builder<Order, OrderType> builder = new OrderBuilder();
 			List<Order> resultList = new ArrayList<Order>();
@@ -87,8 +112,9 @@ public abstract class AbstractOrderDAOImpl implements BeanDao<Order, OrderType> 
 				parametersMap.put(OrderType.DATE_OF_FINISH, rs.getString(6));
 				parametersMap.put(OrderType.COST, Long.toString(rs.getLong(7)));
 				parametersMap.put(OrderType.CONDITION, rs.getString(8));
-				parametersMap.put(OrderType.BRAND, rs.getString(9));
-				parametersMap.put(OrderType.MODEL, rs.getString(10));
+				parametersMap.put(OrderType.INFO, rs.getString(9));
+				parametersMap.put(OrderType.BRAND, rs.getString(10));
+				parametersMap.put(OrderType.MODEL, rs.getString(11));
 				Order order = builder.build(parametersMap);
 				resultList.add(order);
 			}
@@ -129,6 +155,11 @@ public abstract class AbstractOrderDAOImpl implements BeanDao<Order, OrderType> 
 	}
 
 	public abstract boolean rentAuto(Map<OrderType, String> parameters) throws DaoException;
-	public abstract List<Order> showOrders(Map<UserType, String> parameters) throws DaoException;
+	public abstract List<Order> showOrdersForCurrentUser(Map<UserType, String> parameters) throws DaoException;
 	public abstract boolean releaseRent(Map<OrderType, String> parameters) throws DaoException;
-}
+	public abstract List<Order> showAllOrders() throws DaoException;
+	public abstract boolean confirmOrder(Map<OrderType, String> parameters) throws DaoException;
+	public abstract boolean denyOrder(Map<OrderType, String> parameters) throws DaoException;
+	public abstract boolean releaseRentWithPenalty(Map<OrderType, String> parameters) throws DaoException;
+	public abstract boolean releaseRentFinally(Map<OrderType, String> parameters) throws DaoException;
+} 

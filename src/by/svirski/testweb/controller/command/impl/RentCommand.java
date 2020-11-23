@@ -56,13 +56,11 @@ public class RentCommand implements ActionCommand {
 			try {
 				boolean result = service.rentAuto(parametersMap);
 				if(result) {
-					request.setAttribute(RequestParameters.COLLOR, "green");
-					request.setAttribute(RequestParameters.CONDITION, "машина забронирована, ожидайте подвтерждения администратора");
-					request.getServletContext().getRequestDispatcher(PagePath.RENT_AUTO_PAGE).forward(request, response);
+					response.sendRedirect(request.getContextPath() + PagePath.USER_PAGE);
 				} else {
-					request.setAttribute(RequestParameters.COLLOR, "red");
-					request.setAttribute(RequestParameters.CONDITION, "проверьте правильность полей или повторите позже");
-					request.getServletContext().getRequestDispatcher(PagePath.RENT_AUTO_PAGE).forward(request, response);
+					logger.log(Level.ERROR, "ошибка в сервисе");
+					request.setAttribute(RequestParameters.ERROR, "что-то пошло не так");
+					request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
 				}
 			} catch (ServiceException e) {
 				logger.log(Level.ERROR, "ошибка в сервисе");

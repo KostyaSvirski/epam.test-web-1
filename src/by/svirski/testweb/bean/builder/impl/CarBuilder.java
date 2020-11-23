@@ -13,7 +13,7 @@ import by.svirski.testweb.bean.builder.Builder;
 import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
 
 public class CarBuilder implements Builder<Car, CarType> {
-	
+
 	private static Logger logger = LogManager.getLogger(CarBuilder.class);
 
 	public CarBuilder() {
@@ -32,32 +32,35 @@ public class CarBuilder implements Builder<Car, CarType> {
 			car.setAcceleration(Float.parseFloat(parameters.get(CarType.ACCELERATION)));
 			DriveUnit[] driveUnitTypes = DriveUnit.values();
 			boolean flag = false;
-			for(DriveUnit driveUnit : driveUnitTypes) {
-				if(driveUnit.toString().equalsIgnoreCase(parameters.get(CarType.DRIVE_UNIT))) {
+			for (DriveUnit driveUnit : driveUnitTypes) {
+				if (driveUnit.toString().equalsIgnoreCase(parameters.get(CarType.DRIVE_UNIT))
+						|| driveUnit.name().equalsIgnoreCase(parameters.get(CarType.DRIVE_UNIT))) {
 					car.setDriveUnit(driveUnit);
 					flag = true;
 					break;
 				}
 			}
-			if(!flag) {
+			if (!flag) {
 				logger.log(Level.INFO, "не найден нужный DriveUnit");
 			}
 			Fuel[] fuelTypes = Fuel.values();
 			flag = false;
-			for(Fuel fuel : fuelTypes) {
-				if(fuel.toString().equalsIgnoreCase(parameters.get(CarType.FUEL))) {
+			for (Fuel fuel : fuelTypes) {
+				if (fuel.toString().equalsIgnoreCase(parameters.get(CarType.FUEL))
+						|| fuel.name().equalsIgnoreCase(parameters.get(CarType.FUEL))) {
 					car.setFuel(fuel);
 					flag = true;
 					break;
 				}
 			}
-			if(!flag) {
+			if (!flag) {
 				logger.log(Level.INFO, "не найден нужный Fuel");
 			}
 			car.setCost(Long.parseLong(parameters.get(CarType.COST)));
 			car.setImage(parameters.get(CarType.IMG));
 			car.setBooked(Boolean.parseBoolean(parameters.get(CarType.IS_BOOKED)));
-		} catch (NumberFormatException e) {
+			car.setDiscription(parameters.get(CarType.DETAIL));
+		} catch (IllegalArgumentException e) {
 			logger.log(Level.INFO, "ошибка при парсинге", e);
 		}
 		logger.log(Level.DEBUG, "построился объект Car");

@@ -50,6 +50,7 @@ public class StatusControlFilter implements Filter {
 		if(user != null && user.getIsBlocked()) {
 			request.setAttribute(RequestParameters.ERROR, "вы заблокированы соре");
 			hRequest.getServletContext().getRequestDispatcher(page).forward(request, response);
+			session.invalidate();
 		} else {
 			chain.doFilter(request, response);			
 		}

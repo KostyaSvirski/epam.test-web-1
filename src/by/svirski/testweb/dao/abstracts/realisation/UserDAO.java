@@ -207,6 +207,30 @@ public class UserDAO extends AbstractUserDAOImpl {
 	}
 
 	@Override
+	public User findThisUser(Map<UserType, String> parameters) throws DaoException {
+		Connection cn = null;
+		try {
+			try {
+				cn = ConnectionPool.getInstance().getConnection();
+			} catch (ConnectionPoolException e) {
+				throw new DaoException(e);
+			}
+			List<String> listOfParams = new ArrayList<String>();
+			listOfParams.add(parameters.get(UserType.ID));
+			List<User> beanList = select(listOfParams, SELECT_USER, cn);
+			if (beanList.isEmpty() || beanList.size() > 1) {
+				logger.log(Level.ERROR, "ошибка в запросе: найдено более одного или ни одного пользователя");
+				throw new DaoException("ошибка в запросе: найдено более одного или ни одного пользователя");
+			} else {
+				User user = beanList.get(0);
+				return user;
+			}
+		} finally {
+			close(cn);
+		}
+	}
+
+	@Override
 	public boolean blockUser(Map<UserType, String> parameters) throws DaoException {
 		Connection cn = null;
 		try {

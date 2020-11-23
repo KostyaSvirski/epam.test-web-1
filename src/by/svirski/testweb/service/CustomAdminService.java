@@ -6,6 +6,7 @@ import java.util.Map;
 import by.svirski.testweb.bean.Order;
 import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
+import by.svirski.testweb.bean.type.TypeOfParameters.OrderType;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.service.exception.ServiceException;
 
@@ -20,4 +21,12 @@ public interface CustomAdminService {
 	boolean blockOrUnblockUser(Map<UserType, String> parametersMap) throws ServiceException;
 	
 	boolean makeAdmin(Map<UserType, String> parametersMap) throws ServiceException;
+	
+	User showThisUser(Map<UserType, String> parametersMap) throws ServiceException;
+	
+	boolean confirmOrderOfUser(Map<OrderType, String> parametersMap) throws ServiceException;
+	
+	boolean denyOrderOfUser(Map<OrderType, String> parametersMap) throws ServiceException;
+	
+	boolean releaseRent(Map<OrderType, String> parametersMap) throws ServiceException;
 }
