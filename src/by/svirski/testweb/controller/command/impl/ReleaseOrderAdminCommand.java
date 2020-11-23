@@ -18,28 +18,36 @@ import by.svirski.testweb.bean.type.TypeOfParameters.OrderType;
 import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 import by.svirski.testweb.controller.command.ActionCommand;
-import by.svirski.testweb.service.CustomCarService;
+import by.svirski.testweb.service.CustomAdminService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
-public class ReleaseOrderCommand implements ActionCommand {
+public class ReleaseOrderAdminCommand implements ActionCommand {
 
-	private static Logger logger = LogManager.getLogger(ReleaseOrderCommand.class);
-	
-	public ReleaseOrderCommand() {
+	private static Logger logger = LogManager.getLogger(ReleaseOrderAdminCommand.class);
+
+	public ReleaseOrderAdminCommand() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {
-		String orderId = request.getParameter(RequestParameters.ORDER_ID);
 		Map<OrderType, String> parametersMap = new EnumMap<TypeOfParameters.OrderType, String>(OrderType.class);
-		parametersMap.put(OrderType.ORDER_ID, orderId);
+		parametersMap.put(OrderType.ORDER_ID, request.getParameter(RequestParameters.ORDER_ID));
+		if (request.getParameter(RequestParameters.PROBLEMS) != null) {
+			parametersMap.put(OrderType.PROBLEMS, request.getParameter(RequestParameters.PROBLEMS));
+		}
+		if (request.getParameter(RequestParameters.PENALTY) != null) {
+			parametersMap.put(OrderType.PENALTY, request.getParameter(RequestParameters.PENALTY));
+		}
+		parametersMap.put(OrderType.INFO, request.getParameter(RequestParameters.INFO));
 		ServiceFactory factory = ServiceFactory.getInstance();
-		CustomCarService service = factory.getCarService();
+		boolean result = false;
+		CustomAdminService service = factory.getAdminService();
 		try {
-			boolean result = service.releaseRent(parametersMap);
-			if(result) {
+			result = service.releaseRent(parametersMap);
+			if (result) {
 				response.sendRedirect(request.getContextPath() + PagePath.USER_PAGE);
 			} else {
 				logger.log(Level.ERROR, "что-то пошло не так");
@@ -51,7 +59,7 @@ public class ReleaseOrderCommand implements ActionCommand {
 			request.setAttribute(RequestParameters.ERROR, "ошибка в сервисе");
 			request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
 		}
-		
+
 	}
 
 }

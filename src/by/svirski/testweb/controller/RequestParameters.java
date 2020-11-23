@@ -48,6 +48,8 @@ public final class RequestParameters {
 	public static final String CAR_FUEL= "fuel";
 	public static final String CAR_COST= "cost";
 	public static final String CAR_DETAIL= "detail";
+	public static final String IS_BOOKED = "is_booked";
+	public static final String COMMENTS = "comments";
 
 	
 	//EDIT
@@ -69,7 +71,6 @@ public final class RequestParameters {
 	public static final String ORDERS = "orders";
 	public static final String ORDER_ID = "order_id";
 	public static final String PROBLEMS = "problems";
-	public static final String PENALTY = "penalty";
 	public static final String HAVE_PROBLEMS = "YES";
 	public static final String NO_PROBLEMS = "NO";
 	public static final String INFO = "info";
@@ -79,6 +80,10 @@ public final class RequestParameters {
 	
 	//RESPONSE
 	public static final String DEFAULT_ERROR = "Что-то пошло не так соре";
-	
+
+	//PENALTY
+	public static final String PENALTY = "penalty";
+	public static final String PENALTY_ID = "id";
+
 	
 }

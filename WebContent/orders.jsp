@@ -61,54 +61,74 @@
                    <p class="el">${order.dateOfStart} - ${order.dateOfFinish}</p>
                    <p class="el">${order.carBrand} ${order.carModel}</p>
                    <c:if test="${sessionScope.user.roleInProject != 'ADMIN'}">
-	                   <c:if test="${order.condition == 'обрабатывается'}">
-		                   <p class="el" ><font color = "yellow">${order.condition}</font></p>                    
-		                   <form action="MainController" method="POST">
-		                   	   <input type="hidden" name="command" value="RELEASE_ORDER_COMMAND">
-		                   	   <input type="hidden" name="order_id" value="${order.id}">
-		                   	   <input type="submit" id="button-form" value="RELEASE">
-		                   </form>
-	                   </c:if>
-	                   <c:if test="${order.condition == 'одобрено'}">
-		                   <p class="el" ><font color = "green">${order.condition}</font></p> 
-		                   <form action="MainController" method="POST">
-		                   	   <input type="hidden" name="command" value="RELEASE_ORDER_COMMAND">
-		                   	   <input type="hidden" name="order_id" value="${order.id}">
-		                   	   <input type="submit" id="button-form" value="RELEASE">
-		                   </form>                   
-	                   </c:if>
-					   <c:if test="${order.condition == 'отклонено'}">
-		                   <p class="el"><font color = "red">${order.condition}</font></p>
-		                   <p class="el">${order.info}</p>                   
-	                   </c:if>
-	                   <c:if test="${order.condition == 'завершено'}">
-		                   <p class="el" ><font color = "black">${order.condition}</font></p>                   
-	                   </c:if>
+	                   <c:choose>
+	                       <c:when test="${order.condition == 'обрабатывается'}">
+		                       <p class="el" ><font color = "yellow">${order.condition}</font></p>                    
+			                   <form action="MainController" method="POST">
+			                   	   <input type="hidden" name="command" value="RELEASE_ORDER_COMMAND">
+			                   	   <input type="hidden" name="order_id" value="${order.id}">
+			                   	   <input type="submit" id="button-form" value="RELEASE">
+			                   </form>
+	                       </c:when>
+	                       <c:when test="${order.condition == 'одобрено'}">
+			                   <p class="el" ><font color = "green">${order.condition}</font></p> 
+			                   <a href = "detail_release.jsp?id=${order.id}" class="button1">RELEASE</a>
+	                       </c:when>
+	                       <c:when test="${order.condition == 'отклонено'}">
+			                   <p class="el"><font color = "red">${order.condition}</font></p>
+		                   	   <p class="el">${order.info}</p>
+	                       </c:when>
+	                       <c:when test="${order.condition == 'завершено'}">
+			                   <p class="el" ><font color = "black">${order.condition}</font></p>
+	                       </c:when>
+	                       <c:when test="${order.condition == 'штраф'}">
+		                       <p class="el" ><font color = "red">${order.condition}</font></p>                    
+			                   <form action="MainController" method="POST">
+			                   	   <input type="hidden" name="command" value="SHOW_PENALTY_COMMAND">
+			                   	   <input type="hidden" name="order_id" value="${order.id}">
+			                   	   <input type="submit" id="button-form" value="PENALTY">
+			                   </form>
+	                       </c:when>
+	                       <c:when test="${order.condition == 'завершение'}">
+		                       <p class="el" ><font color = "yellow">${order.condition}</font></p>             
+	                       </c:when> 
+	                       <c:otherwise>
+	                           <p class="el" ><font color = "yellow">???</font></p>   
+	                       </c:otherwise>   
+	                   </c:choose>
                    </c:if>
                    <c:if test="${sessionScope.user.roleInProject == 'ADMIN'}">
-                       <c:if test="${order.condition == 'обрабатывается'}">                   
-		                   <form action="MainController" method="POST">
-		                   	   <input type="hidden" name="command" value="CONFIRM_USER_ORDER_COMMAND">
-		                   	   <input type="hidden" name="order_id" value="${order.id}">
-		                   	   <input type="submit" class="button1" value="CONFIRM">
-		                   </form>
-		                   <a href = "detail_deny.jsp?id=${order.id}" class="button2">DENY</a>
-	                   </c:if>
-	                   <c:if test="${order.condition == 'одобрено'}">
-		                   <p class="el" ><font color = "green">${order.condition}</font></p> 
-		                   <form action="MainController" method="POST">
-		                   	   <input type="hidden" name="command" value="RELEASE_ORDER_COMMAND">
-		                   	   <input type="hidden" name="order_id" value="${order.id}">
-		                   	   <input type="submit" id="button-form" value="RELEASE">
-		                   </form>                   
-	                   </c:if>
-					   <c:if test="${order.condition == 'отклонено'}">
-		                   <p class="el"><font color = "red">${order.condition}</font></p>
-		                   <p class="el">${order.info}</p>                   
-	                   </c:if>
-	                   <c:if test="${order.condition == 'завершено'}">
-		                   <p class="el" ><font color = "black">${order.condition}</font></p>                   
-	                   </c:if>
+                       <c:choose>
+                           <c:when test="${order.condition == 'обрабатывается'}">
+	                           <form action="MainController" method="POST">
+			                   	   <input type="hidden" name="command" value="CONFIRM_USER_ORDER_COMMAND">
+			                   	   <input type="hidden" name="order_id" value="${order.id}">
+			                   	   <input type="submit" class="button1" value="CONFIRM">
+			                   </form>
+			                   <a href = "detail_deny.jsp?id=${order.id}" class="button2">DENY</a>
+                           </c:when>
+                           <c:when test="${order.condition == 'одобрено'}">
+	                           <p class="el" ><font color = "green">${order.condition}</font></p> 
+		                       <a href = "detail_release.jsp?id=${order.id}" class="button1">RELEASE</a>
+                           </c:when>
+                           <c:when test="${order.condition == 'отклонено'}">
+	                           <p class="el"><font color = "red">${order.condition}</font></p>
+		                       <p class="el">${order.info}</p>
+                           </c:when>
+                           <c:when test="${order.condition == 'завершено'}">
+	                           <p class="el" ><font color = "black">${order.condition}</font></p>
+                           </c:when>
+                           <c:when test="${order.condition == 'штраф'}">
+	                           <p class="el" ><font color = "red">${order.condition}</font></p>
+                           </c:when>
+                           <c:when test="${order.condition == 'завершение'}">
+	                           <p class="el" ><font color = "yellow">${order.condition}</font></p> 
+		                       <a href = "detail_release.jsp?id=${order.id}" class="button2">RELEASE</a>
+                           </c:when>
+                           <c:otherwise>
+	                           <p class="el" ><font color = "yellow">???</font></p>   
+	                       </c:otherwise>   
+                       </c:choose>
                    </c:if>
                   </div>
                 </section>

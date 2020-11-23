@@ -93,6 +93,10 @@ nav {
   font-family: "Inconsolata", monospace;
   font-family: "Roboto Slab", serif;
 }
+
+#text-id {
+  margin-left: 30%;
+}
 .info img {
   width: 40%;
   height: 30%;

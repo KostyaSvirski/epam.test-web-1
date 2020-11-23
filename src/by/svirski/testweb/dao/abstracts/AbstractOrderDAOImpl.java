@@ -160,4 +160,6 @@ public abstract class AbstractOrderDAOImpl implements BeanDao<Order, OrderType> 
 	public abstract List<Order> showAllOrders() throws DaoException;
 	public abstract boolean confirmOrder(Map<OrderType, String> parameters) throws DaoException;
 	public abstract boolean denyOrder(Map<OrderType, String> parameters) throws DaoException;
+	public abstract boolean releaseRentWithPenalty(Map<OrderType, String> parameters) throws DaoException;
+	public abstract boolean releaseRentFinally(Map<OrderType, String> parameters) throws DaoException;
 } 

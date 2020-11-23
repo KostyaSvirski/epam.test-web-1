@@ -7,10 +7,16 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import by.svirski.testweb.bean.Penalty;
 import by.svirski.testweb.bean.User;
 import by.svirski.testweb.bean.type.TypeOfParameters;
+import by.svirski.testweb.bean.type.TypeOfParameters.OrderType;
+import by.svirski.testweb.bean.type.TypeOfParameters.PenaltyType;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.dao.DaoFactory;
+import by.svirski.testweb.dao.abstracts.AbstractCommentDAOImpl;
+import by.svirski.testweb.dao.abstracts.AbstractOrderDAOImpl;
+import by.svirski.testweb.dao.abstracts.AbstractPenaltyDAOImpl;
 import by.svirski.testweb.dao.abstracts.AbstractUserDAOImpl;
 import by.svirski.testweb.dao.exception.DaoException;
 import by.svirski.testweb.service.CustomUserService;
@@ -106,5 +112,56 @@ public class UserServiceImpl implements CustomUserService {
 		}
 		return updatedUser;
 	}
+
+	@Override
+	public boolean releaseRent(Map<OrderType, String> parameters) throws ServiceException {
+		DaoFactory factory = DaoFactory.getInstance();
+		AbstractOrderDAOImpl dao = factory.getOrderDao();
+		boolean result = false;
+		try {
+			result = dao.releaseRent(parameters);
+			if(parameters.get(OrderType.INFO) != null) {
+				AbstractCommentDAOImpl daoComment = factory.getCommentDao();
+				result = daoComment.createComment(parameters);
+			}
+			if(result) {
+				return result;
+			} else {
+				throw new ServiceException("ошибка в дао");
+			}
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	public Penalty showPenalty(Map<PenaltyType, String> parameters) throws ServiceException {
+		DaoFactory factory = DaoFactory.getInstance();
+		AbstractPenaltyDAOImpl dao = factory.getPenaltyDao();
+		Penalty penalty = null;
+		try {
+			penalty = dao.showPenalty(parameters);
+		} catch (DaoException e) {
+			throw new ServiceException("ошибка в дао");
+		}
+		
+		return penalty;
+	}
+
+	@Override
+	public boolean closePenalty(Map<PenaltyType, String> parameters) throws ServiceException {
+		DaoFactory factory = DaoFactory.getInstance();
+		AbstractPenaltyDAOImpl dao = factory.getPenaltyDao();
+		boolean flag = false;
+		try {
+			flag = dao.closePenalty(parameters);
+		} catch (DaoException e) {
+			throw new ServiceException("ошибка в дао");
+		}
+		return flag;
+	}
+	
+	
+	
 
 }

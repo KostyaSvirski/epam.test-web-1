@@ -37,7 +37,7 @@ public class Penalty {
 		return costOfPenalty;
 	}
 
-	public boolean isClosed() {
+	public boolean getIsClosed() {
 		return isClosed;
 	}
 

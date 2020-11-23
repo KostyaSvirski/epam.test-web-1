@@ -51,36 +51,45 @@
 
        <main>
         <section class="info">
-            <img src="${param.image}" alt="auto">
+            <img src="${car.image}" alt="auto">
             <div class="text">
-                <p id="name"><b>${param.brand} ${param.model}</b></p>
-                <p>Class: ${param.carClass}</p>
-                <p>Power: ${param.power}</p>
-                <p>Engine: ${param.engine}</p>
-                <p>Acceleration: ${param.acceleration}</p> 
-                <p>Drive unit: ${param.driveUnit}</p>
-                <p>Fuel: ${param.fuel}</p>
-                <p>Cost: ${param.cost} $</p>
+                <p id="name"><b>${car.brand} ${car.model}</b></p>
+                <p>Class: ${car.carClass}</p>
+                <p>Power: ${car.power}</p>
+                <p>Engine: ${car.engine}</p>
+                <p>Acceleration: ${car.acceleration}</p> 
+                <p>Drive unit: ${car.driveUnit}</p>
+                <p>Fuel: ${car.fuel}</p>
+                <p>Cost: ${car.cost} $</p>
                 <div class="all_button">
                     <c:if test="${sessionScope.user.login != null}">
-						<c:if test="${param.isBooked == true}">
+						<c:if test="${car.isBooked == true}">
 							<p><fmt:message key="cars.info.text.booked"/></p>
 						</c:if>
-						<c:if test="${param.isBooked == false}">
+						<c:if test="${car.isBooked == false}">
 							<a href="rent_auto.jsp?id=${param.id}&image=${param.image}&brand=${param.brand}&model=${param.model}&cost=${param.cost}" class="button"><fmt:message key="cars.button.rent"/></a> 
 						</c:if>
 					</c:if>
 					<c:if test="${sessionScope.user.login == null}">
 						<p><fmt:message key="cars.info.text.not_sign_in"/></p>
 					</c:if>
-                    <a href="cars.html" class="button">BACK</a>
+                    <a href="MainController?command=SHOW_CARS_COMMAND" class="button">BACK</a>
                 </div>
             </div>
         </section>
         <section class="textarea">
-            <h2><b>${param.brand} ${param.model} rental</b></h2>
-            <p>${param.discription}</p>
+            <h2><b>${car.brand} ${car.model} rental</b></h2>
+            <p>${car.discription}</p>
         </section>
+        <h2 class="textarea"><b>comments</b></h2>
+        <div class = "comments">
+        <c:forEach var="comment" items="${requestScope.comments}">
+        	<div class="comment">
+	        	<p class="name_user">${comment.signature}</p>
+	        	<p class="info">${comment.commentInfo}</p>        	
+        	</div>        	
+        </c:forEach>
+        </div>
        </main>
 
        <footer>

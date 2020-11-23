@@ -30,8 +30,10 @@ public class OrderDAO extends AbstractOrderDAOImpl {
 			+ "values (?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_BOOK_LIST_RENT = "update book_list set is_booked = true where id_car = ?";
 	private static final String RELEASE_ORDER = "update order_list set order_condition = 'завершено' where id_order = ?";
+	private static final String PREPARE_RELEASE_ORDER = "update order_list set order_condition = 'завершение' where id_order = ?";
 	private static final String CONFIRM_ORDER = "update order_list set order_condition = 'одобрено' where id_order = ?";
 	private static final String DENY_ORDER = "update order_list set order_condition = 'отклонено' where id_order = ?";
+	private static final String RELEASE_ORDER_PENALTY = "update order_list set order_condition = 'штраф' where id_order = ?";
 	private static final String FIND_ID_CAR = "select car.id_car from order_list join car on order_list.id_car = car.id_car"
 			+ " where order_list.id_order = ?";
 	private static final String UPDATE_BOOK_LIST_RELEASE = "update book_list set is_booked = false where id_car = ?";
@@ -160,7 +162,7 @@ public class OrderDAO extends AbstractOrderDAOImpl {
 				throw new DaoException("соеденение не было получено", e);
 			}
 			boolean flag = false;
-			flag = releaseRent(parameters, cn);
+			flag = releaseRent(parameters, DENY_ORDER, cn);
 			logger.log(Level.DEBUG, "завершена аренда авто");
 			if (flag) {
 				List<String> listOfParams = new ArrayList<String>();
@@ -198,7 +200,7 @@ public class OrderDAO extends AbstractOrderDAOImpl {
 			}
 			boolean resultOfRelease = false;
 			try {
-				resultOfRelease = update(parameters, RELEASE_ORDER, cn);
+				resultOfRelease = update(parameters, PREPARE_RELEASE_ORDER, cn);
 				List<String> parametersForFindId = new ArrayList<String>();
 				parametersForFindId.add(parameters.get(OrderType.ORDER_ID));
 				List<Order> orderList = select(parametersForFindId, FIND_ID_CAR, cn);
@@ -226,10 +228,11 @@ public class OrderDAO extends AbstractOrderDAOImpl {
 		}
 	}
 
-	public boolean releaseRent(Map<OrderType, String> parameters, Connection cn) throws DaoException {
+	public boolean releaseRent(Map<OrderType, String> parameters, String newCondition, Connection cn)
+			throws DaoException {
 		boolean resultOfRelease = false;
 		try {
-			resultOfRelease = update(parameters, DENY_ORDER, cn);
+			resultOfRelease = update(parameters, newCondition, cn);
 			List<String> parametersForFindId = new ArrayList<String>();
 			parametersForFindId.add(parameters.get(OrderType.ORDER_ID));
 			List<Order> orderList = select(parametersForFindId, FIND_ID_CAR, cn);
@@ -255,6 +258,44 @@ public class OrderDAO extends AbstractOrderDAOImpl {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean releaseRentWithPenalty(Map<OrderType, String> parameters) throws DaoException {
+		Connection cn = null;
+		boolean flag = false;
+		try {
+			try {
+				cn = ConnectionPool.getInstance().getConnection();
+				cn.setAutoCommit(false);
+			} catch (ConnectionPoolException | SQLException e) {
+				logger.log(Level.ERROR, "соеденение не было получено");
+				throw new DaoException("соеденение не было получено", e);
+			}
+			flag = releaseRent(parameters, RELEASE_ORDER_PENALTY, cn);
+		} finally {
+			close(cn);
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean releaseRentFinally(Map<OrderType, String> parameters) throws DaoException {
+		Connection cn = null;
+		boolean flag = false;
+		try {
+			try {
+				cn = ConnectionPool.getInstance().getConnection();
+				cn.setAutoCommit(false);
+			} catch (ConnectionPoolException | SQLException e) {
+				logger.log(Level.ERROR, "соеденение не было получено");
+				throw new DaoException("соеденение не было получено", e);
+			}
+			flag = releaseRent(parameters, RELEASE_ORDER, cn);
+		} finally {
+			close(cn);
+		}
+		return flag;
 	}
 
 	@Override

@@ -109,6 +109,35 @@ main{
     margin-left: 2.5vh;
 }
 
+.button1{
+  width: 10%;
+  padding: 1vh;
+  margin: 1vh;
+  font-family: "Inconsolata", monospace;
+  font-family: "Roboto Slab", serif;
+  background: #dc7633;
+  border-radius: 1vh;
+  border-color: #dc7633;
+  color: white;
+  font-size: 14px;
+}
+
+#form-detail {
+	width: 40%;
+	margin-right: 10%;
+}
+
+.decor {
+  position: relative;
+  z-index: 3;
+  max-width: 550px;
+  margin: 1vh auto 0;
+  background: rgb(255, 255, 255, 0.7);
+  border-radius: 30px;
+}
+.decor1{
+	background: rgb(255, 80, 0, 0);
+}
 footer {
   color: white;
   width: 100%;

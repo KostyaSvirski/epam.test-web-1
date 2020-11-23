@@ -81,7 +81,7 @@
              <option class="opt1" value="">Status</option>
              <option class="opt" value="false">Available</option>
            </select>
-           <input class="submit-button" type="submit" value="CONFIRM">
+           <input class="button1" type="submit" value="CONFIRM">
 		</form>
     </section>
 	<c:forEach var="car" items="${requestScope.cars}">
@@ -102,20 +102,35 @@
 				<p><fmt:message key="cars.info.cost"/> ${car.cost} $</p>
 				<div class="all_button">
 					<c:if test="${sessionScope.user.login != null}">
-						<c:if test="${car.isBooked == true}">
-							<p><fmt:message key="cars.info.text.booked"/></p>
-						</c:if>
-						<c:if test="${car.isBooked == false}">
-							<a href="rent_auto.jsp?id=${car.id}&image=${car.image}&brand=${car.brand}&model=${car.model}&cost=${car.cost}" class="button"><fmt:message key="cars.button.rent"/></a> 
+						<c:if test="${sessionScope.user.roleInProject != 'ADMIN'}">
+							<c:if test="${car.isBooked == true}">
+								<p><fmt:message key="cars.info.text.booked"/></p>
+							</c:if>
+							<c:if test="${car.isBooked == false}">
+								<a href="rent_auto.jsp?id=${car.id}&image=${car.image}&brand=${car.brand}&model=${car.model}&cost=${car.cost}" class="button"><fmt:message key="cars.button.rent"/></a> 
+							</c:if>
 						</c:if>
 					</c:if>
 					<c:if test="${sessionScope.user.login == null}">
 						<p><fmt:message key="cars.info.text.not_sign_in"/></p>
 					</c:if>
-					<a href="detail.jsp?id=${car.id}&image=${car.image}&brand=${car.brand}&model=${car.model}&cost=${car.cost}&carClass=${car.carClass}
-					&power=${car.power}&engine=${car.engine}&acceleration=${car.acceleration}&driveUnit=${car.driveUnit}&fuel=${car.fuel}&discription=${car.discription}
-					&isBooked=${car.isBooked}"
-						 class="button"><fmt:message key="cars.button.detail"/></a>
+					<form id="form-detail" class="decor1" action="MainController" method="POST">
+						<input type="hidden" name="command" value="SHOW_DETAIL_CAR_COMMAND">
+						<input type="hidden" name="id" value="${car.id}">
+						<input type="hidden" name="photo" value="${car.image}">
+						<input type="hidden" name="brand" value="${car.brand}">
+						<input type="hidden" name="model" value="${car.model}">
+						<input type="hidden" name="class" value="${car.carClass}">
+						<input type="hidden" name="power" value="${car.power}">
+						<input type="hidden" name="engine" value="${car.engine}">
+						<input type="hidden" name="acceleration" value="${car.acceleration}">
+						<input type="hidden" name="drive_unit" value="${car.driveUnit}">
+						<input type="hidden" name="fuel" value="${car.fuel}">
+						<input type="hidden" name="cost" value="${car.cost}">
+						<input type="hidden" name="detail" value="${car.discription}">
+						<input type="hidden" name="is_booked" value="${car.isBooked}">
+						<input class="button" type="submit" value="DETAIL">
+					</form>
 				</div>
 			</div>
 		</section>

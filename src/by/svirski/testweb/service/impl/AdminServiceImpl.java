@@ -16,6 +16,7 @@ import by.svirski.testweb.controller.RequestParameters;
 import by.svirski.testweb.dao.DaoFactory;
 import by.svirski.testweb.dao.abstracts.AbstractCarDAOImpl;
 import by.svirski.testweb.dao.abstracts.AbstractOrderDAOImpl;
+import by.svirski.testweb.dao.abstracts.AbstractPenaltyDAOImpl;
 import by.svirski.testweb.dao.abstracts.AbstractUserDAOImpl;
 import by.svirski.testweb.dao.exception.DaoException;
 import by.svirski.testweb.service.CustomAdminService;
@@ -127,7 +128,7 @@ public class AdminServiceImpl implements CustomAdminService {
 				&& validatorNumber.validate(parametersMap.get(CarType.POWER))
 				&& validatorUrl.validate(parametersMap.get(CarType.IMG))
 				&& validatorFuel.validate(parametersMap.get(CarType.FUEL))
-				&& validatorDriveUnit.validate(parametersMap.get(CarType.DRIVE_UNIT))) {			
+				&& validatorDriveUnit.validate(parametersMap.get(CarType.DRIVE_UNIT))) {
 			DaoFactory factory = DaoFactory.getInstance();
 			AbstractCarDAOImpl dao = factory.getCarDao();
 			boolean flag = false;
@@ -137,9 +138,9 @@ public class AdminServiceImpl implements CustomAdminService {
 				throw new ServiceException(e);
 			}
 			return flag;
-			
+
 		}
-		
+
 		return false;
 	}
 
@@ -155,7 +156,24 @@ public class AdminServiceImpl implements CustomAdminService {
 		}
 		return flag;
 	}
-	
-	
+
+	@Override
+	public boolean releaseRent(Map<OrderType, String> parametersMap) throws ServiceException {
+		DaoFactory factory = DaoFactory.getInstance();
+		AbstractOrderDAOImpl dao = factory.getOrderDao();
+		boolean result = false;
+		try {
+			if (parametersMap.get(OrderType.PROBLEMS).equals(RequestParameters.HAVE_PROBLEMS)) {
+				result = dao.releaseRentWithPenalty(parametersMap);
+				AbstractPenaltyDAOImpl penaltyDao = factory.getPenaltyDao();
+				result = penaltyDao.createPenalty(parametersMap);
+			} else {
+				result = dao.releaseRentFinally(parametersMap);
+			}
+		} catch (DaoException e) {
+			throw new ServiceException("ошибка в дао");
+		}
+		return result;
+	}
 
 }

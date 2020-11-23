@@ -145,3 +145,20 @@ footer {
   margin: 0vh 1vh;
   display: block;
 }
+.comments{
+	margin-left: 15%;
+	margin-right: 15%;
+	margin-bottom: 5%;
+	padding: 1.5%;
+}
+.info{
+	font-family: "Inconsolata", monospace;
+}
+.name_user{
+	font-family: "Roboto Slab", serif; 
+}
+.comment{
+	border-bottom: 2px solid black; 
+	padding-right: 5%;
+	padding-left: 5%;
+}

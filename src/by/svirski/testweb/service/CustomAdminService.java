@@ -27,4 +27,6 @@ public interface CustomAdminService {
 	boolean confirmOrderOfUser(Map<OrderType, String> parametersMap) throws ServiceException;
 	
 	boolean denyOrderOfUser(Map<OrderType, String> parametersMap) throws ServiceException;
+	
+	boolean releaseRent(Map<OrderType, String> parametersMap) throws ServiceException;
 }

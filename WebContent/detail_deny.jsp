@@ -50,17 +50,16 @@
     <main class="main">
         <h1  class="main_text">DENY</h1>
         <div class="main">
-        <form class="decor" action="MainController" method="POST">
+        <form class="decor" action="MainController" method="GET">
             <div class="form-left-decoration"></div>
             <div class="form-right-decoration"></div>
             <div class="circle"></div>
-    
             <div class="form-inner">
-            <input type="hidden" name="command" value="DENY_USER_ORDER_COMMAND">
-            <input type="hidden" name="order_id" value="${param.id}">
-            <input type="text" placeholder="tell why..." name="info">
-            <input type="submit" value = "CONFIRM">
-        </div>
+	            <input type="hidden" name="command" value="DENY_USER_ORDER_COMMAND">
+	            <input type="hidden" name="order_id" value="${param.id}">
+	            <input type="text" placeholder="tell why..." name="info">
+	            <input type="submit" value = "CONFIRM">
+        	</div>
         </form>
         </div>
         <a href = "my_page.jsp" class="register"> BACK </a>

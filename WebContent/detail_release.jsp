@@ -56,15 +56,23 @@
             <div class="circle"></div>
     
             <div class="form-inner">
-            <input type="hidden" name="command" value="DENY_USER_ORDER_COMMAND">
-            <input type="hidden" name="order_id" value="${param.id}">
-            <input type="textarea" placeholder="Are there any problems with the car?" name="">
-            <div class="radio">
-                <input type="radio" name="problems" value="YES">Yes
-                <input type="radio" name="problems" value="NO">No<br>
-            </div>
-            <input type="text" placeholder="Cost of penalty in $" name="penalty">
-            <input type="submit" value = "CONFIRM">
+            <c:if test="${sessionScope.user.roleInProject == 'ADMIN'}">
+	            <input type="hidden" name="command" value="RELEASE_ORDER_ADMIN_COMMAND">
+	            <input type="hidden" name="order_id" value="${param.id}">
+	            <div class="radio">
+	                <input type="radio" name="problems" value="YES">Yes
+	                <input type="radio" name="problems" value="NO">No<br>
+	            </div>
+	            <input type="text" placeholder="Are there any problems with the car?" name="info">
+	            <input type="text" placeholder="Cost of penalty in $" name="penalty">
+	            <input type="submit" value = "CONFIRM">            
+            </c:if>
+            <c:if test="${sessionScope.user.roleInProject != 'ADMIN'}">
+            	<input type="hidden" name="command" value="RELEASE_ORDER_COMMAND">
+	            <input type="hidden" name="order_id" value="${param.id}">
+	            <input type="text" placeholder="leave your commnet to car" name="info">
+	            <input type="submit" value = "CONFIRM">
+            </c:if>
         </div>
         </form>
         </div>
