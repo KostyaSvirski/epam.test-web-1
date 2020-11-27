@@ -59,12 +59,12 @@ public class RentCommand implements ActionCommand {
 					response.sendRedirect(request.getContextPath() + PagePath.USER_PAGE);
 				} else {
 					logger.log(Level.ERROR, "ошибка в сервисе");
-					request.setAttribute(RequestParameters.ERROR, "что-то пошло не так");
+					request.setAttribute(RequestParameters.ERROR, RequestParameters.DEFAULT_ERROR);
 					request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
 				}
 			} catch (ServiceException e) {
 				logger.log(Level.ERROR, "ошибка в сервисе");
-				request.setAttribute(RequestParameters.ERROR, "что-то пошло не так");
+				request.setAttribute(RequestParameters.ERROR, RequestParameters.DEFAULT_ERROR);
 				request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
 			}
 		} else {

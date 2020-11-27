@@ -55,7 +55,9 @@
 	          </c:if>
 	          <div class="all_button">
 	          <c:if test="${penalty.isClosed == false}">
-	            <input type = "submit" id="button-form" value="CLOSE">
+	          	<c:if test="${sessionScope.user.roleInProject != 'ADMIN'}">
+		            <input type = "submit" id="button-form" value="CLOSE">	          		
+	          	</c:if>
 	          </c:if>
 	          </div>
 	    	  <a href="my_page.jsp" class="button">BACK</a>

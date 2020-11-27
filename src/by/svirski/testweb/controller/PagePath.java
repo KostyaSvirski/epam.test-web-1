@@ -17,7 +17,8 @@ public final class PagePath {
 	public static final String ALL_USERS_PAGE = "/users.jsp";
 	public static final String THIS_USER_PAGE = "/this_user.jsp";
 	public static final String DETAIL_PAGE = "/detail.jsp";
-	public static final String PENALTY_PAGE = "/penalty.jsp";
+	public static final String PENALTY_PAGE = "/penalty.jsp";	
+	public static final String NOT_FOUND_PAGE = "/not_found.jsp";
 	
 	private PagePath() {}
 
