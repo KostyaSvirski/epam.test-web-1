@@ -22,6 +22,7 @@ import by.svirski.testweb.controller.RequestParameters;
 import by.svirski.testweb.controller.command.ActionCommand;
 import by.svirski.testweb.service.CustomCarService;
 import by.svirski.testweb.service.ServiceFactory;
+import by.svirski.testweb.service.exception.InvalidParameterException;
 import by.svirski.testweb.service.exception.ServiceException;
 
 public class RentCommand implements ActionCommand {
@@ -65,6 +66,10 @@ public class RentCommand implements ActionCommand {
 			} catch (ServiceException e) {
 				logger.log(Level.ERROR, "ошибка в сервисе");
 				request.setAttribute(RequestParameters.ERROR, RequestParameters.DEFAULT_ERROR);
+				request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
+			} catch (InvalidParameterException e) {
+				logger.log(Level.ERROR, e.getMessage());
+				request.setAttribute(RequestParameters.ERROR, e.getMessage());
 				request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
 			}
 		} else {

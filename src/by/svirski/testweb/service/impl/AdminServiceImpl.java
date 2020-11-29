@@ -20,12 +20,16 @@ import by.svirski.testweb.dao.abstracts.AbstractPenaltyDAOImpl;
 import by.svirski.testweb.dao.abstracts.AbstractUserDAOImpl;
 import by.svirski.testweb.dao.exception.DaoException;
 import by.svirski.testweb.service.CustomAdminService;
+import by.svirski.testweb.service.exception.InvalidParameterException;
 import by.svirski.testweb.service.exception.ServiceException;
-import by.svirski.testweb.util.validator.CustomValidator;
-import by.svirski.testweb.util.validator.impl.DriveUnitValidator;
-import by.svirski.testweb.util.validator.impl.FuelValidator;
-import by.svirski.testweb.util.validator.impl.ImageSourceValidator;
-import by.svirski.testweb.util.validator.impl.NumberValidatorImpl;
+import by.svirski.testweb.util.validator.PreparedValidatorsChain;
+import by.svirski.testweb.util.validator.realisation.IntermidiateCarLink;
+import by.svirski.testweb.util.validator.realisation.car.AccelerationValidatorLink;
+import by.svirski.testweb.util.validator.realisation.car.DriveUnitValidatorLink;
+import by.svirski.testweb.util.validator.realisation.car.FuelValidatorLink;
+import by.svirski.testweb.util.validator.realisation.car.ImageSourceValidatorLink;
+import by.svirski.testweb.util.validator.realisation.car.NumberValidatorLink;
+import by.svirski.testweb.util.validator.realisation.car.PowerValidatorLink;
 
 public class AdminServiceImpl implements CustomAdminService {
 
@@ -118,17 +122,14 @@ public class AdminServiceImpl implements CustomAdminService {
 	}
 
 	@Override
-	public boolean addCar(Map<CarType, String> parametersMap) throws ServiceException {
-		CustomValidator validatorNumber = new NumberValidatorImpl();
-		CustomValidator validatorUrl = new ImageSourceValidator();
-		CustomValidator validatorFuel = new FuelValidator();
-		CustomValidator validatorDriveUnit = new DriveUnitValidator();
-		if (validatorNumber.validate(parametersMap.get(CarType.COST))
-				&& validatorNumber.validate(parametersMap.get(CarType.ACCELERATION))
-				&& validatorNumber.validate(parametersMap.get(CarType.POWER))
-				&& validatorUrl.validate(parametersMap.get(CarType.IMG))
-				&& validatorFuel.validate(parametersMap.get(CarType.FUEL))
-				&& validatorDriveUnit.validate(parametersMap.get(CarType.DRIVE_UNIT))) {
+	public boolean addCar(Map<CarType, String> parametersMap) throws ServiceException, InvalidParameterException {
+
+		PreparedValidatorsChain<CarType> chain = new IntermidiateCarLink();
+		chain.linkWith(new AccelerationValidatorLink()).linkWith(new DriveUnitValidatorLink())
+				.linkWith(new FuelValidatorLink()).linkWith(new ImageSourceValidatorLink())
+				.linkWith(new NumberValidatorLink()).linkWith(new PowerValidatorLink());
+		boolean result = chain.validate(parametersMap);
+		if(result) {
 			DaoFactory factory = DaoFactory.getInstance();
 			AbstractCarDAOImpl dao = factory.getCarDao();
 			boolean flag = false;
@@ -137,11 +138,11 @@ public class AdminServiceImpl implements CustomAdminService {
 			} catch (DaoException e) {
 				throw new ServiceException(e);
 			}
-			return flag;
-
+			return flag;			
 		}
+		logger.log(Level.INFO, "не валидные параметры");
+		throw new InvalidParameterException("не валидные параметры");
 
-		return false;
 	}
 
 	@Override

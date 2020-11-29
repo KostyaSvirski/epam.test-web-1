@@ -35,8 +35,8 @@ public class RegistrationCommand implements ActionCommand {
 		String name = request.getParameter(RequestParameters.NAME);
 		String surname = request.getParameter(RequestParameters.SURNAME);
 		String login = request.getParameter(RequestParameters.LOGIN);
-		String pass = Integer.toString(encryptPassword(request.getParameter(RequestParameters.PASSWORD)));
-		String repeatPass = Integer.toString(encryptPassword(request.getParameter(RequestParameters.REPEAT_PASSWORD)));
+		String pass = request.getParameter(RequestParameters.PASSWORD);
+		String repeatPass = request.getParameter(RequestParameters.REPEAT_PASSWORD);
 		String gender = request.getParameter(RequestParameters.GENDER);
 		String passportId = request.getParameter(RequestParameters.PASSPORT_ID);
 		String passportNumber = request.getParameter(RequestParameters.PASSPORT_NUMBER);

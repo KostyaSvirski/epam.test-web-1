@@ -45,6 +45,7 @@
         <input type="text" placeholder="Fuel" name="fuel">
         <input type="text" placeholder="Cost" name="cost">
 		<input type="submit" value = "CONFIRM">
+		<p style="color: ${collor}; text-align: center">${message}</p>
 	</div>
 	</form>
 	</div>

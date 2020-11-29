@@ -19,6 +19,7 @@ public final class PagePath {
 	public static final String DETAIL_PAGE = "/detail.jsp";
 	public static final String PENALTY_PAGE = "/penalty.jsp";	
 	public static final String NOT_FOUND_PAGE = "/not_found.jsp";
+	public static final String ADD_CAR_PAGE = "/add_car.jsp";
 	
 	private PagePath() {}
 

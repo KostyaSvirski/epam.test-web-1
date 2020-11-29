@@ -2,25 +2,22 @@ package by.svirski.testweb.util.validator;
 
 import java.util.Map;
 
-import by.svirski.testweb.bean.type.TypeOfParameters;
-
-public abstract class PreparedValidatorsChain {
+public abstract class PreparedValidatorsChain<T> {
 	
-	private CustomValidator nextValidator;
-
-	public PreparedValidatorsChain() {
+	private PreparedValidatorsChain<T> nextLink;
+	
+	public PreparedValidatorsChain<T> linkWith(PreparedValidatorsChain<T> nextLink) {
+		this.nextLink = nextLink;
+		return nextLink;
 	}
 	
-	public CustomValidator linkWith(CustomValidator nextValidator) {
-		this.nextValidator = nextValidator;
-		return nextValidator;
-	}
+	public abstract boolean validate(Map<T, String> params);
 	
-	protected boolean checkNext(Map<TypeOfParameters, String> parametersToValidate) {
-		if(nextValidator == null) {
+	protected boolean checkNextLink(Map<T, String> params) {
+		if(nextLink == null) {
 			return true;
 		}
-		return nextValidator.validate("");
+		return nextLink.validate(params);
 	}
 
 }

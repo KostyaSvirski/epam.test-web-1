@@ -16,7 +16,14 @@
 	<session-config>
 		<session-timeout>10</session-timeout>
 	</session-config>
-
+	
+	<jsp-config>
+		<taglib>
+			<taglib-uri>custom-tags</taglib-uri>
+			<taglib-location>/WEB-INF/tld/custom_tag.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
 	<filter>
 		<filter-name>EncodingFilter</filter-name>
 		<filter-class>by.svirski.testweb.controller.filter.EncodingFilter</filter-class>

@@ -8,13 +8,14 @@ import by.svirski.testweb.bean.Comment;
 import by.svirski.testweb.bean.Order;
 import by.svirski.testweb.bean.type.TypeOfParameters;
 import by.svirski.testweb.bean.type.TypeOfParameters.CommentType;
+import by.svirski.testweb.service.exception.InvalidParameterException;
 import by.svirski.testweb.service.exception.ServiceException;
 
 public interface CustomCarService {
 
 	List<Car> showCars(Map<TypeOfParameters.CarType, String> parametersMap) throws ServiceException;
 
-	boolean rentAuto(Map<TypeOfParameters.OrderType, String> parameters) throws ServiceException;
+	boolean rentAuto(Map<TypeOfParameters.OrderType, String> parameters) throws ServiceException, InvalidParameterException;
 
 	List<Order> showOrders(Map<TypeOfParameters.UserType, String> parameters) throws ServiceException;
 	

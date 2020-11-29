@@ -135,6 +135,7 @@ public class UserDAO extends AbstractUserDAOImpl {
 				listOfParamters = createListOfStatusParameters(parameters);
 				boolean isStatusRegistrated = insert(listOfParamters, cn, REGISTRATE_STATUS);
 				logger.log(Level.DEBUG, "зарегистрирован статус");
+				cn.commit();
 				return (isMainRegistrate && isPersonalRegistrated && isRoleRegistated && isStatusRegistrated);
 			} catch(TransactionException e) {
 				logger.log(Level.ERROR, "ошибка insert");

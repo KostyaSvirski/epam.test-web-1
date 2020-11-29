@@ -1,3 +1,4 @@
+<%@ taglib prefix="ctg" uri="custom-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -29,27 +30,9 @@
   </head>
 
   <body>
-    <header class="header">
-      <img
-        class="logo"
-        src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
-        alt="logo"
-      />
-      <nav>
-        <a class="nav" href="#aboutUs"><fmt:message key="welcome_page.header.nav.about_us"/></a>
-        <a class="nav" href="#autopark"><fmt:message key="welcome_page.header.nav.autopark"/></a>
-        <a class="nav" href="#rent"><fmt:message key="welcome_page.header.nav.rent"/></a>
-        <a class="nav" href="#carBrands"><fmt:message key="welcome_page.header.nav.car_brands"/></a>
-        <a class="nav" href="#contacts"><fmt:message key="welcome_page.header.nav.contacts"/></a>
-        <c:if test="${sessionScope.user.login == null}">
-	        <a class="nav" href="sign_in.jsp"><fmt:message key="welcome_page.header.nav.sign_in"/></a>	        
-        </c:if>
-         <c:if test="${sessionScope.user.login != null}">
-	        <a class="nav" href="my_page.jsp"><fmt:message key="welcome_page.header.nav.my_page"/></a>	        
-        </c:if>
-      </nav>
-    </header>
-
+  
+    <ctg:header-menu/>
+  
     <main>
       <section class="main">
         <p class="main_text"><fmt:message key="welcome_page.title.text1"/></p>

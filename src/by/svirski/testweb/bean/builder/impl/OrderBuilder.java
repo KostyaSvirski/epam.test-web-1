@@ -14,11 +14,10 @@ import by.svirski.testweb.bean.type.TypeOfParameters.OrderType;
 import by.svirski.testweb.util.parser.CustomParser;
 import by.svirski.testweb.util.parser.exception.CustomParseException;
 import by.svirski.testweb.util.parser.impl.DateParser;
-import by.svirski.testweb.util.validator.CustomValidator;
-import by.svirski.testweb.util.validator.impl.DateValidator;
+
 
 public class OrderBuilder implements Builder<Order, OrderType> {
-	
+
 	private static Logger logger = LogManager.getLogger(OrderBuilder.class);
 
 	public OrderBuilder() {
@@ -30,22 +29,22 @@ public class OrderBuilder implements Builder<Order, OrderType> {
 		order.setId(Integer.parseInt(parameters.get(OrderType.ORDER_ID)));
 		order.setIdUser(Integer.parseInt(parameters.get(OrderType.USER_ID)));
 		order.setIdCar(Integer.parseInt(parameters.get(OrderType.CAR_ID)));
-		CustomValidator validator = new DateValidator();
-		if (validator.validate(parameters.get(OrderType.DATE_OF_START))) {
-			CustomParser<Calendar> parser = new DateParser();
-			Calendar dateOfStart = null;
-			Calendar dateOfFinish = null;
-			try {
-				dateOfStart = parser.parse(parameters.get(OrderType.DATE_OF_START));
-				dateOfFinish = parser.parse(parameters.get(OrderType.DATE_OF_FINISH));
-			} catch (CustomParseException e) {
-				dateOfStart = new GregorianCalendar();
-				logger.log(Level.ERROR, "не возможно распарсить дату");
-			}
+		CustomParser<Calendar> parser = new DateParser();
+		Calendar dateOfStart = null;
+		Calendar dateOfFinish = null;
+		try {
+			dateOfStart = parser.parse(parameters.get(OrderType.DATE_OF_START));
 			order.setDateOfStart(dateOfStart);
+		} catch (CustomParseException e) {
+			dateOfStart = new GregorianCalendar();
+			logger.log(Level.ERROR, "не возможно распарсить дату");
+		}
+		try {
+			dateOfFinish = parser.parse(parameters.get(OrderType.DATE_OF_FINISH));
 			order.setDateOfFinish(dateOfFinish);
-		} else {
-			logger.log(Level.ERROR, "не корректная дата");
+		} catch (CustomParseException e) {
+			dateOfFinish = new GregorianCalendar();
+			logger.log(Level.ERROR, "не возможно распарсить дату");
 		}
 		order.setTotalPrice(Long.parseLong(parameters.get(OrderType.COST)));
 		order.setCondition(parameters.get(OrderType.CONDITION));
@@ -55,7 +54,5 @@ public class OrderBuilder implements Builder<Order, OrderType> {
 		order.setInfo(parameters.get(OrderType.INFO));
 		return order;
 	}
-	
-	
 
 }
