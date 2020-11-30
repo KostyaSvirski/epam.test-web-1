@@ -15,14 +15,29 @@ import by.svirski.testweb.util.parser.CustomParser;
 import by.svirski.testweb.util.parser.exception.CustomParseException;
 import by.svirski.testweb.util.parser.impl.DateParser;
 
-
+/**
+ * class represents builder for order bean
+ * 
+ * @see Order
+ * @see OrderType
+ * @see Builder
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class OrderBuilder implements Builder<Order, OrderType> {
 
 	private static Logger logger = LogManager.getLogger(OrderBuilder.class);
 
+	/**
+	 * default constructor
+	 */
 	public OrderBuilder() {
 	}
 
+	/**
+	 * overriden method {@link Builder#build(Map)} for build Order Bean
+	 */
 	@Override
 	public Order build(Map<OrderType, String> parameters) {
 		Order order = new Order();

@@ -70,6 +70,9 @@ public class UserServiceImpl implements CustomUserService {
 
 	@Override
 	public User authorize(Map<UserType, String> parameters) throws ServiceException {
+		CustomEncryptor encryptor = new PasswordEncryptor();
+		String encryptedPassword = Integer.toString(encryptor.encrypt(parameters.remove(UserType.PASSWORD)));
+		parameters.put(UserType.PASSWORD, encryptedPassword);
 		DaoFactory factory = DaoFactory.getInstance();
 		AbstractUserDAOImpl dao = factory.getUserDao();
 		User user = null;

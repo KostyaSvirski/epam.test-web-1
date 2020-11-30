@@ -17,14 +17,30 @@ import by.svirski.testweb.util.parser.CustomParser;
 import by.svirski.testweb.util.parser.exception.CustomParseException;
 import by.svirski.testweb.util.parser.impl.DateParser;
 
+/**
+ * class represents builder for User Bean
+ * 
+ * @see User
+ * @see UserType
+ * @see Builder
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class UserBuilder implements Builder<User, UserType> {
 
 	private static Logger logger = LogManager.getLogger(UserBuilder.class);
 
+	/**
+	 * default constructor
+	 */
 	public UserBuilder() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/** 
+	 * overriden method {@link Builder#build(Map)} for build User Bean
+	 * 
+	 */
 	@Override
 	public User build(Map<UserType, String> parameters) {
 		User user = new User();

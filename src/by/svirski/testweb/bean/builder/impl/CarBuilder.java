@@ -12,13 +12,29 @@ import by.svirski.testweb.bean.Fuel;
 import by.svirski.testweb.bean.builder.Builder;
 import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
 
+/**
+ * class represents builder for car bean 
+ * 
+ * @see Car
+ * @see CarType  
+ * @see Builder
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class CarBuilder implements Builder<Car, CarType> {
 
 	private static Logger logger = LogManager.getLogger(CarBuilder.class);
 
+	/**
+	 * default constructor
+	 */
 	public CarBuilder() {
 	}
 
+	/**
+	 * overriden method {@link Builder#build(Map)} of building Car bean 
+	 */
 	@Override
 	public Car build(Map<CarType, String> parameters) {
 		Car car = new Car();

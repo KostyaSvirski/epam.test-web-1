@@ -30,7 +30,7 @@ public class AuthorizationCommand implements ActionCommand {
 		if (request.getParameter(RequestParameters.LOGIN) != null
 				&& request.getParameter(RequestParameters.PASSWORD) != null) {
 			String login = request.getParameter(RequestParameters.LOGIN);
-			String password = Integer.toString(encryptPassword(request.getParameter(RequestParameters.PASSWORD)));
+			String password = request.getParameter(RequestParameters.PASSWORD);
 			Map<TypeOfParameters.UserType, String> mapParameters = new EnumMap<TypeOfParameters.UserType, String>(
 					TypeOfParameters.UserType.class);
 			mapParameters.put(TypeOfParameters.UserType.PASSWORD, password);

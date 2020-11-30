@@ -38,11 +38,6 @@ public class MainMenuTag extends TagSupport {
 		String locale = (String) session.getAttribute(RequestParameters.LANGUAGE);
 		ResourceBundle bundle = TagUtil.getBundle(locale);
 		try {
-			writter.write("<header class=\"header\">");
-			writter.write(
-					"<a href=\"index.jsp\" <img class=\"logo\" "
-					+ "src=\"https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png\" "
-					+ "alt=\"logo\"/> </a>");
 			writter.write("<nav>");
 			createAboutUsLink(writter, bundle);
 			createAutoparkLink(writter, bundle);
@@ -55,7 +50,6 @@ public class MainMenuTag extends TagSupport {
 				createMyPageLink(writter, bundle);
 			}
 			writter.write("</nav>");
-			writter.write("</header>");
 		} catch (IOException e) {
 			throw new JspException(e.getMessage());
 		}

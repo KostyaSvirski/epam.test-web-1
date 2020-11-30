@@ -30,9 +30,15 @@
   </head>
 
   <body>
-  
-    <ctg:header-menu/>
-  
+  	 <header class="header">
+	     <a href="index.jsp"><img
+	        class="logo"
+	        src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
+	        alt="logo"
+	      />
+	      </a> 
+    	<ctg:header-menu/>
+  	</header>
     <main>
       <section class="main">
         <p class="main_text"><fmt:message key="welcome_page.title.text1"/></p>
