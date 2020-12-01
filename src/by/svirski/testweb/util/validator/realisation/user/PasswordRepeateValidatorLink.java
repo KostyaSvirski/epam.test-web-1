@@ -6,12 +6,20 @@ import java.util.regex.Pattern;
 
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 
+/**
+ * class represents validator for repeated passwrd
+ * 
+ * @author Kostya Svirski 
+ * @version 1.0
+ */
 public class PasswordRepeateValidatorLink extends PasswordValidatorLink{
 
 	public PasswordRepeateValidatorLink() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overridden method {@link PasswordValidatorLink#validate(Map)} to check validity of repeated password
+	 */
 	@Override
 	public boolean validate(Map<UserType, String> params) {
 		Pattern pattern = Pattern.compile(REG_EXP_PASSWORD);

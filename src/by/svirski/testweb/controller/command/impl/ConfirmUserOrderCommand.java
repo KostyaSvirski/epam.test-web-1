@@ -17,12 +17,20 @@ import by.svirski.testweb.service.CustomAdminService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents command to confirm order of user
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class ConfirmUserOrderCommand implements ActionCommand {
 
 	public ConfirmUserOrderCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to confirm user order 
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

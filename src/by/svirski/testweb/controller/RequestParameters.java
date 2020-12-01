@@ -1,26 +1,40 @@
 package by.svirski.testweb.controller;
 
+/**
+ * class represents parameters names in requests which comes from pages
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public final class RequestParameters {
-
+	
 	private RequestParameters() {
 	}
 	
-	//LOCALE
+	/**
+	 * parameters for locale
+	 */
 	public static final String LANGUAGE = "lang";
 	public static final String DEFAULT_LANG = "en_EN";
 	
-	//CONTROLLER
+	/**
+	 * parameters for controller
+	 */
 	public static final String COMMAND = "command";
 	public static final String CHAR_ENCODDING = "UTF-8";
 	
-	//AUTHORITHATION
+	/**
+	 * parameters for authorization
+	 */
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "pass";
 	public static final String ERROR = "type_error";
 	public static final String MESSAGE = "message"; 
 	public static final String COLLOR = "collor"; 
 	
-	//REGISTRATION
+	/**
+	 * parameters for registration
+	 */
 	public static final String NAME = "name";
 	public static final String SURNAME = "surname";
 	public static final String REPEAT_PASSWORD = "pass_repeat";
@@ -30,10 +44,14 @@ public final class RequestParameters {
 	public static final String DATE_OF_BIRTH = "date_of_birth";
 	public static final String PHONE = "phone";
 	
-	//WELCOME
+	/**
+	 * parameters init
+	 */
 	public static final String COUNT_USERS = "count";
 	
-	//CARS
+	/**
+	 * parameters for cars
+	 */
 	public static final String CARS = "cars";
 	public static final String CAR = "car";
 	public static final String CAR_ID = "id";
@@ -51,18 +69,23 @@ public final class RequestParameters {
 	public static final String IS_BOOKED = "is_booked";
 	public static final String COMMENTS = "comments";
 
-	
-	//EDIT
+	/**
+	 * parameters for user
+	 */
 	public static final String USER = "user";
 	public static final String USER_ID = "id_user";
 	public static final String ACTION = "action";
 	public static final String BLOCK = "block";
 	public static final String UNBLOCK = "unblock";
 	
-	//PAGE
+	/**
+	 * parameters for page
+	 */
 	public static final String CURRENT_PAGE = "currentPage";
 	
-	//RENT
+	/**
+	 * parameters for rent
+	 */
 	public static final String DATE_OF_START = "startDate";
 	public static final String DATE_OF_FINISH = "finishDate";
 	public static final String USER_SIGNATURE = "signature";
@@ -75,13 +98,19 @@ public final class RequestParameters {
 	public static final String NO_PROBLEMS = "NO";
 	public static final String INFO = "info";
 	
-	//ADMIN
+	/**
+	 * parameters for admin
+	 */
 	public static final String USERS = "users";
 	
-	//RESPONSE
+	/**
+	 * parameters for response
+	 */
 	public static final String DEFAULT_ERROR = "Что-то пошло не так соре";
 
-	//PENALTY
+	/**
+	 * parameters for penalty
+	 */
 	public static final String PENALTY = "penalty";
 	public static final String PENALTY_ID = "id";
 

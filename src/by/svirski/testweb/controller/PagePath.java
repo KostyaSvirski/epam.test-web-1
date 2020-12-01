@@ -1,5 +1,11 @@
 package by.svirski.testweb.controller;
 
+/**
+ * class represents paths to all pages in project
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public final class PagePath {
 
 	public static final String INDEX_PAGE = "/index.jsp";

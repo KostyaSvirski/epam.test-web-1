@@ -6,14 +6,22 @@ import java.util.GregorianCalendar;
 import by.svirski.testweb.util.parser.CustomParser;
 import by.svirski.testweb.util.parser.exception.CustomParseException;
 
+/**
+ * class represents parser for date
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class DateParser implements CustomParser<Calendar> {
 
 	private static final String DELIMETER = "[.-]";
 	
 	public DateParser() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overridden method {@link CustomParser#parse(String)} to parse date
+	 */
 	@Override
 	public Calendar parse(String parameterToParse) throws CustomParseException {
 		String[] values = parameterToParse.split(DELIMETER);

@@ -25,14 +25,22 @@ import by.svirski.testweb.service.CustomCarService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents coomand to rent list of user from side of user
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class ShowRentListCommand implements ActionCommand {
 	
 	private static Logger logger = LogManager.getLogger(ShowRentListCommand.class);
 
 	public ShowRentListCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to show rent list of user from side of user
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

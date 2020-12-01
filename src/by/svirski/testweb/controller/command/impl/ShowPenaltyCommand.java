@@ -18,11 +18,20 @@ import by.svirski.testweb.service.CustomUserService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents command to show penalty 
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class ShowPenaltyCommand implements ActionCommand {
 
 	public ShowPenaltyCommand() {
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to show penalty 
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

@@ -22,14 +22,22 @@ import by.svirski.testweb.service.exception.ServiceException;
 import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 
+/**
+ * class represents command to registrate user
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class RegistrationCommand implements ActionCommand {
 
 	private static Logger logger = LogManager.getLogger(RegistrationCommand.class);
 
 	public RegistrationCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to registrate user
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String name = request.getParameter(RequestParameters.NAME);

@@ -7,6 +7,12 @@ import java.util.regex.Pattern;
 import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
 import by.svirski.testweb.util.validator.realisation.IntermidiateCarLink;
 
+/**
+ * class represents validator for source link of image
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class ImageSourceValidatorLink extends IntermidiateCarLink {
 
 	private static final String URL_REGEXP = "http://\\w+(.){0,}(.)[a-z]+/.{0,}(.)(png)|"
@@ -15,9 +21,11 @@ public class ImageSourceValidatorLink extends IntermidiateCarLink {
 			+ "https://\\w+(.){0,}(.)[a-z]+/(.){0,}(.)(jpeg)";
 
 	public ImageSourceValidatorLink() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overridden method {@link IntermidiateCarLink#validate(Map)} to check validity of url image
+	 */
 	@Override
 	public boolean validate(Map<CarType, String> params) {
 		Pattern pattern = Pattern.compile(URL_REGEXP);

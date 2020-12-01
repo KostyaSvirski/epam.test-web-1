@@ -6,6 +6,12 @@ import java.util.Map.Entry;
 import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
 import by.svirski.testweb.util.creator.RequestCreator;
 
+/**
+ * class represents creator for custom request to view cars in different ways
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class CreatorRequestForCarShowImpl implements RequestCreator<CarType>{
 	
 	private static final String DELIMETER_FOR_PAIRS = " and ";
@@ -18,6 +24,9 @@ public class CreatorRequestForCarShowImpl implements RequestCreator<CarType>{
 	public CreatorRequestForCarShowImpl() {
 	}
 
+	/**
+	 * overriden method {@link RequestCreator#createRequest(String, Map)} to view cars in different ways
+	 */
 	@Override
 	public String createRequest(String abstractRequest, Map<CarType, String> mapOfAdditionalParams) {
 		if (mapOfAdditionalParams.isEmpty()) {

@@ -6,8 +6,17 @@ import java.util.Map.Entry;
 import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.util.validator.PreparedValidatorsChain;
 
+/**
+ * class represents base validator for user maps
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class IntermidiateUserLink extends PreparedValidatorsChain<UserType> {
 
+	/**
+	 * overridden method {@link PreparedValidatorsChain#validate(Map)} to check parameters on empty
+	 */
 	@Override
 	public boolean validate(Map<UserType, String> params) {
 		for (Entry<UserType, String> entry : params.entrySet()) {

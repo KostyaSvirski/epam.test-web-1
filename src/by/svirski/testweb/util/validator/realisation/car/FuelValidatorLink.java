@@ -6,12 +6,21 @@ import by.svirski.testweb.bean.Fuel;
 import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
 import by.svirski.testweb.util.validator.realisation.IntermidiateCarLink;
 
+/**
+ * class represents validator for fuel
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class FuelValidatorLink extends IntermidiateCarLink {
 
 	public FuelValidatorLink() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overridden method {@link IntermidiateCarLink#validate(Map)} to check validity of fuel
+	 * @see Fuel
+	 */
 	@Override
 	public boolean validate(Map<CarType, String> params) {
 		Fuel[] values = Fuel.values();

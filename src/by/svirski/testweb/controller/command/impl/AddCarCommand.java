@@ -18,12 +18,20 @@ import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.InvalidParameterException;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents command to add a car in project
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class AddCarCommand implements ActionCommand {
 
 	public AddCarCommand() {
-		// TODO Auto-generated constructor stub
 	}
-
+	
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to add car on page 
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

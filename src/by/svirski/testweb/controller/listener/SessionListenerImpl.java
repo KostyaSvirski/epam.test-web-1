@@ -18,7 +18,6 @@ public class SessionListenerImpl implements HttpSessionListener {
      * Default constructor. 
      */
     public SessionListenerImpl() {
-        
     }
 
 	/**
@@ -33,7 +32,6 @@ public class SessionListenerImpl implements HttpSessionListener {
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
     public void sessionDestroyed(HttpSessionEvent se)  { 
-         
     }
 	
 }

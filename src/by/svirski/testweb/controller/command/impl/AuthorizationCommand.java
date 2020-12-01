@@ -18,12 +18,20 @@ import by.svirski.testweb.service.exception.ServiceException;
 import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 
+/**
+ * class represents command to authorize user
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class AuthorizationCommand implements ActionCommand {
 
 	public AuthorizationCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to authorize user
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

@@ -11,12 +11,20 @@ import javax.servlet.http.HttpSession;
 import by.svirski.testweb.controller.RequestParameters;
 import by.svirski.testweb.controller.command.ActionCommand;
 
+/**
+ * class represents command to switch language on page
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class ChangeLocaleCommand implements ActionCommand {
 
 	public ChangeLocaleCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to switch language on page
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

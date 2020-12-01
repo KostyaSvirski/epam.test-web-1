@@ -21,12 +21,20 @@ import by.svirski.testweb.service.exception.ServiceException;
 import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 
+/**
+ * class represents command to show cars on page
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class CarShowCommand implements ActionCommand {
 
 	public CarShowCommand() {
-
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to show cars on page
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

@@ -17,15 +17,24 @@ import by.svirski.testweb.controller.provider.CommandProvider;
 import by.svirski.testweb.dao.exception.ConnectionPoolException;
 import by.svirski.testweb.dao.pool.ConnectionPool;
 
+/**
+ * class represents main controller of project used to process all requests
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 @WebServlet("/MainController")
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = LogManager.getLogger(MainController.class);
-
+	
+	/**
+	 * default controller
+	 */
 	public MainController() {
 		super();
 	}
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		logger.log(Level.DEBUG, "пришел запрос GET");

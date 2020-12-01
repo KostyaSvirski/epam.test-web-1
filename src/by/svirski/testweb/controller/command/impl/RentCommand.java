@@ -25,10 +25,19 @@ import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.InvalidParameterException;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents command to rent a car 
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class RentCommand implements ActionCommand {
 
 	private static Logger logger = LogManager.getLogger(RentCommand.class);
-
+	
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to rent a car 
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

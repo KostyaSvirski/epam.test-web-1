@@ -6,12 +6,21 @@ import by.svirski.testweb.bean.DriveUnit;
 import by.svirski.testweb.bean.type.TypeOfParameters.CarType;
 import by.svirski.testweb.util.validator.realisation.IntermidiateCarLink;
 
+/**
+ * class represents validator for drive unit
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class DriveUnitValidatorLink extends IntermidiateCarLink {
 
 	public DriveUnitValidatorLink() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overridden method {@link IntermidiateCarLink#validate(Map)} to check validity of drive unit
+	 * @see DriveUnit
+	 */
 	@Override
 	public boolean validate(Map<CarType, String> params) {
 		DriveUnit[] values = DriveUnit.values();

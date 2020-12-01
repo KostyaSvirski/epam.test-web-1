@@ -1,8 +1,12 @@
 package by.svirski.testweb.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * class represents url patterns for pages 
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public final class UrlPatterns {
 
 	private UrlPatterns() {
@@ -33,28 +37,4 @@ public final class UrlPatterns {
 	public static final String WELCOME = "/welcome.jsp";
 	public static final String NOT_FOUND = "/not_found.jsp";
 	
-	public static List<String> getAllUrls() {
-		List<String> listOfUrls = new ArrayList<String>();
-		listOfUrls.add(DETAIL);
-		listOfUrls.add(MY_PAGE);
-		listOfUrls.add(ORDERS);
-		listOfUrls.add(SIGN_OUT);
-		listOfUrls.add(SIGN_IN);
-		listOfUrls.add(SIGN_UP);
-		listOfUrls.add(ERROR_PAGE);
-		listOfUrls.add(RENT_AUTO);
-		listOfUrls.add(EDIT_USER);
-		listOfUrls.add(ADD_CAR);
-		listOfUrls.add(CARS);
-		listOfUrls.add(DETAIL_DENY);
-		listOfUrls.add(DETAIL);
-		listOfUrls.add(DETAIL_RELEASE);
-		listOfUrls.add(INDEX);
-		listOfUrls.add(PENALTY);
-		listOfUrls.add(THIS_USER);
-		listOfUrls.add(USERS);
-		listOfUrls.add(WELCOME);
-		listOfUrls.add(NOT_FOUND);
-		return listOfUrls;
-	}
 }
