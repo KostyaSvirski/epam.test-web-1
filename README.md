@@ -2,7 +2,7 @@
 
 ## *author: Konstantin Svirski*
 
-## How it's works
+## How it works
 
 The application is designed to automate car rental. An authorized user orders a car and pays for it. 
 The administrator confirms the reservation or refuses, indicating the reason for the refusal. At the end of the lease, 
