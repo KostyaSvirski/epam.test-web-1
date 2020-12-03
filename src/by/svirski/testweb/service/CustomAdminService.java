@@ -17,6 +17,8 @@ public interface CustomAdminService {
 
 	List<Order> showAllOrders() throws ServiceException;
 
+	List<Order> showSpecificOrders(Map<OrderType, String> parametersMap) throws ServiceException;
+
 	boolean addCar(Map<CarType, String> parametersMap) throws ServiceException, InvalidParameterException;
 	
 	boolean blockOrUnblockUser(Map<UserType, String> parametersMap) throws ServiceException;
@@ -30,4 +32,5 @@ public interface CustomAdminService {
 	boolean denyOrderOfUser(Map<OrderType, String> parametersMap) throws ServiceException;
 	
 	boolean releaseRent(Map<OrderType, String> parametersMap) throws ServiceException;
+	
 }

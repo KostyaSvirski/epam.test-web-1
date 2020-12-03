@@ -32,7 +32,8 @@ public enum TypeOfCommand {
 	RELEASE_ORDER_ADMIN_COMMAND(new ReleaseOrderAdminCommand()),
 	SHOW_DETAIL_CAR_COMMAND(new ShowDetailCarCommand()),
 	SHOW_PENALTY_COMMAND(new ShowPenaltyCommand()),
-	CLOSE_PENALTY_COMMAND(new ClosePenaltyCommand());
+	CLOSE_PENALTY_COMMAND(new ClosePenaltyCommand()),
+	SHOW_THIS_USER_RENT_LIST_COMMAND(new ShowThisUserRentListCommand());
 	
 	private ActionCommand command;
 

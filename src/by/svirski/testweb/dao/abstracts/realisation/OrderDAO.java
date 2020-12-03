@@ -129,6 +129,30 @@ public class OrderDAO extends AbstractOrderDAOImpl {
 	}
 
 	@Override
+	public List<Order> showSpecificOrders(Map<OrderType, String> parameters) throws DaoException {
+		Connection cn = null;
+		try {
+			try {
+				cn = ConnectionPool.getInstance().getConnection();
+			} catch (ConnectionPoolException e) {
+				logger.log(Level.ERROR, "соеденение не было получено");
+				throw new DaoException("соеденение не было получено", e);
+			}
+			List<Order> listOfOrders = null;
+			List<String> parametersList = new ArrayList<String>();
+			parametersList.add(parameters.get(OrderType.USER_ID));
+			try {
+				listOfOrders = super.select(parametersList, GET_ORDERS_FOR_CURRENT_USER, cn);
+			} catch (TransactionException e) {
+				throw new DaoException(e);
+			}
+			return listOfOrders;
+		} finally {
+			close(cn);
+		}
+	}
+
+	@Override
 	public boolean confirmOrder(Map<OrderType, String> parameters) throws DaoException {
 		Connection cn = null;
 		try {

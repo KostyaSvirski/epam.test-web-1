@@ -1,3 +1,4 @@
+<%@ taglib prefix="ctg" uri="custom-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -28,26 +29,17 @@
 
 <body>
     <header class="header">
-        <a href="index.jsp"> <img
-           class="logo"
-           src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
-           alt="logo"
-         />
-         </a>
-         <nav>
-           <a class="nav" href="index.jsp#aboutUs"><fmt:message key="welcome_page.header.nav.about_us"/></a>
-           <a class="nav" href="index.jsp#autopark"><fmt:message key="welcome_page.header.nav.autopark"/></a>
-           <a class="nav" href="index.jsp#rent"><fmt:message key="welcome_page.header.nav.rent"/></a>
-           <a class="nav" href="index.jsp#carBrands"><fmt:message key="welcome_page.header.nav.car_brands"/></a>
-           <a class="nav" href="index.jsp#contacts"><fmt:message key="welcome_page.header.nav.contacts"/></a>
-           <a class="nav" href="my_page.jsp"><fmt:message key="welcome_page.header.nav.my_page"/></a>
-           <a class="lang" href="MainController?command=CHANGE_LOCALE&lang=en_EN&currentPage=<c:url value="/my_page.jsp"/>">En</a>
-           <a class="lang" href="MainController?command=CHANGE_LOCALE&lang=ru_BY&currentPage=<c:url value="/my_page.jsp"/>">Ru</a>
-         </nav>
-       </header>
+	     <a href="index.jsp"><img
+	        class="logo"
+	        src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
+	        alt="logo"
+	      />
+	      </a> 
+    	<ctg:header-menu/>
+  	</header>
        <main>
          <section class="info" id="orders-info">
-          <h2 id="info_h2">User profile</h2>
+          <h2 id="info_h2"><fmt:message key="users.this.info"/></h2>
           <div class="decor">
             <div class="inner">
               <p><fmt:message key="my_page.profile.name"/> ${requestScope.user.name}</p>
@@ -62,35 +54,35 @@
 		            <form action="MainController" method="POST">
 			        	<input type="hidden" name="command" value="MAKE_ADMIN_COMMAND"/>
 			            <input type="hidden" name="id_user" value="${requestScope.user.id}"/>
-			            <input class="button1" type="submit" value="MAKE ADMIN"/>
+			            <input class="button1" type="submit" value="<fmt:message key="users.button.make_admin"/>"/>
 		        	</form>
 		        </c:if>
-		        <c:if test="${user.isBlocked == 'false'}">
+		        <c:if test="${requestScope.user.isBlocked == 'false'}">
 		            <form action="MainController" method="POST">
 			            <input type="hidden" name="command" value="BLOCK_UNBLOCK_COMMAND"/>
 		                <input type="hidden" name="id_user" value="${user.id}"/>
 		                <input type="hidden" name="action" value="block"/>
-		                <input class="button2" type="submit" value="BLOCK"/>
+		                <input class="button2" type="submit" value="<fmt:message key="users.button.block"/>"/>
 		            </form>
 		        </c:if>
-		     	<c:if test="${user.isBlocked == 'true'}">
+		     	<c:if test="${requestScope.user.isBlocked == 'true'}">
 		            <form action="MainController" method="POST">
 			            <input type="hidden" name="command" value="BLOCK_UNBLOCK_COMMAND"/>
 			            <input type="hidden" name="id_user" value="${user.id}"/>
 			            <input type="hidden" name="action" value="unblock"/>
-			            <input class="button1" type="submit" value="UNBLOCK"/>
+			            <input class="button1" type="submit" value="<fmt:message key="users.button.unblock"/>"/>
 		            </form>
 	  			</c:if>
           </div>   
          </section>
          <c:if test="${requestScope.user.roleInProject == 'USER'}">
          <section class="info" id="orders-info">
-             <h2 id="info_h2"><fmt:message key="my_page.orders"/></h2>
+             <h2 id="info_h2"><fmt:message key="users.this.orders"/></h2>
 	         <div class="decor">
 	 			<form action="MainController" method="POST">
 	            	<input type="hidden" name="command" value="SHOW_THIS_USER_RENT_LIST_COMMAND">
 	                <input type="hidden" name="id_user" value="${user.id}"/>
-	                <input type="submit" id="button-form" value="ORDERS">
+	                <input type="submit" id="button-form" value="<fmt:message key="my_page.orders.button.more_orders"/>"/>
 	            </form>         
 	          </div>
           </section>

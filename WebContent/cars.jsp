@@ -1,3 +1,4 @@
+<%@ taglib prefix="ctg" uri="custom-tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -24,26 +25,14 @@
 <body>
 
 	<header class="header">
-		<a href="index.jsp"> <img class="logo"
-			src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
-			alt="logo" />
-		</a>
-		<nav>
-			<a class="nav" href="index.jsp#aboutUs"><fmt:message key="welcome_page.header.nav.about_us"/></a> 
-			<a class="nav" href="index.jsp#autopark"><fmt:message key="welcome_page.header.nav.autopark"/></a> 
-			<a class="nav" href="index.jsp#rent"><fmt:message key="welcome_page.header.nav.rent"/></a> 
-			<a class="nav" href="index.jsp#carBrands"><fmt:message key="welcome_page.header.nav.car_brands"/></a> 
-			<a class="nav" href="index.jsp#contacts"><fmt:message key="welcome_page.header.nav.contacts"/></a> 
-			<c:if test="${sessionScope.user.login == null}">
-	        	<a class="nav" href="sign_in.jsp"><fmt:message key="welcome_page.header.nav.sign_in"/></a>	        
-        	</c:if>
-         	<c:if test="${sessionScope.user.login != null}">
-	        	<a class="nav" href="my_page.jsp"><fmt:message key="welcome_page.header.nav.my_page"/></a>	        
-        	</c:if>
-        	<a class="lang" href="MainController?command=CHANGE_LOCALE&lang=en_EN&currentPage=<c:url value="/cars.jsp"/>">En</a>
-        	<a class="lang" href="MainController?command=CHANGE_LOCALE&lang=ru_BY&currentPage=<c:url value="/cars.jsp"/>">Ru</a>
-		</nav>
-	</header>
+	     <a href="index.jsp"><img
+	        class="logo"
+	        src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
+	        alt="logo"
+	      />
+	      </a> 
+    	<ctg:header-menu/>
+  	</header>
 
 	<main class="main">
 	 <section class="filter">
@@ -129,7 +118,7 @@
 						<input type="hidden" name="cost" value="${car.cost}">
 						<input type="hidden" name="detail" value="${car.discription}">
 						<input type="hidden" name="is_booked" value="${car.isBooked}">
-						<input class="button" type="submit" value="DETAIL">
+						<input class="button" type="submit" value="<fmt:message key="cars.button.detail"/>">
 					</form>
 				</div>
 			</div>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="ctg" uri="custom-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -28,23 +29,14 @@
 
 <body>
     <header class="header">
-        <a href="index.jsp"> <img
-           class="logo"
-           src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
-           alt="logo"
-         />
-         </a>
-         <nav>
-           <a class="nav" href="index.jsp#aboutUs"><fmt:message key="welcome_page.header.nav.about_us"/></a>
-           <a class="nav" href="index.jsp#autopark"><fmt:message key="welcome_page.header.nav.autopark"/></a>
-           <a class="nav" href="index.jsp#rent"><fmt:message key="welcome_page.header.nav.rent"/></a>
-           <a class="nav" href="index.jsp#carBrands"><fmt:message key="welcome_page.header.nav.car_brands"/></a>
-           <a class="nav" href="index.jsp#contacts"><fmt:message key="welcome_page.header.nav.contacts"/></a>
-           <a class="nav" href="#"><fmt:message key="welcome_page.header.nav.my_page"/></a>
-           <a class="lang" href="MainController?command=CHANGE_LOCALE&lang=en_EN&currentPage=<c:url value="/my_page.jsp"/>">En</a>
-           <a class="lang" href="MainController?command=CHANGE_LOCALE&lang=ru_BY&currentPage=<c:url value="/my_page.jsp"/>">Ru</a>
-         </nav>
-       </header>
+	     <a href="index.jsp"><img
+	        class="logo"
+	        src="https://www.freelancejob.ru/upload/139/29eb6b9055a15d9a3aaca113ce12f81b.png"
+	        alt="logo"
+	      />
+	      </a> 
+    	<ctg:header-menu/>
+  	</header>
        <main>
          <section class="info" id="orders-info">
           <h2 id="info_h2"><fmt:message key="my_page.profile"/></h2>
@@ -66,35 +58,29 @@
          </section>
          <section class="info" id="orders-info">
          <c:if test="${sessionScope.user.roleInProject == 'ADMIN'}">
-	         <h2 id="info_h2">USERS ORDERS</h2>
+	         <h2 id="info_h2"><fmt:message key="my_page.admin.users.orders"/></h2>
 	         <div class="decor">
 	 			<form action="MainController" method="POST">
 	            	<input type="hidden" name="command" value="SHOW_USERS_RENT_LIST_COMMAND">
-	                <input type="submit" id="button-form" value="USER ORDERS">
+	                <input type="submit" id="button-form" value="<fmt:message key="my_page.admin.users.orders"/>">
 	            </form>         
 	          </div>
-	         <h2 id="info_h2" class="a1">SHOW ALL USERS</h2>
+	         <h2 id="info_h2" class="a1"><fmt:message key="my_page.admin.users.show"/></h2>
 	         <div class="decor">
 	 			<form action="MainController" method="POST">
 	            	<input type="hidden" name="command" value="SHOW_USERS_COMMAND">
-	                <input type="submit" id="button-form" value="SHOW ALL USERS">
+	                <input type="submit" id="button-form" value="<fmt:message key="my_page.admin.users.show"/>">
 	            </form>         
 	          </div>
-	          <h2 id="info_h2" class="a1">ADD CARS</h2>
-	          <!-- <div class="decor">
-	 			<form action="MainController" method="POST">
-	            	<input type="hidden" name="command" value="ADD_CARS_COMMAND">
-	                <input type="submit" id="button-form" value="ADD CARS">
-	            </form>         
-	          </div>   -->
-	          <a href = "add_car.jsp" class="button">ADD CAR</a>
+	          <h2 id="info_h2" class="a1"><fmt:message key="my_page.admin.users.add_car"/></h2>
+	          <a href = "add_car.jsp" class="button"><fmt:message key="my_page.admin.users.add_car"/></a>
           </c:if>
           <c:if test="${sessionScope.user.roleInProject == 'USER'}">
              <h2 id="info_h2"><fmt:message key="my_page.orders"/></h2>
 	         <div class="decor">
 	 			<form action="MainController" method="POST">
 	            	<input type="hidden" name="command" value="SHOW_RENT_LIST_COMMAND">
-	                <input type="submit" id="button-form" value="ORDERS">
+	                <input type="submit" id="button-form" value="<fmt:message key="my_page.orders.button.more_orders"/>"/>
 	            </form>         
 	          </div>
           </c:if>         

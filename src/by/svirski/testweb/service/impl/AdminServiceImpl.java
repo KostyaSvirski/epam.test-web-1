@@ -177,4 +177,19 @@ public class AdminServiceImpl implements CustomAdminService {
 		return result;
 	}
 
+	@Override
+	public List<Order> showSpecificOrders(Map<OrderType, String> parametersMap) throws ServiceException {
+		DaoFactory factory = DaoFactory.getInstance();
+		AbstractOrderDAOImpl dao = factory.getOrderDao();
+		List<Order> listOfOrders = null;
+		try {
+			listOfOrders=dao.showSpecificOrders(parametersMap);
+		} catch (DaoException e) {
+			throw new ServiceException("ошибка в дао");
+		}		
+		return listOfOrders;
+	}
+	
+	
+
 }
