@@ -20,11 +20,12 @@ import by.svirski.testweb.controller.UrlPatterns;
 /**
  * Servlet Filter implementation class StatusControlFilter
  */
-@WebFilter(urlPatterns = { UrlPatterns.ALL }, initParams = { @WebInitParam(name = "page", value = PagePath.ERROR_PAGE) })
+@WebFilter(urlPatterns = { UrlPatterns.ALL }, initParams = {
+		@WebInitParam(name = "page", value = PagePath.ERROR_PAGE) })
 public class StatusControlFilter implements Filter {
-	
+
 	private String page;
-	
+
 	/**
 	 * Default constructor.
 	 */
@@ -47,14 +48,14 @@ public class StatusControlFilter implements Filter {
 		HttpServletRequest hRequest = (HttpServletRequest) request;
 		HttpSession session = hRequest.getSession();
 		User user = (User) session.getAttribute(RequestParameters.USER);
-		if(user != null && user.getIsBlocked()) {
+		if (user != null && user.getIsBlocked()) {
 			request.setAttribute(RequestParameters.ERROR, "вы заблокированы соре");
 			hRequest.getServletContext().getRequestDispatcher(page).forward(request, response);
 			session.invalidate();
 		} else {
-			chain.doFilter(request, response);			
+			chain.doFilter(request, response);
 		}
-		
+
 	}
 
 	/**

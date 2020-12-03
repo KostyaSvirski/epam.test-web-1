@@ -22,12 +22,22 @@ import by.svirski.testweb.controller.RequestParameters;
 import by.svirski.testweb.controller.command.ActionCommand;
 import by.svirski.testweb.service.CustomCarService;
 import by.svirski.testweb.service.ServiceFactory;
+import by.svirski.testweb.service.exception.InvalidParameterException;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents command to rent a car 
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class RentCommand implements ActionCommand {
 
 	private static Logger logger = LogManager.getLogger(RentCommand.class);
-
+	
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to rent a car 
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {
@@ -59,12 +69,16 @@ public class RentCommand implements ActionCommand {
 					response.sendRedirect(request.getContextPath() + PagePath.USER_PAGE);
 				} else {
 					logger.log(Level.ERROR, "ошибка в сервисе");
-					request.setAttribute(RequestParameters.ERROR, "что-то пошло не так");
+					request.setAttribute(RequestParameters.ERROR, RequestParameters.DEFAULT_ERROR);
 					request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
 				}
 			} catch (ServiceException e) {
 				logger.log(Level.ERROR, "ошибка в сервисе");
-				request.setAttribute(RequestParameters.ERROR, "что-то пошло не так");
+				request.setAttribute(RequestParameters.ERROR, RequestParameters.DEFAULT_ERROR);
+				request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
+			} catch (InvalidParameterException e) {
+				logger.log(Level.ERROR, e.getMessage());
+				request.setAttribute(RequestParameters.ERROR, e.getMessage());
 				request.getServletContext().getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
 			}
 		} else {

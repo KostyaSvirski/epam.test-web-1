@@ -17,12 +17,21 @@ import by.svirski.testweb.service.CustomAdminService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents command to deny users order
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ * 
+ */
 public class DenyUserOrderCommand implements ActionCommand {
 
 	public DenyUserOrderCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to deny users order
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

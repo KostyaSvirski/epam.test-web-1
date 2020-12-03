@@ -31,25 +31,25 @@ public abstract class AbstractUserDAOImpl implements BeanDao<User, UserType> {
 	}
 
 	@Override
-	public boolean insert(List<String> parameters, Connection cn, String request) throws DaoException {
+	public boolean insert(List<String> parameters, Connection cn, String request) throws DaoException, TransactionException {
 		PreparedStatement ps = null;
 		try {
 			try {
 				ps = cn.prepareStatement(request);
 			} catch (SQLException e) {
-				throw new DaoException("error in create prepared statement", e);
+				throw new TransactionException("error in create prepared statement", e);
 			}
 			try {
 				for (int i = 1; i <= parameters.size(); i++) {
 					ps.setString(i, parameters.get(i - 1));
 				}
 			} catch (SQLException e) {
-				throw new DaoException("error in setting parameters", e);
+				throw new TransactionException("error in setting parameters", e);
 			}
 			try {
 				ps.executeUpdate();
 			} catch (SQLException e) {
-				throw new DaoException("error in sending request", e);
+				throw new TransactionException("error in sending request", e);
 			}
 			return true;
 		} finally {

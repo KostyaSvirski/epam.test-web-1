@@ -23,7 +23,9 @@ import by.svirski.testweb.controller.UrlPatterns;
  */
 @WebFilter(urlPatterns = { UrlPatterns.MY_PAGE, UrlPatterns.EDIT_USER,
 		UrlPatterns.ERROR_PAGE, UrlPatterns.ORDERS, UrlPatterns.RENT_AUTO,
-		UrlPatterns.SIGN_OUT }, initParams = {
+		UrlPatterns.SIGN_OUT, UrlPatterns.ADD_CAR, UrlPatterns.DETAIL_DENY, 
+		UrlPatterns.DETAIL_RELEASE, UrlPatterns.PENALTY, UrlPatterns.THIS_USER,
+		UrlPatterns.USERS}, initParams = {
 				@WebInitParam(name = "page", value = PagePath.SIGN_IN_PAGE) })
 public class AccessSesurityFilterUser implements Filter {
 

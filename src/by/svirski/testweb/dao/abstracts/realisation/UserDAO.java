@@ -77,7 +77,12 @@ public class UserDAO extends AbstractUserDAOImpl {
 			}
 			String login = parameters.get(TypeOfParameters.UserType.LOGIN);
 			String password = parameters.get(TypeOfParameters.UserType.PASSWORD);
-			int position = findUserId(cn, login, password);
+			int position = -1;
+			try {
+				position = findUserId(cn, login, password);
+			} catch (TransactionException e) {
+				throw new DaoException(e);
+			}
 			if (position != -1) {
 				List<String> listOfParametersForRequest = new ArrayList<String>();
 				listOfParametersForRequest.add(Integer.toString(position));
@@ -104,35 +109,42 @@ public class UserDAO extends AbstractUserDAOImpl {
 		try {
 			try {
 				connectionPool = ConnectionPool.getInstance();
+				cn = connectionPool.getConnection();
+				cn.setAutoCommit(false);
 			} catch (ConnectionPoolException e1) {
 				throw new DaoException(e1.getMessage(), e1);
 			}
 			try {
-				cn = connectionPool.getConnection();
-			} catch (ConnectionPoolException e) {
+				String login = parameters.get(TypeOfParameters.UserType.LOGIN);
+				int position = findUserId(cn, login);
+				if (position != -1) {
+					return false;
+				}
+				boolean isMainRegistrate = false;
+				List<String> listOfParamters = createListOfMainParameters(parameters);
+				isMainRegistrate = insert(listOfParamters, cn, REGISTRATE_USER_MAIN);
+				logger.log(Level.DEBUG, "зарегистрирована главная информация");
+				position = findUserId(cn, login);
+				parameters.put(TypeOfParameters.UserType.ID, Integer.toString(position));
+				listOfParamters = createListOfPersonalParameters(parameters);
+				boolean isPersonalRegistrated = insert(listOfParamters, cn, REGISTRATE_USER_PERSONAL);
+				logger.log(Level.DEBUG, "зарегистрирована персональная информация");
+				listOfParamters = createListOfRoleParameters(parameters);
+				boolean isRoleRegistated = insert(listOfParamters, cn, REGISTRATE_ROLE);
+				logger.log(Level.DEBUG, "зарегистрирована роль");
+				listOfParamters = createListOfStatusParameters(parameters);
+				boolean isStatusRegistrated = insert(listOfParamters, cn, REGISTRATE_STATUS);
+				logger.log(Level.DEBUG, "зарегистрирован статус");
+				cn.commit();
+				return (isMainRegistrate && isPersonalRegistrated && isRoleRegistated && isStatusRegistrated);
+			} catch(TransactionException e) {
+				logger.log(Level.ERROR, "ошибка insert");
+				cn.rollback();
 				throw new DaoException(e);
 			}
-			String login = parameters.get(TypeOfParameters.UserType.LOGIN);
-			int position = findUserId(cn, login);
-			if (position != -1) {
-				return false;
-			}
-			boolean isMainRegistrate = false;
-			List<String> listOfParamters = createListOfMainParameters(parameters);
-			isMainRegistrate = insert(listOfParamters, cn, REGISTRATE_USER_MAIN);
-			logger.log(Level.DEBUG, "зарегистрирована главная информация");
-			position = findUserId(cn, login);
-			parameters.put(TypeOfParameters.UserType.ID, Integer.toString(position));
-			listOfParamters = createListOfPersonalParameters(parameters);
-			boolean isPersonalRegistrated = insert(listOfParamters, cn, REGISTRATE_USER_PERSONAL);
-			logger.log(Level.DEBUG, "зарегистрирована персональная информация");
-			listOfParamters = createListOfRoleParameters(parameters);
-			boolean isRoleRegistated = insert(listOfParamters, cn, REGISTRATE_ROLE);
-			logger.log(Level.DEBUG, "зарегистрирована роль");
-			listOfParamters = createListOfStatusParameters(parameters);
-			boolean isStatusRegistrated = insert(listOfParamters, cn, REGISTRATE_STATUS);
-			logger.log(Level.DEBUG, "зарегистрирован статус");
-			return (isMainRegistrate && isPersonalRegistrated && isRoleRegistated && isStatusRegistrated);
+		} catch (SQLException e) {
+			logger.log(Level.ERROR, "ошибка коммита/отката");
+			throw new DaoException("ошибка коммита/отката");
 		} finally {
 			close(cn);
 		}
@@ -350,9 +362,10 @@ public class UserDAO extends AbstractUserDAOImpl {
 
 	}
 
-	private int findUserId(Connection cn, String login, String password) throws DaoException {
+	private int findUserId(Connection cn, String login, String password) throws DaoException, TransactionException {
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = cn.prepareStatement(CHECK_REGISTRATION);
+			ps = cn.prepareStatement(CHECK_REGISTRATION);
 			ResultSet rs = null;
 			try {
 				ps.setString(1, login);
@@ -366,18 +379,19 @@ public class UserDAO extends AbstractUserDAOImpl {
 					return rs.getInt(1);
 				}
 			} catch (SQLException e) {
-				throw new DaoException("error in rs", e);
-			} finally {
-				close(ps);
+				throw new TransactionException("error in rs", e);
 			}
 		} catch (SQLException e) {
-			throw new DaoException("can't create prepareded statement", e);
+			throw new TransactionException("can't create prepareded statement", e);
+		} finally {
+			close(ps);
 		}
 	}
 
-	private int findUserId(Connection cn, String login) throws DaoException {
+	private int findUserId(Connection cn, String login) throws DaoException, TransactionException {
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = cn.prepareStatement(FIND_ID_USER);
+			ps = cn.prepareStatement(FIND_ID_USER);
 			ResultSet rs = null;
 			try {
 				ps.setString(1, login);
@@ -390,12 +404,12 @@ public class UserDAO extends AbstractUserDAOImpl {
 					return rs.getInt(1);
 				}
 			} catch (SQLException e) {
-				throw new DaoException("error in rs", e);
-			} finally {
-				close(ps);
+				throw new TransactionException("error in rs", e);
 			}
 		} catch (SQLException e) {
-			throw new DaoException("can't create prepareded statement", e);
+			throw new TransactionException("can't create prepareded statement", e);
+		} finally {
+			close(ps);
 		}
 	}
 

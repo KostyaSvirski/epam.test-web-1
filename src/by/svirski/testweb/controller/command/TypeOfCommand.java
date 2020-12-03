@@ -2,6 +2,12 @@ package by.svirski.testweb.controller.command;
 
 import by.svirski.testweb.controller.command.impl.*;
 
+/**
+ * enumeration represents existing commands in project
+ * 
+ * @author Kostya Svirski 
+ * @version 1.0
+ */
 public enum TypeOfCommand {
 	
 	AUTHORIZATION_COMMAND(new AuthorizationCommand()),
@@ -26,7 +32,8 @@ public enum TypeOfCommand {
 	RELEASE_ORDER_ADMIN_COMMAND(new ReleaseOrderAdminCommand()),
 	SHOW_DETAIL_CAR_COMMAND(new ShowDetailCarCommand()),
 	SHOW_PENALTY_COMMAND(new ShowPenaltyCommand()),
-	CLOSE_PENALTY_COMMAND(new ClosePenaltyCommand());
+	CLOSE_PENALTY_COMMAND(new ClosePenaltyCommand()),
+	SHOW_THIS_USER_RENT_LIST_COMMAND(new ShowThisUserRentListCommand());
 	
 	private ActionCommand command;
 
@@ -34,6 +41,11 @@ public enum TypeOfCommand {
 		this.command = command;
 	}
 
+	/**
+	 * method to get existing command
+	 * @see ActionCommand
+	 * @return command 
+	 */
 	public ActionCommand getCommand() {
 		return command;
 	}

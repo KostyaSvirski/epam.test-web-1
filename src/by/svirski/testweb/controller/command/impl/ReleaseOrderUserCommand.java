@@ -23,6 +23,12 @@ import by.svirski.testweb.service.CustomUserService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents command to release order from side of user
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class ReleaseOrderUserCommand implements ActionCommand {
 
 	private static Logger logger = LogManager.getLogger(ReleaseOrderUserCommand.class);
@@ -30,6 +36,9 @@ public class ReleaseOrderUserCommand implements ActionCommand {
 	public ReleaseOrderUserCommand() {
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to release order from side of user
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

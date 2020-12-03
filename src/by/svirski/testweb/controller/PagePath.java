@@ -1,5 +1,11 @@
 package by.svirski.testweb.controller;
 
+/**
+ * class represents paths to all pages in project
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public final class PagePath {
 
 	public static final String INDEX_PAGE = "/index.jsp";
@@ -17,7 +23,9 @@ public final class PagePath {
 	public static final String ALL_USERS_PAGE = "/users.jsp";
 	public static final String THIS_USER_PAGE = "/this_user.jsp";
 	public static final String DETAIL_PAGE = "/detail.jsp";
-	public static final String PENALTY_PAGE = "/penalty.jsp";
+	public static final String PENALTY_PAGE = "/penalty.jsp";	
+	public static final String NOT_FOUND_PAGE = "/not_found.jsp";
+	public static final String ADD_CAR_PAGE = "/add_car.jsp";
 	
 	private PagePath() {}
 

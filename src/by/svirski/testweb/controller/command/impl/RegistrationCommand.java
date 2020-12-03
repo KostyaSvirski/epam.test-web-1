@@ -22,21 +22,29 @@ import by.svirski.testweb.service.exception.ServiceException;
 import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 
+/**
+ * class represents command to registrate user
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class RegistrationCommand implements ActionCommand {
 
 	private static Logger logger = LogManager.getLogger(RegistrationCommand.class);
 
 	public RegistrationCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to registrate user
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String name = request.getParameter(RequestParameters.NAME);
 		String surname = request.getParameter(RequestParameters.SURNAME);
 		String login = request.getParameter(RequestParameters.LOGIN);
-		String pass = Integer.toString(encryptPassword(request.getParameter(RequestParameters.PASSWORD)));
-		String repeatPass = Integer.toString(encryptPassword(request.getParameter(RequestParameters.REPEAT_PASSWORD)));
+		String pass = request.getParameter(RequestParameters.PASSWORD);
+		String repeatPass = request.getParameter(RequestParameters.REPEAT_PASSWORD);
 		String gender = request.getParameter(RequestParameters.GENDER);
 		String passportId = request.getParameter(RequestParameters.PASSPORT_ID);
 		String passportNumber = request.getParameter(RequestParameters.PASSPORT_NUMBER);

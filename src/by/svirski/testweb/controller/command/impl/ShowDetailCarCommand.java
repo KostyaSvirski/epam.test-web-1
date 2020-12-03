@@ -23,12 +23,21 @@ import by.svirski.testweb.service.CustomCarService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents command to show detail description of a car
+ * 
+ * @author Kostya Svirski 
+ * @version 1.0
+ */
 public class ShowDetailCarCommand implements ActionCommand {
 
 	public ShowDetailCarCommand() {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to show detail description of a car
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

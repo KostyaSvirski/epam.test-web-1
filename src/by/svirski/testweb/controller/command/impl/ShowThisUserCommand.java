@@ -18,12 +18,20 @@ import by.svirski.testweb.service.CustomAdminService;
 import by.svirski.testweb.service.ServiceFactory;
 import by.svirski.testweb.service.exception.ServiceException;
 
+/**
+ * class represents command to show this specific user
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class ShowThisUserCommand implements ActionCommand {
 
 	public ShowThisUserCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to show this specific user
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

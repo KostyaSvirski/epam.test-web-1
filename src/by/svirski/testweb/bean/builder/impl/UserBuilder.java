@@ -16,31 +16,44 @@ import by.svirski.testweb.bean.type.TypeOfParameters.UserType;
 import by.svirski.testweb.util.parser.CustomParser;
 import by.svirski.testweb.util.parser.exception.CustomParseException;
 import by.svirski.testweb.util.parser.impl.DateParser;
-import by.svirski.testweb.util.validator.CustomValidator;
-import by.svirski.testweb.util.validator.impl.DateValidator;
-import by.svirski.testweb.util.validator.impl.PhoneValidator;
 
+/**
+ * class represents builder for User Bean
+ * 
+ * @see User
+ * @see UserType
+ * @see Builder
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class UserBuilder implements Builder<User, UserType> {
 
 	private static Logger logger = LogManager.getLogger(UserBuilder.class);
 
+	/**
+	 * default constructor
+	 */
 	public UserBuilder() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/** 
+	 * overriden method {@link Builder#build(Map)} for build User Bean
+	 * 
+	 */
 	@Override
 	public User build(Map<UserType, String> parameters) {
 		User user = new User();
 		user.setId(Integer.parseInt(parameters.get(UserType.ID)));
-		user.setLogin(parameters.get(UserType.LOGIN));		
-		if(parameters.get(UserType.IS_BLOCKED).equalsIgnoreCase(UserType.NOT_BLOCKED.name().toLowerCase())) {
-			user.setBlocked(false);			
-		} else if(parameters.get(UserType.IS_BLOCKED).equalsIgnoreCase(UserType.BLOCKED.name().toLowerCase())){
+		user.setLogin(parameters.get(UserType.LOGIN));
+		if (parameters.get(UserType.IS_BLOCKED).equalsIgnoreCase(UserType.NOT_BLOCKED.name().toLowerCase())) {
+			user.setBlocked(false);
+		} else if (parameters.get(UserType.IS_BLOCKED).equalsIgnoreCase(UserType.BLOCKED.name().toLowerCase())) {
 			user.setBlocked(true);
 		}
 		RoleInProject[] roles = RoleInProject.values();
-		for(RoleInProject role : roles) {
-			if(role.toString().equalsIgnoreCase(parameters.get(UserType.ROLE_IN_PROJECT))) {
+		for (RoleInProject role : roles) {
+			if (role.toString().equalsIgnoreCase(parameters.get(UserType.ROLE_IN_PROJECT))) {
 				user.setRoleInProject(role);
 			}
 		}
@@ -49,25 +62,16 @@ public class UserBuilder implements Builder<User, UserType> {
 		user.setSurname(parameters.get(UserType.SURNAME));
 		user.setPassportId(parameters.get(UserType.PASSPORT_ID));
 		user.setPassportNumber(parameters.get(UserType.PASSPORT_NUMBER));
-		CustomValidator validator = new DateValidator();
-		if (validator.validate(parameters.get(UserType.DATE_OF_BIRTH))) {
-			CustomParser<Calendar> parser = new DateParser();
-			Calendar dateOfBirth = null;
-			try {
-				dateOfBirth = parser.parse(parameters.get(UserType.DATE_OF_BIRTH));
-			} catch (CustomParseException e) {
-				dateOfBirth = new GregorianCalendar();
-				logger.log(Level.INFO, "не корректная дата");
-			}
-			user.setDateOfBirth(dateOfBirth);
+		CustomParser<Calendar> parser = new DateParser();
+		Calendar dateOfBirth = null;
+		try {
+			dateOfBirth = parser.parse(parameters.get(UserType.DATE_OF_BIRTH));
+		} catch (CustomParseException e) {
+			dateOfBirth = new GregorianCalendar();
+			logger.log(Level.INFO, "не корректная дата");
 		}
-		validator = new PhoneValidator();
-		if (validator.validate(parameters.get(UserType.PHONE_NUMBER))) {
-			user.setPhoneNumber(parameters.get(UserType.PHONE_NUMBER));
-		} else {
-			logger.log(Level.INFO, "не корректный номер телефона");
-			user.setPhoneNumber("no phone");
-		}
+		user.setDateOfBirth(dateOfBirth);
+		user.setPhoneNumber(parameters.get(UserType.PHONE_NUMBER));
 		Gender[] genders = Gender.values();
 		for (Gender gender : genders) {
 			if (gender.name().equalsIgnoreCase(parameters.get(UserType.GENDER))

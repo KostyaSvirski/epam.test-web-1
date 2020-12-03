@@ -18,19 +18,27 @@ import by.svirski.testweb.service.exception.ServiceException;
 import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 
+/**
+ * class represents command to authorize user
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class AuthorizationCommand implements ActionCommand {
 
 	public AuthorizationCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to authorize user
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {
 		if (request.getParameter(RequestParameters.LOGIN) != null
 				&& request.getParameter(RequestParameters.PASSWORD) != null) {
 			String login = request.getParameter(RequestParameters.LOGIN);
-			String password = Integer.toString(encryptPassword(request.getParameter(RequestParameters.PASSWORD)));
+			String password = request.getParameter(RequestParameters.PASSWORD);
 			Map<TypeOfParameters.UserType, String> mapParameters = new EnumMap<TypeOfParameters.UserType, String>(
 					TypeOfParameters.UserType.class);
 			mapParameters.put(TypeOfParameters.UserType.PASSWORD, password);

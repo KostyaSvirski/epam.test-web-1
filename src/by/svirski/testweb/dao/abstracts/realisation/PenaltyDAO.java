@@ -27,7 +27,6 @@ public class PenaltyDAO extends AbstractPenaltyDAOImpl {
 	private static final String UPDATE_CLOSED = "update penalty set is_closed = true where id_penalty = ?";
 
 	public PenaltyDAO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

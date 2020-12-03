@@ -14,12 +14,20 @@ import by.svirski.testweb.service.exception.ServiceException;
 import by.svirski.testweb.controller.PagePath;
 import by.svirski.testweb.controller.RequestParameters;
 
+/**
+ * class represents command to count authorized users in project
+ * 
+ * @author Kostya Svirski
+ * @version 1.0
+ */
 public class CountUsersCommand implements ActionCommand {
 	
 	public CountUsersCommand() {
-		
 	}
-
+	
+	/**
+	 * overriden method {@link ActionCommand#execute(HttpServletRequest, HttpServletResponse)} to count users authorized users in project
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException, ServletException {

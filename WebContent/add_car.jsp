@@ -1,3 +1,6 @@
+<%@ taglib prefix="ctg" uri="custom-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -45,6 +48,7 @@
         <input type="text" placeholder="Fuel" name="fuel">
         <input type="text" placeholder="Cost" name="cost">
 		<input type="submit" value = "CONFIRM">
+		<p style="color: ${collor}; text-align: center">${message}</p>
 	</div>
 	</form>
 	</div>

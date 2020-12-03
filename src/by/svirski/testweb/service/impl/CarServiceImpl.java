@@ -16,7 +16,12 @@ import by.svirski.testweb.dao.abstracts.AbstractCommentDAOImpl;
 import by.svirski.testweb.dao.abstracts.AbstractOrderDAOImpl;
 import by.svirski.testweb.dao.exception.DaoException;
 import by.svirski.testweb.service.CustomCarService;
+import by.svirski.testweb.service.exception.InvalidParameterException;
 import by.svirski.testweb.service.exception.ServiceException;
+import by.svirski.testweb.util.validator.PreparedValidatorsChain;
+import by.svirski.testweb.util.validator.realisation.IntermidiateOrderValidator;
+import by.svirski.testweb.util.validator.realisation.order.DateFinishValidatorLink;
+import by.svirski.testweb.util.validator.realisation.order.DateStartValidatorLink;
 
 public class CarServiceImpl implements CustomCarService {
 
@@ -36,18 +41,25 @@ public class CarServiceImpl implements CustomCarService {
 			throw new ServiceException(e);
 		}
 	}
-	
+
 	@Override
-	public boolean rentAuto(Map<OrderType, String> parameters) throws ServiceException {
-		DaoFactory factory = DaoFactory.getInstance();
-		AbstractOrderDAOImpl dao = factory.getOrderDao();
-		boolean resultOfRent = false;
-		try {
-			resultOfRent = dao.rentAuto(parameters);
-		} catch (DaoException e) {
-			throw new ServiceException(e);
+	public boolean rentAuto(Map<OrderType, String> parameters) throws ServiceException, InvalidParameterException {
+
+		PreparedValidatorsChain<OrderType> chain = new IntermidiateOrderValidator();
+		chain.linkWith(new DateStartValidatorLink()).linkWith(new DateFinishValidatorLink());
+		boolean result = chain.validate(parameters);
+		if (result) {
+			DaoFactory factory = DaoFactory.getInstance();
+			AbstractOrderDAOImpl dao = factory.getOrderDao();
+			boolean resultOfRent = false;
+			try {
+				resultOfRent = dao.rentAuto(parameters);
+			} catch (DaoException e) {
+				throw new ServiceException(e);
+			}
+			return resultOfRent;
 		}
-		return resultOfRent;
+		throw new InvalidParameterException("не валидные данные");
 	}
 
 	@Override
@@ -74,8 +86,6 @@ public class CarServiceImpl implements CustomCarService {
 			throw new ServiceException(e);
 		}
 		return comments;
-	}	
-	
-	
+	}
 
 }

@@ -1,7 +1,6 @@
 package by.svirski.testweb.service.impl;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -22,9 +21,15 @@ import by.svirski.testweb.dao.exception.DaoException;
 import by.svirski.testweb.service.CustomUserService;
 import by.svirski.testweb.service.exception.InvalidParameterException;
 import by.svirski.testweb.service.exception.ServiceException;
-import by.svirski.testweb.util.validator.CustomValidator;
-import by.svirski.testweb.util.validator.impl.DateValidator;
-import by.svirski.testweb.util.validator.impl.PhoneValidator;
+import by.svirski.testweb.util.encryptor.CustomEncryptor;
+import by.svirski.testweb.util.encryptor.impl.PasswordEncryptor;
+import by.svirski.testweb.util.validator.PreparedValidatorsChain;
+import by.svirski.testweb.util.validator.realisation.IntermidiateUserLink;
+import by.svirski.testweb.util.validator.realisation.user.DateValidatorLink;
+import by.svirski.testweb.util.validator.realisation.user.EmailValidatorLink;
+import by.svirski.testweb.util.validator.realisation.user.PasswordRepeateValidatorLink;
+import by.svirski.testweb.util.validator.realisation.user.PasswordValidatorLink;
+import by.svirski.testweb.util.validator.realisation.user.PhoneValidatorLink;
 
 public class UserServiceImpl implements CustomUserService {
 
@@ -36,48 +41,38 @@ public class UserServiceImpl implements CustomUserService {
 	@Override
 	public boolean registrate(Map<TypeOfParameters.UserType, String> parameters)
 			throws ServiceException, InvalidParameterException {
-		if(!checkParametersOnEmpty(parameters)) {
-			throw new InvalidParameterException("не все поля заполнены");
-		}
-		if (!parameters.get(UserType.PASSWORD).equals(parameters.get(UserType.REPEAT_PASS))) {
-			throw new InvalidParameterException("пароли не сопадают");
-		}
-		CustomValidator validatorDate = new DateValidator();
-		if (!validatorDate.validate(parameters.get(UserType.DATE_OF_BIRTH))) {
-			logger.log(Level.INFO, "не валидная дата");
-			throw new InvalidParameterException("не валидная дата");
-		}
-		CustomValidator validatorPhone = new PhoneValidator();
-		if (!validatorPhone.validate(parameters.get(UserType.PHONE_NUMBER))) {
-			logger.log(Level.INFO, "не валидный телефон");
-			throw new InvalidParameterException("не валидный телефон");
-		}
-		DaoFactory factory = DaoFactory.getInstance();
-		AbstractUserDAOImpl dao = factory.getUserDao();
-		boolean check = false;
-		try {
-			check = dao.registrateUser(parameters);
-		} catch (DaoException e) {
-			throw new ServiceException(e);
-		}
-		return check;
-	}
-	
-	private boolean checkParametersOnEmpty(Map<UserType, String> parametersMap) {
-		for (Entry<UserType, String> entry : parametersMap.entrySet()) {
-			String value = entry.getValue();
-			if (value == null) {
-				return false;
+
+		PreparedValidatorsChain<UserType> chain = new IntermidiateUserLink();
+		chain.linkWith(new DateValidatorLink()).linkWith(new PhoneValidatorLink()).linkWith(new EmailValidatorLink())
+				.linkWith(new PasswordValidatorLink()).linkWith(new PasswordRepeateValidatorLink())
+				.linkWith(new PasswordRepeateValidatorLink());
+		boolean result = chain.validate(parameters);
+
+		if (result) {
+			CustomEncryptor encryptor = new PasswordEncryptor();
+			String encryptedPassword = Integer.toString(encryptor.encrypt(parameters.remove(UserType.PASSWORD)));
+			parameters.put(UserType.PASSWORD, encryptedPassword);
+			parameters.remove(UserType.REPEAT_PASS);
+			parameters.put(UserType.REPEAT_PASS, encryptedPassword);
+			DaoFactory factory = DaoFactory.getInstance();
+			AbstractUserDAOImpl dao = factory.getUserDao();
+			boolean flag = false;
+			try {
+				flag = dao.registrateUser(parameters);
+			} catch (DaoException e) {
+				throw new ServiceException(e);
 			}
-			if (value.isEmpty() || value.isBlank()) {
-				return false;
-			}
+			return flag;
 		}
-		return true;
+		logger.log(Level.INFO, "не валидные параметры");
+		throw new InvalidParameterException("не валидные параметры");
 	}
 
 	@Override
 	public User authorize(Map<UserType, String> parameters) throws ServiceException {
+		CustomEncryptor encryptor = new PasswordEncryptor();
+		String encryptedPassword = Integer.toString(encryptor.encrypt(parameters.remove(UserType.PASSWORD)));
+		parameters.put(UserType.PASSWORD, encryptedPassword);
 		DaoFactory factory = DaoFactory.getInstance();
 		AbstractUserDAOImpl dao = factory.getUserDao();
 		User user = null;
@@ -92,25 +87,24 @@ public class UserServiceImpl implements CustomUserService {
 
 	@Override
 	public User editUser(Map<UserType, String> parameters) throws ServiceException, InvalidParameterException {
-		CustomValidator validatorDate = new DateValidator();
-		if (!validatorDate.validate(parameters.get(UserType.DATE_OF_BIRTH))) {
-			logger.log(Level.INFO, "не валидная дата");
-			throw new InvalidParameterException("не валидная дата");
+
+		PreparedValidatorsChain<UserType> chain = new IntermidiateUserLink();
+		chain.linkWith(new DateValidatorLink()).linkWith(new PhoneValidatorLink());
+		boolean result = chain.validate(parameters);
+
+		if (result) {
+			DaoFactory factory = DaoFactory.getInstance();
+			AbstractUserDAOImpl dao = factory.getUserDao();
+			User updatedUser = null;
+			try {
+				updatedUser = dao.editUser(parameters);
+			} catch (DaoException e) {
+				throw new ServiceException(e);
+			}
+			return updatedUser;
 		}
-		CustomValidator validatorPhone = new PhoneValidator();
-		if (!validatorPhone.validate(parameters.get(UserType.PHONE_NUMBER))) {
-			logger.log(Level.INFO, "не валидный телефон");
-			throw new InvalidParameterException("не валидный телефон");
-		}
-		DaoFactory factory = DaoFactory.getInstance();
-		AbstractUserDAOImpl dao = factory.getUserDao();
-		User updatedUser = null;
-		try {
-			updatedUser = dao.editUser(parameters);
-		} catch (DaoException e) {
-			throw new ServiceException(e);
-		}
-		return updatedUser;
+		logger.log(Level.INFO, "не валидные параметры");
+		throw new InvalidParameterException("не валидные данные");
 	}
 
 	@Override
@@ -120,11 +114,11 @@ public class UserServiceImpl implements CustomUserService {
 		boolean result = false;
 		try {
 			result = dao.releaseRent(parameters);
-			if(parameters.get(OrderType.INFO) != null) {
+			if (parameters.get(OrderType.INFO) != null) {
 				AbstractCommentDAOImpl daoComment = factory.getCommentDao();
 				result = daoComment.createComment(parameters);
 			}
-			if(result) {
+			if (result) {
 				return result;
 			} else {
 				throw new ServiceException("ошибка в дао");
@@ -144,7 +138,7 @@ public class UserServiceImpl implements CustomUserService {
 		} catch (DaoException e) {
 			throw new ServiceException("ошибка в дао");
 		}
-		
+
 		return penalty;
 	}
 
@@ -160,8 +154,5 @@ public class UserServiceImpl implements CustomUserService {
 		}
 		return flag;
 	}
-	
-	
-	
 
 }

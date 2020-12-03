@@ -65,18 +65,18 @@ public abstract class AbstractOrderDAOImpl implements BeanDao<Order, OrderType> 
 			close(ps);
 		}
 	}
-	
+
 	public boolean update(List<String> params, String request, Connection cn)
 			throws DaoException, TransactionException {
 		PreparedStatement ps = null;
 		try {
 			ps = cn.prepareStatement(request);
-			for(int i = 1; i <= params.size(); i++) {
-				if(i == 2) {
-					ps.setInt(i, Integer.parseInt(params.get(i-1)));									
+			for (int i = 1; i <= params.size(); i++) {
+				if (i == 2) {
+					ps.setInt(i, Integer.parseInt(params.get(i - 1)));
 				} else {
-					ps.setString(i, params.get(i-1));
-				}			
+					ps.setString(i, params.get(i - 1));
+				}
 			}
 			ps.executeUpdate();
 			return true;
@@ -93,9 +93,9 @@ public abstract class AbstractOrderDAOImpl implements BeanDao<Order, OrderType> 
 		PreparedStatement ps = null;
 		try {
 			ps = cn.prepareStatement(request);
-			if(parameters!= null && !parameters.isEmpty()) {
-				for(int i = 1; i <=parameters.size(); i++) {
-					ps.setInt(i, Integer.parseInt(parameters.get(i-1)));					
+			if (parameters != null && !parameters.isEmpty()) {
+				for (int i = 1; i <= parameters.size(); i++) {
+					ps.setInt(i, Integer.parseInt(parameters.get(i - 1)));
 				}
 			}
 			ResultSet rs = ps.executeQuery();
@@ -155,11 +155,20 @@ public abstract class AbstractOrderDAOImpl implements BeanDao<Order, OrderType> 
 	}
 
 	public abstract boolean rentAuto(Map<OrderType, String> parameters) throws DaoException;
+
 	public abstract List<Order> showOrdersForCurrentUser(Map<UserType, String> parameters) throws DaoException;
+
 	public abstract boolean releaseRent(Map<OrderType, String> parameters) throws DaoException;
+
 	public abstract List<Order> showAllOrders() throws DaoException;
+
 	public abstract boolean confirmOrder(Map<OrderType, String> parameters) throws DaoException;
+
 	public abstract boolean denyOrder(Map<OrderType, String> parameters) throws DaoException;
+
 	public abstract boolean releaseRentWithPenalty(Map<OrderType, String> parameters) throws DaoException;
+
 	public abstract boolean releaseRentFinally(Map<OrderType, String> parameters) throws DaoException;
-} 
+	
+	public abstract List<Order> showSpecificOrders(Map<OrderType, String> parameters) throws DaoException;
+}
